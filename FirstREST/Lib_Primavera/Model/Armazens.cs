@@ -18,11 +18,5 @@ namespace FirstREST.Lib_Primavera.Model
             get;
             set;
         }
-
-        public string descArmazens
-        {
-            get;
-            set;
-        }
     }
 }

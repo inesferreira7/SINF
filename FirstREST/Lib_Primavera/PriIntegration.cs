@@ -274,6 +274,7 @@ namespace FirstREST.Lib_Primavera
             StdBELista armList;
 
             Model.Artigo art = new Model.Artigo();
+            Model.Armazens arm = new Model.Armazens();
             List<Model.Artigo> listArts = new List<Model.Artigo>();
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
@@ -297,21 +298,24 @@ namespace FirstREST.Lib_Primavera
                     art.STKActualArtigo = objList.Valor("STKActual");
                     art.IvaArtigo = objList.Valor("Iva");
                     art.ObsArtigo = objList.Valor("Observacoes");
+                    art.armArtigo = new List<Model.Armazens>();
 
                     string query = "SELECT Armazem, StkActual FROM ArtigoArmazem WHERE ArtigoArmazem.Artigo = '" + art.CodArtigo + "'";
             
-                   armList = PriEngine.Engine.Consulta(query);
+                    armList = PriEngine.Engine.Consulta(query);
 
                     List<Model.Armazens> listArms = new List<Model.Armazens>();
+                    string s = armList.NumLinhas().ToString();
 
-                    Model.Armazens arm = new Model.Armazens();
-
+                    Console.WriteLine(s);
                     while (!armList.NoFim())
                     {
                         arm = new Model.Armazens();
                         arm.idArmazens = armList.Valor("Armazem");
                         arm.StkArmazens = armList.Valor("StkActual");
                         listArms.Add(arm);
+
+                        armList.Seguinte();
                     }
 
                     art.armArtigo = listArms;
