@@ -53,27 +53,55 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Interop.CblBE900">
-      <HintPath>..\..\..\..\..\Program Files\Common Files\PRIMAVERA\SG900\Interop.CblBE900.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\PRIMAVERA\SG900\Apl\Interop.CblBE900.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Interop.CrmBE900">
       <HintPath>..\..\..\..\..\Program Files\Common Files\PRIMAVERA\SG900\Interop.CrmBE900.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Interop.EapBE900">
+      <HintPath>..\..\..\..\..\..\Program Files\PRIMAVERA\SG900\Apl\Interop.EapBE900.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Interop.ErpBS900">
-      <HintPath>..\..\..\..\..\Program Files\Common Files\PRIMAVERA\SG900\Interop.ErpBS900.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\PRIMAVERA\SG900\Apl\Interop.ErpBS900.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Interop.GcpBE900">
-      <HintPath>..\..\..\..\..\Program Files\Common Files\PRIMAVERA\SG900\Interop.GcpBE900.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\PRIMAVERA\SG900\Apl\Interop.GcpBE900.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.IBasBS900">
+      <HintPath>..\..\..\..\..\..\Program Files\PRIMAVERA\SG900\Apl\Interop.IBasBS900.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.ICblBS900">
+      <HintPath>..\..\..\..\..\..\Program Files\PRIMAVERA\SG900\Apl\Interop.ICblBS900.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.IEapBS900">
+      <HintPath>..\..\..\..\..\..\Program Files\PRIMAVERA\SG900\Apl\Interop.IEapBS900.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.IFacBS900">
+      <HintPath>..\..\..\..\..\..\Program Files\PRIMAVERA\SG900\Apl\Interop.IFacBS900.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Interop.IGcpBS900">
-      <HintPath>..\..\..\Program Files\PRIMAVERA\SG900\Apl\Interop.IGcpBS900.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\PRIMAVERA\SG900\Apl\Interop.IGcpBS900.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.IRhpBS900">
+      <HintPath>..\..\..\..\..\..\Program Files\PRIMAVERA\SG900\Apl\Interop.IRhpBS900.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.Primavera.Platform.Caching900">
+      <HintPath>..\..\..\..\..\..\Program Files\PRIMAVERA\SG900\Apl\Interop.Primavera.Platform.Caching900.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Interop.StdBE900">
-      <HintPath>..\..\..\..\..\Program Files\Common Files\PRIMAVERA\SG900\Interop.StdBE900.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\PRIMAVERA\SG900\Apl\Interop.StdBE900.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Interop.StdBESql900">
@@ -85,11 +113,11 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Interop.StdPlatBE900">
-      <HintPath>..\..\..\..\..\Program Files\Common Files\PRIMAVERA\SG900\Interop.StdPlatBE900.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\PRIMAVERA\SG900\Apl\Interop.StdPlatBE900.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Interop.StdPlatBS900">
-      <HintPath>..\..\..\..\..\Program Files\Common Files\PRIMAVERA\SG900\Interop.StdPlatBS900.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files\PRIMAVERA\SG900\Apl\Interop.StdPlatBS900.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -217,6 +245,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Lib_Primavera\Model\Armazens.cs" />
     <Compile Include="Lib_Primavera\PriIntegration.cs" />
     <Compile Include="Lib_Primavera\Model\Artigo.cs" />
     <Compile Include="Lib_Primavera\Model\Cliente.cs" />

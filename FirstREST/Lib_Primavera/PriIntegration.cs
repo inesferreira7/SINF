@@ -271,6 +271,7 @@ namespace FirstREST.Lib_Primavera
         {
                         
             StdBELista objList;
+            StdBELista armList;
 
             Model.Artigo art = new Model.Artigo();
             List<Model.Artigo> listArts = new List<Model.Artigo>();
@@ -278,13 +279,42 @@ namespace FirstREST.Lib_Primavera
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
+                //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
+
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, CodBarras, Descricao, Marca, Modelo, PermiteDevolucao, Peso, PesoLiquido, STKActual, Iva, Observacoes FROM Artigo");
 
                 while (!objList.NoFim())
                 {
                     art = new Model.Artigo();
-                    art.CodArtigo = objList.Valor("artigo");
-                    art.DescArtigo = objList.Valor("descricao");
+                    art.CodArtigo = objList.Valor("Artigo");
+                    art.DescArtigo = objList.Valor("Descricao");
+                    art.CodBArtigo = objList.Valor("CodBarras");
+                    art.MarcaArtigo = objList.Valor("Marca");
+                    art.ModeloArtigo = objList.Valor("Modelo");
+                    art.PermDevArtigo = objList.Valor("PermiteDevolucao");
+                    art.PesoArtigo = objList.Valor("Peso");
+                    art.PesoLArtigo = objList.Valor("PesoLiquido");
+                    art.STKActualArtigo = objList.Valor("STKActual");
+                    art.IvaArtigo = objList.Valor("Iva");
+                    art.ObsArtigo = objList.Valor("Observacoes");
+
+                    string query = "SELECT Armazem, StkActual FROM ArtigoArmazem WHERE ArtigoArmazem.Artigo = '" + art.CodArtigo + "'";
+            
+                   armList = PriEngine.Engine.Consulta(query);
+
+                    List<Model.Armazens> listArms = new List<Model.Armazens>();
+
+                    Model.Armazens arm = new Model.Armazens();
+
+                    while (!armList.NoFim())
+                    {
+                        arm = new Model.Armazens();
+                        arm.idArmazens = armList.Valor("Armazem");
+                        arm.StkArmazens = armList.Valor("StkActual");
+                        listArms.Add(arm);
+                    }
+
+                    art.armArtigo = listArms;
 
                     listArts.Add(art);
                     objList.Seguinte();

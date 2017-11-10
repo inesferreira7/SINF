@@ -19,5 +19,64 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
+        public string CodBArtigo
+        {
+            get;
+            set;
+        }
+
+        public string MarcaArtigo
+        {
+            get;
+            set;
+        }
+
+        public string ModeloArtigo
+        {
+            get;
+            set;
+        }
+
+        public bool PermDevArtigo
+        {
+            get;
+            set;
+        }
+
+        public double PesoArtigo
+        {
+            get;
+            set;
+        }
+
+        public double PesoLArtigo
+        {
+            get;
+            set;
+        }
+
+        public double STKActualArtigo
+        {
+            get;
+            set;
+        }
+
+        public string IvaArtigo
+        {
+            get;
+            set;
+        }
+
+        public string ObsArtigo
+        {
+            get;
+            set;
+        }
+
+        public List<Armazens> armArtigo
+        {
+            get;
+            set;
+        }
     }
 }
