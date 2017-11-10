@@ -78,5 +78,17 @@ namespace FirstREST.Lib_Primavera.Model
             get;
             set;
         }
+
+        public double precoArtigo
+        {
+            get;
+            set;
+        }
+
+        public double precomIvaArtigo
+        {
+            get;
+            set;
+        }
     }
 }

@@ -272,6 +272,8 @@ namespace FirstREST.Lib_Primavera
                         
             StdBELista objList;
             StdBELista armList;
+            StdBELista precoList;
+            StdBELista descArmList;
 
             Model.Artigo art = new Model.Artigo();
             Model.Armazens arm = new Model.Armazens();
@@ -300,25 +302,36 @@ namespace FirstREST.Lib_Primavera
                     art.ObsArtigo = objList.Valor("Observacoes");
                     art.armArtigo = new List<Model.Armazens>();
 
-                    string query = "SELECT Armazem, StkActual FROM ArtigoArmazem WHERE ArtigoArmazem.Artigo = '" + art.CodArtigo + "'";
-            
-                    armList = PriEngine.Engine.Consulta(query);
+                    string queryArmazem = "SELECT Armazem, StkActual FROM ArtigoArmazem WHERE ArtigoArmazem.Artigo = '" + art.CodArtigo + "'";
+                    
+                    armList = PriEngine.Engine.Consulta(queryArmazem);
 
                     List<Model.Armazens> listArms = new List<Model.Armazens>();
-                    string s = armList.NumLinhas().ToString();
 
-                    Console.WriteLine(s);
                     while (!armList.NoFim())
                     {
                         arm = new Model.Armazens();
                         arm.idArmazens = armList.Valor("Armazem");
                         arm.StkArmazens = armList.Valor("StkActual");
+
+                        string queryDescArm = "SELECT Descricao FROM Armazens WHERE Armazem = '" + arm.idArmazens +"'";
+                        descArmList = PriEngine.Engine.Consulta(queryDescArm);
+
+                        arm.descArmazens = descArmList.Valor("Descricao");
+                        
                         listArms.Add(arm);
 
                         armList.Seguinte();
                     }
 
                     art.armArtigo = listArms;
+
+
+                    string queryPreco = "SELECT PVP1 FROM ArtigoMoeda WHERE Artigo = '" + art.CodArtigo + "'";
+                    precoList = PriEngine.Engine.Consulta(queryPreco);
+
+                    art.precoArtigo = precoList.Valor("PVP1");
+                    art.precomIvaArtigo = art.precoArtigo + art.precoArtigo * Double.Parse(art.IvaArtigo) * 0.01;
 
                     listArts.Add(art);
                     objList.Seguinte();
