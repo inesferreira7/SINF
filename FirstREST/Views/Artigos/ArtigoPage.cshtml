@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "ArtigoPage";
+    var artigo = ViewBag.artigo;
+}
+
+<h2>ArtigoPage</h2>
+
+@{
+<table>
+        <tr>
+            <td>@artigo.CodArtigo</td>
+            <td>@artigo.DescArtigo</td>
+            <td>@artigo.precomIvaArtigo €</td>
+        </tr>
+</table>
+}

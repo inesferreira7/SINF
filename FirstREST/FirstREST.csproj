@@ -380,6 +380,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Artigos\artigos.cshtml" />
+    <Content Include="Views\Artigos\Index.cshtml" />
+    <Content Include="Views\Artigos\ArtigoPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "artigos";
+}
+
+<h2>artigos</h2>
+
+<table>
+    @{foreach (var artigo in ViewBag.artigos)
+    {
+        <tr>
+            <td><a href="/artigos/artigopage/@artigo.CodArtigo/">@artigo.CodArtigo</a></td>
+            <td>@artigo.DescArtigo</td>
+        </tr>
+    }
+
+    }
+</table>
+

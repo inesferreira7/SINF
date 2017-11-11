@@ -239,7 +239,12 @@ namespace FirstREST.Lib_Primavera
 
         public static Lib_Primavera.Model.Artigo GetArtigo(string codArtigo)
         {
-            
+            StdBELista armList;
+            StdBELista descArmList;
+            StdBELista precoList;
+
+            Model.Armazens arm = new Model.Armazens();
+
             GcpBEArtigo objArtigo = new GcpBEArtigo();
             Model.Artigo myArt = new Model.Artigo();
 
@@ -253,8 +258,50 @@ namespace FirstREST.Lib_Primavera
                 else
                 {
                     objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(codArtigo);
+                    myArt = new Model.Artigo();
                     myArt.CodArtigo = objArtigo.get_Artigo();
                     myArt.DescArtigo = objArtigo.get_Descricao();
+                    myArt.CodBArtigo = objArtigo.get_CodBarras();
+                    myArt.MarcaArtigo = objArtigo.get_Marca();
+                    myArt.ModeloArtigo = objArtigo.get_Modelo();
+                    myArt.PermDevArtigo = objArtigo.get_SujeitoDevolucao();
+                    myArt.PesoArtigo = objArtigo.get_Peso();
+                    myArt.PesoLArtigo = objArtigo.get_PesoLiquido();
+                    myArt.STKActualArtigo = objArtigo.get_StkActual();
+                    myArt.IvaArtigo = objArtigo.get_IVA();
+                    myArt.ObsArtigo = objArtigo.get_Observacoes();
+                    myArt.armArtigo = new List<Model.Armazens>();
+
+                    string queryArmazem = "SELECT Armazem, StkActual FROM ArtigoArmazem WHERE ArtigoArmazem.Artigo = '" + myArt.CodArtigo + "'";
+
+                    armList = PriEngine.Engine.Consulta(queryArmazem);
+
+                    List<Model.Armazens> listArms = new List<Model.Armazens>();
+
+                    while (!armList.NoFim())
+                    {
+                        arm = new Model.Armazens();
+                        arm.idArmazens = armList.Valor("Armazem");
+                        arm.StkArmazens = armList.Valor("StkActual");
+
+                        string queryDescArm = "SELECT Descricao FROM Armazens WHERE Armazem = '" + arm.idArmazens + "'";
+                        descArmList = PriEngine.Engine.Consulta(queryDescArm);
+
+                        arm.descArmazens = descArmList.Valor("Descricao");
+
+                        listArms.Add(arm);
+
+                        armList.Seguinte();
+                    }
+
+                    myArt.armArtigo = listArms;
+
+
+                    string queryPreco = "SELECT PVP1 FROM ArtigoMoeda WHERE Artigo = '" + myArt.CodArtigo + "'";
+                    precoList = PriEngine.Engine.Consulta(queryPreco);
+
+                    myArt.precoArtigo = precoList.Valor("PVP1");
+                    myArt.precomIvaArtigo = myArt.precoArtigo + myArt.precoArtigo * Double.Parse(myArt.IvaArtigo) * 0.01;
 
                     return myArt;
                 }
