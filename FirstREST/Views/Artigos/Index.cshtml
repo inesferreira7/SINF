@@ -2,17 +2,30 @@
     ViewBag.Title = "artigos";
 }
 
-<h2>artigos</h2>
 
-<table>
-    @{foreach (var artigo in ViewBag.artigos)
-    {
-        <tr>
-            <td><a href="/artigos/artigopage/@artigo.CodArtigo/">@artigo.CodArtigo</a></td>
-            <td>@artigo.DescArtigo</td>
-        </tr>
-    }
+<div class="container">
+    <div class="row">
+        @{foreach (var artigo in ViewBag.artigos)
+          {
+              <div class="single-article col-xs-3">
+                  <img src="~/Images/marinheiro.jpg" />
+                  <h4><a href="/artigos/artigopage/@artigo.CodArtigo/">@artigo.CodArtigo - @artigo.precoArtigo €</a></h4>
+                  <h5>@artigo.DescArtigo</h5>
+              </div>
+              
+          }
+         }
 
-    }
-</table>
+
+    </div>
+
+
+
+</div>
+
+              
+         
+
+
+   
 
