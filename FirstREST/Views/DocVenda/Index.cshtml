@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "encomendas";
+}
+
+<h2> Lista de encomendas</h2>
+
+@{foreach (var encomenda in ViewBag.encomendas) {
+    <div>
+        <h4>Cliente: @encomenda.Entidade     Data: @encomenda.Data -  </h4>
+        <ul style="list-style-type:disc">
+            @{foreach (var indiv in encomenda.LinhasDoc)
+            {
+                <li>Nome do artigo: @indiv.DescArtigo      Quantidade: @indiv.Quantidade     Preço por unidade: @indiv.PrecoUnitario €</li>}
+            }
+        </ul>
+        <h4>Total: @encomenda.TotalMerc €</h4>
+        </div>
+        }
+        }
+
