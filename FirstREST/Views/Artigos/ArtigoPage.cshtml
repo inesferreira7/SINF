@@ -11,6 +11,15 @@
             <td>@artigo.CodArtigo</td>
             <td>@artigo.DescArtigo</td>
             <td>@artigo.precomIvaArtigo €</td>
+            <td>
+                <select>
+                    @{foreach (var wh in artigo.armArtigo)
+                      {
+                          <option value="@wh.descArmazens">@wh.descArmazens</option>
+                      }
+                     }
+                </select>
+            </td>
         </tr>
 </table>
 }

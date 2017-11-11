@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "ProcuraArtigo";
+}
+
+<h2>ProcuraArtigo</h2>
+
+<table>
+    @{foreach (var artigo in ViewBag.procura_artigo)
+    {
+        <tr>
+            <td><a href="/artigos/artigopage/@artigo.CodArtigo/">@artigo.CodArtigo</a></td>
+            <td>@artigo.DescArtigo</td>
+        </tr>
+    }
+
+    }
+</table>
