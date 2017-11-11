@@ -400,6 +400,7 @@
     <Content Include="Views\Artigos\artigos.cshtml" />
     <Content Include="Views\Artigos\Index.cshtml" />
     <Content Include="Views\Artigos\ArtigoPage.cshtml" />
+    <Content Include="Views\Artigos\ProcuraArtigo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -2,8 +2,19 @@
     ViewBag.Title = "artigos";
 }
 
+<script>
+    function search() {
+        window.location.href = "/artigos/ProcuraArtigo/" + $("#search").val() + "/";
+    }
+</script>
+
 
 <div class="container">
+    <div class="row">
+        <input placeholder="Search..." id="search" />
+        <button onclick="search()">GO</button>
+    </div>
+
     <div class="row">
         @{foreach (var artigo in ViewBag.artigos)
           {
