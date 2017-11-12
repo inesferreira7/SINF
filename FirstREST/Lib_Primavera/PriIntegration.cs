@@ -561,9 +561,25 @@ namespace FirstREST.Lib_Primavera
 
         }
 
+        public static List<string> ListCategories()
+        {
+            StdBELista catList;
+            List<string> categories = new List<string>();
+            catList = PriEngine.Engine.Consulta("SELECT Descricao from TiposArtigo");
+            
+            while (!catList.NoFim())
+            {
+                string cat = catList.Valor("Descricao");
+                categories.Add(cat);
+                catList.Seguinte();
+            }
+
+            return categories;
+             
+        }
+
         #endregion Artigo
 
-   
 
         #region DocCompra
         
