@@ -22,6 +22,7 @@ namespace FirstREST.Controllers
         public ActionResult ArtigoPage(string id)
         {
             ViewBag.artigo = Lib_Primavera.PriIntegration.GetArtigo(id);
+            ViewBag.related = Lib_Primavera.PriIntegration.ListaArtigosPorCategoria(ViewBag.artigo.tipoArtigo);
             return View();
         }
     }

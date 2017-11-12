@@ -270,6 +270,7 @@ namespace FirstREST.Lib_Primavera
                     myArt.STKActualArtigo = objArtigo.get_StkActual();
                     myArt.IvaArtigo = objArtigo.get_IVA();
                     myArt.ObsArtigo = objArtigo.get_Observacoes();
+                    myArt.tipoArtigo = objArtigo.get_TipoArtigo();
                     myArt.armArtigo = new List<Model.Armazens>();
 
                     string queryArmazem = "SELECT DISTINCT Armazem, MAX(StkActual) AS StkActual FROM ArtigoArmazem WHERE ArtigoArmazem.Artigo = '" + myArt.CodArtigo + "' GROUP BY Armazem";
@@ -582,23 +583,32 @@ namespace FirstREST.Lib_Primavera
         public static List<Model.Artigo> ListaArtigosPorCategoria(string categoria)
         {
             StdBELista objList;
+            StdBELista precoList;
             Model.Artigo art = new Model.Artigo();
             List<Model.Artigo> listArts = new List<Model.Artigo>();
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT CodBarras, Descricao, Marca, Modelo, STKActual, Observacoes FROM Artigo where TipoArtigo = '" + categoria + "'");
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, CodBarras, Descricao, Marca, Modelo, STKActual, Iva, Observacoes FROM Artigo where TipoArtigo = '" + categoria + "'");
 
                 while (!objList.NoFim())
                 {
                     art = new Model.Artigo();
+                    art.CodArtigo = objList.Valor("Artigo");
                     art.DescArtigo = objList.Valor("Descricao");
                     art.CodBArtigo = objList.Valor("CodBarras");
                     art.MarcaArtigo = objList.Valor("Marca");
                     art.ModeloArtigo = objList.Valor("Modelo");
                     art.STKActualArtigo = objList.Valor("STKActual");
                     art.ObsArtigo = objList.Valor("Observacoes");
+                    art.IvaArtigo = objList.Valor("Iva");
+
+                    string queryPreco = "SELECT PVP1 FROM ArtigoMoeda WHERE Artigo = '" + art.CodArtigo + "'";
+                    precoList = PriEngine.Engine.Consulta(queryPreco);
+
+                    art.precoArtigo = precoList.Valor("PVP1");
+                    art.precomIvaArtigo = art.precoArtigo + art.precoArtigo * Double.Parse(art.IvaArtigo) * 0.01;
 
                     listArts.Add(art);
                     objList.Seguinte();

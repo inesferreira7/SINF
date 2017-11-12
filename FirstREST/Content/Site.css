@@ -62,8 +62,22 @@
     margin-left: 20%;
 }
 
+.hl{
+    margin-top: 3%;
+    border-bottom: 1px solid black;
+    width: 100%;
+}
+
+.related h2{
+    margin-left: 5%;
+    margin-bottom: 3%;
+    font-weight: bold;
+}
 /* página do artigo
 ----------------------------------------------------------*/
+
+
+
 
 /* página de artigos
 ----------------------------------------------------------*/
