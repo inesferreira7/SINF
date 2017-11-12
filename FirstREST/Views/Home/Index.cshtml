@@ -1,5 +1,5 @@
 ﻿<div class="container">
-    <div class="col-xs-2">
+    <div class="cart_anchor col-xs-2">
         <h2>Category</h2>
         <p><a href="#">Category 1</a></p>
         <p><a href="#">Category 2</a></p>
@@ -7,20 +7,20 @@
         <p><a href="#">Category 4</a></p>
         <p><a href="#">Category 5</a></p>
         <p><a href="#">Category 6</a></p>
-        <p><a href="#">Category 7</a></p>   
+        <p><a href="#">Category 7</a></p>
     </div>
     <div class="col-xs-1 vl"></div>
-    <div class="best-sellers col-xs-9">
+    <div class="items best-sellers col-xs-9">
         <h2>Bestselling Books</h2>
         @{ int i = 0;
          foreach (var artigo in ViewBag.artigos)
          {
-            <div class="single-article col-xs-3">
-                <img src="~/Images/marinheiro.jpg" />
+            <div class="item single-article col-xs-3">
+                <img src="~/Images/marinheiro.jpg" alt="item" />
                 <p><a href="/artigos/artigopage/@artigo.CodArtigo/">@artigo.CodArtigo - @artigo.precoArtigo €</a></p>
                 <p>@artigo.DescArtigo</p>
                 <p>@artigo.STKActualArtigo</p>
-                <button class="btn">Add to Cart</button>
+                <button class="add-to-cart btn" type="button">Add to Cart</button>
 
             </div>
              if (++i == 8) { break; }

@@ -38,10 +38,11 @@
                         </form>
                     </div>
                     <ul class="nav navbar-nav navbar-right">
-                        
+                        <li><a class="shopping-cart glyphicon glyphicon-shopping-cart"></a></li>
                         <li><a href="#">LOGIN</a></li>
                         <li><a href="#">REGISTER</a></li>
-                        <li><a class="glyphicon glyphicon-shopping-cart"></a></li>
+                       
+                        
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div>
@@ -49,6 +50,8 @@
     </header>
     @RenderBody()
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/Scripts")
     @RenderSection("scripts", required: false)
 
 </body>
