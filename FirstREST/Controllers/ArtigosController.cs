@@ -26,5 +26,34 @@ namespace FirstREST.Controllers
             return View();
         }
     }
+
+    //  [RoutePrefix("api/test")]
+    public class BooksController : ApiController
+    {
+        // GET: /api/books
+        //[HttpGet]
+        //[AttributeRouting.Web.Mvc.Route("api/test")]
+        public IEnumerable<Lib_Primavera.Model.Artigo> Get()
+        {
+            return Lib_Primavera.PriIntegration.ListaArtigos();
+        }
+
+        // GET: /api/books/{id}
+        //[AttributeRouting.Web.Mvc.Route]
+        public Lib_Primavera.Model.Artigo Get(string id)
+        {
+            Lib_Primavera.Model.Artigo artigo = Lib_Primavera.PriIntegration.GetArtigo(id);
+            if (artigo == null)
+            {
+                throw new HttpResponseException(
+                  Request.CreateResponse(HttpStatusCode.NotFound));
+            }
+            else
+            {
+                return artigo;
+            }
+        }
+
+    }
 }
 
