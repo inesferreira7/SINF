@@ -402,6 +402,7 @@
     <Content Include="Views\Artigos\ArtigoPage.cshtml" />
     <Content Include="Views\DocVenda\Index.cshtml" />
     <Content Include="Views\Artigos\ProcuraArtigo.cshtml" />
+    <Content Include="Views\Home\ProcuraArtigo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
