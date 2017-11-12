@@ -29,7 +29,7 @@ namespace FirstREST.Lib_Primavera
 
                 //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
 
-                objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, Moeda, NumContrib as NumContribuinte, Fac_Mor AS campo_exemplo FROM  CLIENTES");
+                objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, Moeda, NumContrib as NumContribuinte, Fac_Mor, Fac_Tel AS campo_exemplo FROM  CLIENTES");
 
                 
                 while (!objList.NoFim())
@@ -38,7 +38,9 @@ namespace FirstREST.Lib_Primavera
                     {
                         CodCliente = objList.Valor("Cliente"),
                         NomeCliente = objList.Valor("Nome"),
-                        Morada = objList.Valor("campo_exemplo")
+                        Morada = objList.Valor("campo_exemplo"),
+                        Telefone = objList.Valor("Fac_Tel")
+
                     });
                     objList.Seguinte();
 
@@ -68,6 +70,7 @@ namespace FirstREST.Lib_Primavera
                     myCli.CodCliente = objCli.get_Cliente();
                     myCli.NomeCliente = objCli.get_Nome();
                     myCli.Morada = objCli.get_Morada();
+                    myCli.Telefone = objCli.get_Telefone();
                     return myCli;
                 }
                 else
@@ -903,6 +906,58 @@ namespace FirstREST.Lib_Primavera
                 }
             }
             return listdv;
+        }
+
+        public static List<Model.DocVenda> Encomenda_Get_Entidade(string entidade)
+        {
+            StdBELista objListCab;
+            StdBELista objListLin;
+            Model.DocVenda dv = new Model.DocVenda();
+            Model.LinhaDocVenda lindv = new Model.LinhaDocVenda();
+            List<Model.LinhaDocVenda> listlindv = new List<Model.LinhaDocVenda>();
+            List<Model.DocVenda> ret = new List<Model.DocVenda>();
+
+            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+
+                string st = "SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL' and Entidade ='" + entidade + "'";
+                objListCab = PriEngine.Engine.Consulta(st);
+
+                while (!objListCab.NoFim())
+                {
+                    dv = new Model.DocVenda();
+                    dv.id = objListCab.Valor("id");
+                    dv.Entidade = objListCab.Valor("Entidade");
+                    dv.NumDoc = objListCab.Valor("NumDoc");
+                    dv.Data = objListCab.Valor("Data");
+                    dv.TotalMerc = objListCab.Valor("TotalMerc");
+                    dv.Serie = objListCab.Valor("Serie");
+                    objListLin = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido from LinhasDoc where IdCabecDoc='" + dv.id + "' order By NumLinha");
+                    listlindv = new List<Model.LinhaDocVenda>();
+
+                    while (!objListLin.NoFim())
+                    {
+                        lindv = new Model.LinhaDocVenda();
+                        lindv.IdCabecDoc = objListLin.Valor("idCabecDoc");
+                        lindv.CodArtigo = objListLin.Valor("Artigo");
+                        lindv.DescArtigo = objListLin.Valor("Descricao");
+                        lindv.Quantidade = objListLin.Valor("Quantidade");
+                        lindv.Unidade = objListLin.Valor("Unidade");
+                        lindv.Desconto = objListLin.Valor("Desconto1");
+                        lindv.PrecoUnitario = objListLin.Valor("PrecUnit");
+                        lindv.TotalILiquido = objListLin.Valor("TotalILiquido");
+                        lindv.TotalLiquido = objListLin.Valor("PrecoLiquido");
+                        listlindv.Add(lindv);
+                        objListLin.Seguinte();
+                    }
+
+                    dv.LinhasDoc = listlindv;
+                    ret.Add(dv);
+                    objListCab.Seguinte();
+                }
+            }
+            return ret;
         }
 
 

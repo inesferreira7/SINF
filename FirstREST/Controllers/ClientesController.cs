@@ -138,6 +138,7 @@ namespace FirstREST.Controllers
         {
             ViewBag.clientes = Lib_Primavera.PriIntegration.ListaClientes();
             ViewBag.cliente = Lib_Primavera.PriIntegration.GetCliente(id);
+            ViewBag.encomendas = Lib_Primavera.PriIntegration.Encomenda_Get_Entidade(id);
             return View();
         }
         public ActionResult getClientes()

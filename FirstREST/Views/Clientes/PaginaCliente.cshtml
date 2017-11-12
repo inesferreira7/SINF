@@ -1,5 +1,35 @@
 ﻿@{
     ViewBag.Title = "PaginaCliente";
+    var cliente = ViewBag.cliente;
+    
 }
 
-<h2>PaginaCliente</h2>
+<div class="container">
+    <div class="col-xs-6">
+        <h2>Perfil</h2>
+        <p>Code: @cliente.CodCliente</p>
+        <p>Name: @cliente.NomeCliente</p>
+        <p>Address: @cliente.Morada</p>
+        <p>Cellphone: @cliente.Telefone</p>
+
+       <button class="btn" type="button">Edit Profile</button>
+    </div>
+    
+    <div class="col-xs-4">
+        <h2>Pending Orders</h2>
+        @{foreach (var encomenda in ViewBag.encomendas)
+        {
+              <p>@encomenda.id</p>
+              <button class="btn" type="button">Details</button>
+            }
+        }
+
+        <h2>Completed Orders</h2>
+        @{foreach (var encomenda in ViewBag.encomendas)
+        {
+            <p>@encomenda.id</p>
+            <button class="btn" type="button">Details</button>
+        }
+        }
+    </div>
+</div>
