@@ -1,13 +1,11 @@
 ﻿<div class="container">
     <div class="cart_anchor col-xs-2">
         <h2>Category</h2>
-        <p><a href="#">Category 1</a></p>
-        <p><a href="#">Category 2</a></p>
-        <p><a href="#">Category 3</a></p>
-        <p><a href="#">Category 4</a></p>
-        <p><a href="#">Category 5</a></p>
-        <p><a href="#">Category 6</a></p>
-        <p><a href="#">Category 7</a></p>
+        @{foreach (var category in ViewBag.categories)
+          { 
+        <p><a href="#">@category</a></p>
+        }
+        }
     </div>
     <div class="col-xs-1 vl"></div>
     <div class="items best-sellers col-xs-9">
