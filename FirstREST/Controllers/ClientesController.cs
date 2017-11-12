@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -114,7 +114,37 @@ namespace FirstREST.Controllers
             }
 
         }
-
+        
 
     }
+}*/
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using FirstREST.Lib_Primavera.Model;
+
+
+namespace FirstREST.Controllers
+{
+    public class ClientesController : Controller
+    {
+        public ActionResult getClientes()
+        {
+            ViewBag.clientes = Lib_Primavera.PriIntegration.ListaClientes();
+            return View();
+        }
+
+        public ActionResult getCliente(string id)
+        {
+            ViewBag.cliente = Lib_Primavera.PriIntegration.GetCliente(id);
+            return View();
+        }
+    }
 }
+
