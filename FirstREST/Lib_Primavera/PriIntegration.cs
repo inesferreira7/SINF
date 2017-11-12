@@ -561,21 +561,53 @@ namespace FirstREST.Lib_Primavera
 
         }
 
-        public static List<string> ListCategories()
+        public static List<Tuple<string, string>> ListCategories()
         {
             StdBELista catList;
-            List<string> categories = new List<string>();
-            catList = PriEngine.Engine.Consulta("SELECT Descricao from TiposArtigo");
+            List<Tuple<string,string>> categories = new List<Tuple<string,string>>();
+            catList = PriEngine.Engine.Consulta("SELECT TipoArtigo, Descricao from TiposArtigo");
             
             while (!catList.NoFim())
             {
                 string cat = catList.Valor("Descricao");
-                categories.Add(cat);
+                string id = catList.Valor("TipoArtigo");
+                categories.Add(new Tuple<string,string>(id,cat));
                 catList.Seguinte();
             }
 
             return categories;
              
+        }
+
+        public static List<Model.Artigo> ListaArtigosPorCategoria(string categoria)
+        {
+            StdBELista objList;
+            Model.Artigo art = new Model.Artigo();
+            List<Model.Artigo> listArts = new List<Model.Artigo>();
+
+            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+                objList = PriEngine.Engine.Consulta("SELECT CodBarras, Descricao, Marca, Modelo, STKActual, Observacoes FROM Artigo where TipoArtigo = '" + categoria + "'");
+
+                while (!objList.NoFim())
+                {
+                    art = new Model.Artigo();
+                    art.DescArtigo = objList.Valor("Descricao");
+                    art.CodBArtigo = objList.Valor("CodBarras");
+                    art.MarcaArtigo = objList.Valor("Marca");
+                    art.ModeloArtigo = objList.Valor("Modelo");
+                    art.STKActualArtigo = objList.Valor("STKActual");
+                    art.ObsArtigo = objList.Valor("Observacoes");
+
+                    listArts.Add(art);
+                    objList.Seguinte();
+                }
+
+                return listArts;
+            }
+            else return null;
+            
         }
 
         #endregion Artigo

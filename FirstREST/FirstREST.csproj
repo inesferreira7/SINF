@@ -404,6 +404,7 @@
     <Content Include="Views\DocVenda\Index.cshtml" />
     <Content Include="Views\Artigos\ProcuraArtigo.cshtml" />
     <Content Include="Views\Home\ProcuraArtigo.cshtml" />
+    <Content Include="Views\Home\procuraArtigoPorCategoria.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

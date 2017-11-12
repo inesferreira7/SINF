@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "procuraArtigoPorCategoria";
+}
+
+<h2>procuraArtigoPorCategoria</h2>
+
+@{foreach (var artigo in ViewBag.artigos)
+  {
+      <p> @artigo.DescArtigo | @artigo.CodBArtigo | @artigo.MarcaArtigo | @artigo.ModeloArtigo | @artigo.STKActualArtigo</p>
+  }
+}
