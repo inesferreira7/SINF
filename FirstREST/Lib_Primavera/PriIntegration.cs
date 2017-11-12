@@ -511,7 +511,7 @@ namespace FirstREST.Lib_Primavera
                     art.ObsArtigo = objList.Valor("Observacoes");
                     art.armArtigo = new List<Model.Armazens>();
 
-                    if (art.DescArtigo.Contains("Pentium"))
+                    if (art.DescArtigo.Contains(procura))
                     {
 
                         string queryArmazem = "SELECT Armazem, MAX(StkActual) AS StkActual FROM ArtigoArmazem WHERE ArtigoArmazem.Artigo = '" + art.CodArtigo + "' GROUP BY Armazem";
