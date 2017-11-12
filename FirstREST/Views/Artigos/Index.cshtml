@@ -7,16 +7,16 @@
 
     <div class="row">
         @{foreach (var artigo in ViewBag.artigos)
-          {
-              <div class="single-article col-xs-3">
-                  <img src="~/Images/marinheiro.jpg" />
-                  <h4><a href="/artigos/artigopage/@artigo.CodArtigo/">@artigo.CodArtigo - @artigo.precoArtigo €</a></h4>
-                  <h5>@artigo.DescArtigo</h5>
-                  <button class="btn">Add to Cart</button>
-              </div>
-              
-          }
-         }
+        {
+            <div class="item single-article col-xs-3">
+                <img src="~/Images/marinheiro.jpg" alt="item" />
+                <h4><a href="/artigos/artigopage/@artigo.CodArtigo/">@artigo.CodArtigo - @artigo.precoArtigo €</a></h4>
+                <h5>@artigo.DescArtigo</h5>
+                <button class="add-to-cart btn">Add to Cart</button>
+            </div>
+
+        }
+        }
 
 
     </div>
