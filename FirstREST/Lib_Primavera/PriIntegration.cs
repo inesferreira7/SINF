@@ -625,12 +625,11 @@ namespace FirstREST.Lib_Primavera
 
         #region DocCompra
 
-        public static List<Model.DocCompra> GetDocCompra(string id)
+        public static Model.DocCompra GetDocCompra(string id)
         {
             StdBELista objListCab;
             StdBELista objListLin;
             Model.DocCompra dc = new Model.DocCompra();
-            List<Model.DocCompra> listdc = new List<Model.DocCompra>();
             Model.LinhaDocCompra lindc = new Model.LinhaDocCompra();
             List<Model.LinhaDocCompra> listlindc = new List<Model.LinhaDocCompra>();
 
@@ -666,17 +665,16 @@ namespace FirstREST.Lib_Primavera
                         lindc.Armazem = objListLin.Valor("Armazem");
                         lindc.Lote = objListLin.Valor("Lote");
 
+
                         listlindc.Add(lindc);
                         objListLin.Seguinte();
                     }
 
                     dc.LinhasDoc = listlindc;
-
-                    listdc.Add(dc);
                     objListCab.Seguinte();
                 }
             }
-            return listdc;
+            return dc;
         }
 
         public static List<Model.DocCompra> VGR_List()
