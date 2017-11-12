@@ -2,16 +2,52 @@
     ViewBag.Title = "ProcuraArtigo";
 }
 
-<h2>ProcuraArtigo</h2>
 
-<table>
+
+<div class="items-result container">
+    <h2>ProcuraArtigo</h2>
     @{foreach (var artigo in ViewBag.procura_artigo)
-    {
-        <tr>
-            <td><a href="/artigos/artigopage/@artigo.CodArtigo/">@artigo.CodArtigo</a></td>
-            <td>@artigo.DescArtigo</td>
-        </tr>
-    }
+        {
+    <div class="item-row-result row">
+        <div class="result-image col-xs-2">
+            <img src="~/Images/marinheiro.jpg" alt="item" />
+        </div>
+        <div class="col-xs-2">
+            <h3><a href="/artigos/artigopage/@artigo.CodArtigo/">@artigo.DescArtigo</a></h3>
+            <h4>Autor do Livro</h4>
+           
+        </div>
+        <div class="col-xs-2">
+            <h3>Warehouse:</h3>
+            <select id="warehouse-select">
+                @{foreach (var wh in artigo.armArtigo)
+                {
+                    <option value="@wh.descArmazens">@wh.descArmazens</option>
+                }
+                }
+            </select>
+            <h4>@artigo.STKActualArtigo: Available</h4>
+        </div>
+        <div class="col-xs-2">
+            <h3>Quantity</h3>
+            <select>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+
+        </div>
+        <div class="col-xs-2">
+            <button class="add-to-cart btn">Add to Cart</button>
+            <p>Rating: 9/11</p>
+        </div>
+        
+    </div>
+        <hr />
+        }
 
     }
-</table>
+
+</div>
+
