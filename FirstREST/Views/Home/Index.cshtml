@@ -1,7 +1,7 @@
 ﻿<div class="container">
     <div class="cart_anchor col-xs-2">
         <h2>Category</h2>
-        @{foreach (var category in ViewBag.categories)
+        @{foreach (var category in ViewBag.category)
           { 
         <p><a href="/home/procuraArtigoPorCategoria/@category.Item1/">@category.Item2</a></p>
         }
