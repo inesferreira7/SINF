@@ -2,10 +2,28 @@
     ViewBag.Title = "procuraArtigoPorCategoria";
 }
 
-<h2>procuraArtigoPorCategoria</h2>
+<h3> @ViewBag.artigos.Count artigos encontrados </h3>
 
-@{foreach (var artigo in ViewBag.artigos)
-  {
-      <p> @artigo.DescArtigo | @artigo.CodBArtigo | @artigo.MarcaArtigo | @artigo.ModeloArtigo | @artigo.STKActualArtigo</p>
-  }
-}
+<div class="items-result container">
+    @{foreach (var artigo in ViewBag.artigos)
+    {
+        <div class="item-row-result row">
+            <div class="result-image col-xs-3">
+                <img src="~/Images/book.jpg" alt="item" />
+            </div>
+            <div class="col-xs-3">
+                <h3><a href="/artigos/artigopage/@artigo.CodArtigo/">@artigo.DescArtigo</a></h3>
+                <h4>Autor do Livro</h4>
+
+            </div>
+            <div class="col-xs-3">
+                <h5> @artigo.STKActualArtigo: Available</h5>
+            </div>
+            <div class="col-xs-3">
+                <button class="add-to-cart btn">Add to Cart</button>
+            </div>
+        </div>
+        <hr />
+    }
+    }
+</div>
