@@ -10,8 +10,23 @@
         <p><a href="#">Category 7</a></p>   
     </div>
     <div class="col-xs-1 vl"></div>
-    <div class="col-xs-9">
+    <div class="best-sellers col-xs-9">
         <h2>Bestselling Books</h2>
+        @{ int i = 0;
+         foreach (var artigo in ViewBag.artigos)
+         {
+            <div class="single-article col-xs-3">
+                <img src="~/Images/marinheiro.jpg" />
+                <p><a href="/artigos/artigopage/@artigo.CodArtigo/">@artigo.CodArtigo - @artigo.precoArtigo €</a></p>
+                <p>@artigo.DescArtigo</p>
+                <p>@artigo.STKActualArtigo</p>
+                <button class="btn">Add to Cart</button>
+
+            </div>
+             if (++i == 8) { break; }
+         }
+
+        }
     </div>
 
 

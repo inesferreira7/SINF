@@ -26,6 +26,11 @@
 }
 
 
+.single-article p{
+    max-height:30px;
+    min-height:30px;
+}
+
 .single-article h4{
     max-height:5px;
     margin-bottom:5%;
@@ -33,11 +38,15 @@
 
 .single-article h5{
     max-height:2px;
+    margin-bottom:20%;
 }
+
+
+
+
 
 
 
 /* páginas de artigos
 ----------------------------------------------------------*/
-
 

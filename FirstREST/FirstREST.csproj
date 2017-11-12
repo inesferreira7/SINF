@@ -400,11 +400,8 @@
     <Content Include="Views\Artigos\artigos.cshtml" />
     <Content Include="Views\Artigos\Index.cshtml" />
     <Content Include="Views\Artigos\ArtigoPage.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\DocVenda\Index.cshtml" />
-=======
     <Content Include="Views\Artigos\ProcuraArtigo.cshtml" />
->>>>>>> master
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

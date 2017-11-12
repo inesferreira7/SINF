@@ -10,10 +10,7 @@
 
 
 <div class="container">
-    <div class="row">
-        <input placeholder="Search..." id="search" />
-        <button onclick="search()">GO</button>
-    </div>
+   
 
     <div class="row">
         @{foreach (var artigo in ViewBag.artigos)
@@ -22,6 +19,7 @@
                   <img src="~/Images/marinheiro.jpg" />
                   <h4><a href="/artigos/artigopage/@artigo.CodArtigo/">@artigo.CodArtigo - @artigo.precoArtigo €</a></h4>
                   <h5>@artigo.DescArtigo</h5>
+                  <button class="btn">Add to Cart</button>
               </div>
               
           }

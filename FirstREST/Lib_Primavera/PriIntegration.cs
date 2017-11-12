@@ -395,6 +395,86 @@ namespace FirstREST.Lib_Primavera
 
         }
 
+        public static List<Model.Artigo> ListaArtigosPorSTK()
+        {
+
+            StdBELista objList;
+            StdBELista armList;
+            StdBELista precoList;
+            StdBELista descArmList;
+
+            Model.Artigo art = new Model.Artigo();
+            Model.Armazens arm = new Model.Armazens();
+            List<Model.Artigo> listArts = new List<Model.Artigo>();
+
+            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+                //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
+
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, CodBarras, Descricao, Marca, Modelo, PermiteDevolucao, Peso, PesoLiquido, STKActual, Iva, Observacoes FROM Artigo ORDER BY STKActual DESC");
+
+                while (!objList.NoFim())
+                {
+                    art = new Model.Artigo();
+                    art.CodArtigo = objList.Valor("Artigo");
+                    art.DescArtigo = objList.Valor("Descricao");
+                    art.CodBArtigo = objList.Valor("CodBarras");
+                    art.MarcaArtigo = objList.Valor("Marca");
+                    art.ModeloArtigo = objList.Valor("Modelo");
+                    art.PermDevArtigo = objList.Valor("PermiteDevolucao");
+                    art.PesoArtigo = objList.Valor("Peso");
+                    art.PesoLArtigo = objList.Valor("PesoLiquido");
+                    art.STKActualArtigo = objList.Valor("STKActual");
+                    art.IvaArtigo = objList.Valor("Iva");
+                    art.ObsArtigo = objList.Valor("Observacoes");
+                    art.armArtigo = new List<Model.Armazens>();
+
+                    string queryArmazem = "SELECT Armazem, MAX(StkActual) AS StkActual FROM ArtigoArmazem WHERE ArtigoArmazem.Artigo = '" + art.CodArtigo + "' GROUP BY Armazem";
+
+                    armList = PriEngine.Engine.Consulta(queryArmazem);
+
+                    List<Model.Armazens> listArms = new List<Model.Armazens>();
+
+                    while (!armList.NoFim())
+                    {
+                        arm = new Model.Armazens();
+                        arm.idArmazens = armList.Valor("Armazem");
+                        arm.StkArmazens = armList.Valor("StkActual");
+
+                        string queryDescArm = "SELECT Descricao FROM Armazens WHERE Armazem = '" + arm.idArmazens + "'";
+                        descArmList = PriEngine.Engine.Consulta(queryDescArm);
+
+                        arm.descArmazens = descArmList.Valor("Descricao");
+
+                        listArms.Add(arm);
+
+                        armList.Seguinte();
+                    }
+
+                    art.armArtigo = listArms;
+
+
+                    string queryPreco = "SELECT PVP1 FROM ArtigoMoeda WHERE Artigo = '" + art.CodArtigo + "'";
+                    precoList = PriEngine.Engine.Consulta(queryPreco);
+
+                    art.precoArtigo = precoList.Valor("PVP1");
+                    art.precomIvaArtigo = art.precoArtigo + art.precoArtigo * Double.Parse(art.IvaArtigo) * 0.01;
+
+                    listArts.Add(art);
+                    objList.Seguinte();
+                }
+
+                return listArts;
+
+            }
+            else
+            {
+                return null;
+
+            }
+
+        }
 
         public static List<Model.Artigo> ProcuraArtigos(string procura)
         {
