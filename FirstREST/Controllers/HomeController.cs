@@ -13,5 +13,11 @@ namespace FirstREST.Controllers
             ViewBag.artigos = Lib_Primavera.PriIntegration.ListaArtigosPorSTK();
             return View();
         }
+
+        public ActionResult ProcuraArtigo(string id)
+        {
+            ViewBag.procura_artigo = Lib_Primavera.PriIntegration.ProcuraArtigos(id);
+            return View();
+        }
     }
 }
