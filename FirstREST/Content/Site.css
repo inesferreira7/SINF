@@ -10,6 +10,61 @@
 ----------------------------------------------------------*/
 
 
+/* página do artigo
+----------------------------------------------------------*/
+
+.vlap{
+    border-left: 1px solid black;
+    height: 400px;
+}
+
+#obs-text{
+    text-align: justify;
+}
+
+.article-page{
+    text-align:center;
+    margin-bottom:5%;
+}
+
+.article-page img{
+    width:60%;
+    margin-left: 5%;
+}
+
+#title-art-page{
+    font-weight: bold;
+}
+
+.preco-artigo h2{
+    font-weight: bold;
+    margin-right: 15%;
+}
+.preco-artigo h4{
+    margin-top: 15%;
+    font-weight: bold;
+}
+
+.preco-artigo select{
+    font-weight: normal;
+    margin-left:15%;
+}
+
+.preco-artigo input{
+    font-weight: normal;
+    margin-left:20.5%;
+    width: 15%;
+}
+
+.preco-artigo button{
+    text-align: center;
+    margin-top: 20%;
+    margin-left: 20%;
+}
+
+/* página do artigo
+----------------------------------------------------------*/
+
 /* página de artigos
 ----------------------------------------------------------*/
 .single-article{
