@@ -2,24 +2,53 @@
     ViewBag.Title = "ArtigoPage";
     var artigo = ViewBag.artigo;
 }
+<script>
+    function preco(price) {
+        var printContents = document.getElementById('price').innerHTML;
+        var n = price.toFixed(2);
+        document.getElementById('price').innerHTML = n;
+    }
+</script>
 
-<h2>ArtigoPage</h2>
-
-@{
-<table>
-        <tr>
-            <td>@artigo.CodArtigo</td>
-            <td>@artigo.DescArtigo</td>
-            <td>@artigo.precomIvaArtigo €</td>
-            <td>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-7">
+            <div class="row">
+                <div class="article-page col-xs-5">
+                    <img src="~/Images/marinheiro.jpg" alt="item" />
+                </div>
+                <div class="col-xs-7 cart_anchor">
+                    <h2 id="title-art-page">@artigo.CodArtigo</h2>
+                    <h3>@artigo.DescArtigo</h3>
+                    <h4>@artigo.STKActualArtigo</h4>
+                    <h4>@artigo.MarcaArtigo Marca</h4>
+                    <h4>@artigo.ModeloArtigo Modelo</h4>
+                </div>
+            </div>
+            <div id="obs-text" class="row">
+                <div class="col-xs-10 col-xs-offset-1">
+                    <p>Ut vehicula quis nulla et gravida. In vel sodales metus. Integer porttitor nec dui sed semper. Donec et erat pulvinar purus hendrerit convallis. Quisque mattis libero et magna tempor imperdiet. Cras rhoncus metus id turpis commodo porttitor. Aenean porttitor lectus a neque hendrerit, sed lacinia risus convallis. Integer laoreet finibus ante eu tempus. Sed volutpat feugiat leo et sollicitudin. Nullam congue magna nec neque congue finibus. Nulla facilisi. Integer arcu ipsum, ultrices quis venenatis at, pharetra blandit mi. Nullam mattis dapibus velit, sit amet lacinia ipsum dictum eu. Sed volutpat tellus nec elementum facilisis.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-1 vlap"></div>
+        <div class="col-xs-4 cart_anchor preco-artigo">
+            <h2 id="price"><script>preco(@artigo.precomIvaArtigo)</script> €</h2>
+            <h4>
+                Warehouse
                 <select>
                     @{foreach (var wh in artigo.armArtigo)
-                      {
-                          <option value="@wh.descArmazens">@wh.descArmazens</option>
-                      }
-                     }
+                    {
+                        <option value="@wh.descArmazens">@wh.descArmazens</option>
+                    }
+                    }
                 </select>
-            </td>
-        </tr>
-</table>
-}
+            </h4>
+            <h4>
+                Quantity
+                <input type="number" min="1" max="@artigo.STKActualArtigo" step="1" value="1" />
+            </h4>
+            <button class="add-to-cart btn" type="button">Add to Cart</button>
+        </div>
+    </div>
+</div>
