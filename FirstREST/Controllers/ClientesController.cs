@@ -134,6 +134,12 @@ namespace FirstREST.Controllers
 {
     public class ClientesController : Controller
     {
+        public ActionResult PaginaCliente(string id)
+        {
+            ViewBag.clientes = Lib_Primavera.PriIntegration.ListaClientes();
+            ViewBag.cliente = Lib_Primavera.PriIntegration.GetCliente(id);
+            return View();
+        }
         public ActionResult getClientes()
         {
             ViewBag.clientes = Lib_Primavera.PriIntegration.ListaClientes();
