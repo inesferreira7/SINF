@@ -164,3 +164,21 @@
 /* página de resultados
 ----------------------------------------------------------*/
 
+
+/* página do cliente
+----------------------------------------------------------*/
+
+.perfil h2{
+    font-weight: bold;
+}
+
+.single-order{
+    margin-bottom: 7%;
+}
+
+.single-order button{
+    width: 20%;
+}
+
+/* página do cliente
+----------------------------------------------------------*/

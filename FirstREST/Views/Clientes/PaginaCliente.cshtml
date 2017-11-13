@@ -4,13 +4,13 @@
     
 }
 
-<div class="container">
-    <div class="perfil col-xs-6">
+<div class="clientepage container">
+    <div class="perfil col-xs-5">
         <h2>Perfil</h2>
         <p>Code: @cliente.CodCliente</p>
         <p>Name: @cliente.NomeCliente</p>
         <p>Address: @cliente.Morada</p>
-        <p>Phonenumber: 999999999 </p>
+        <p>Phone Number: 999999999 </p>
 
        <button class="btn" type="button">Edit Profile</button>
     </div>
@@ -20,9 +20,10 @@
         @{ int i = 0;
          foreach (var encomenda in ViewBag.encomendas)
          {
-            
+            <div class="single-order">
                 <p class="col-xs-6">Order: @encomenda.NumDoc</p>
                 <button class="col-xs-6 btn" type="button">Details</button>
+            </div>
     <br />
 
              if (++i == 4) { break; }
@@ -33,12 +34,14 @@
     @{int j = 0;
     foreach (var encomenda in ViewBag.encomendas)
     {
-        <p class="col-xs-6">Order: @encomenda.NumDoc</p>
-        <button class="col-xs-6 btn" type="button">Details</button>
-          
+        <div class="single-order">
+            <p class="col-xs-6">Order: @encomenda.NumDoc</p>
+            <button class="col-xs-6 btn" type="button">Details</button>
+        </div>
+    <br />
+
         if (++j == 4) { break; }
     }
 }
-        
-    </div>
+            
 </div>
