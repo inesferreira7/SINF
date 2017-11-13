@@ -52,10 +52,6 @@ namespace FirstREST.Lib_Primavera.Model
 
         }
 
-        public string Telefone
-        {
-            get;
-            set;
-        }
+      
     }
 }

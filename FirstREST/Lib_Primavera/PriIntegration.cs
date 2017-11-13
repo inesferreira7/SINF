@@ -38,7 +38,9 @@ namespace FirstREST.Lib_Primavera
                     {
                         CodCliente = objList.Valor("Cliente"),
                         NomeCliente = objList.Valor("Nome"),
-                        Morada = objList.Valor("campo_exemplo")
+                        Morada = objList.Valor("campo_exemplo"),
+                        Moeda = objList.Valor("Moeda"),
+                        NumContribuinte = objList.Valor("NumContribuinte")
                 
 
                     });
@@ -70,6 +72,8 @@ namespace FirstREST.Lib_Primavera
                     myCli.CodCliente = objCli.get_Cliente();
                     myCli.NomeCliente = objCli.get_Nome();
                     myCli.Morada = objCli.get_Morada();
+                    myCli.NumContribuinte = objCli.get_NumContribuinte();
+                    myCli.Moeda = objCli.get_Moeda();
                    
                     return myCli;
                 }
@@ -111,6 +115,8 @@ namespace FirstREST.Lib_Primavera
                         objCli.set_NumContribuinte(cliente.NumContribuinte);
                         objCli.set_Moeda(cliente.Moeda);
                         objCli.set_Morada(cliente.Morada);
+
+
 
                         PriEngine.Engine.Comercial.Clientes.Actualiza(objCli);
 
@@ -204,6 +210,7 @@ namespace FirstREST.Lib_Primavera
                     myCli.set_NumContribuinte(cli.NumContribuinte);
                     myCli.set_Moeda(cli.Moeda);
                     myCli.set_Morada(cli.Morada);
+                   
 
                     PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
 
