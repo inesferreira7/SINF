@@ -5,31 +5,40 @@
 }
 
 <div class="container">
-    <div class="col-xs-6">
+    <div class="perfil col-xs-6">
         <h2>Perfil</h2>
         <p>Code: @cliente.CodCliente</p>
         <p>Name: @cliente.NomeCliente</p>
         <p>Address: @cliente.Morada</p>
-        <p>Cellphone: @cliente.Telefone</p>
+        <p>Phonenumber: 999999999 </p>
 
        <button class="btn" type="button">Edit Profile</button>
     </div>
     
-    <div class="col-xs-4">
+    <div class="orders col-xs-6">
         <h2>Pending Orders</h2>
-        @{foreach (var encomenda in ViewBag.encomendas)
-        {
-              <p>@encomenda.id</p>
-              <button class="btn" type="button">Details</button>
-            }
-        }
+        @{ int i = 0;
+         foreach (var encomenda in ViewBag.encomendas)
+         {
+            
+                <p class="col-xs-6">Order: @encomenda.NumDoc</p>
+                <button class="col-xs-6 btn" type="button">Details</button>
+    <br />
 
-        <h2>Completed Orders</h2>
-        @{foreach (var encomenda in ViewBag.encomendas)
-        {
-            <p>@encomenda.id</p>
-            <button class="btn" type="button">Details</button>
-        }
-        }
+             if (++i == 4) { break; }
+         }
+}
+
+    <h2>Completed Orders</h2>
+    @{int j = 0;
+    foreach (var encomenda in ViewBag.encomendas)
+    {
+        <p class="col-xs-6">Order: @encomenda.NumDoc</p>
+        <button class="col-xs-6 btn" type="button">Details</button>
+          
+        if (++j == 4) { break; }
+    }
+}
+        
     </div>
 </div>

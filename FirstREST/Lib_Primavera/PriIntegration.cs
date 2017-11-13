@@ -29,7 +29,7 @@ namespace FirstREST.Lib_Primavera
 
                 //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
 
-                objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, Moeda, NumContrib as NumContribuinte, Fac_Mor, Fac_Tel AS campo_exemplo FROM  CLIENTES");
+                objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, Moeda, NumContrib as NumContribuinte, Fac_Mor AS campo_exemplo FROM  CLIENTES");
 
                 
                 while (!objList.NoFim())
@@ -38,8 +38,8 @@ namespace FirstREST.Lib_Primavera
                     {
                         CodCliente = objList.Valor("Cliente"),
                         NomeCliente = objList.Valor("Nome"),
-                        Morada = objList.Valor("campo_exemplo"),
-                        Telefone = objList.Valor("Fac_Tel")
+                        Morada = objList.Valor("campo_exemplo")
+                
 
                     });
                     objList.Seguinte();
@@ -70,7 +70,7 @@ namespace FirstREST.Lib_Primavera
                     myCli.CodCliente = objCli.get_Cliente();
                     myCli.NomeCliente = objCli.get_Nome();
                     myCli.Morada = objCli.get_Morada();
-                    myCli.Telefone = objCli.get_Telefone();
+                   
                     return myCli;
                 }
                 else
@@ -921,7 +921,7 @@ namespace FirstREST.Lib_Primavera
             {
 
 
-                string st = "SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL' and Entidade ='" + entidade + "'";
+                string st = "SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL' and Entidade ='" + entidade + "' ORDER BY NumDoc ASC";
                 objListCab = PriEngine.Engine.Consulta(st);
 
                 while (!objListCab.NoFim())
