@@ -402,6 +402,43 @@ namespace FirstREST.Lib_Primavera
 
         }
 
+
+        public static List<Model.Artigo> ListaBestSellers()
+        {
+            StdBELista objList;
+
+            Model.Artigo art = new Model.Artigo();
+            List<Model.Artigo> listArts = new List<Model.Artigo>();
+
+            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+                //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
+
+                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Artigo, LinhasDoc.Data, SUM(LinhasDoc.Quantidade) AS Total FROM LinhasDoc WHERE CONVERT(DATETIME, '2016-10-01 00:00:00') <= LinhasDoc.Data AND CONVERT(VARCHAR, '2016-10-31 00:00:00', 103) >= LinhasDoc.Data  GROUP BY LinhasDoc.Artigo, LinhasDoc.Data ORDER BY Total DESC");
+
+                while (!objList.NoFim())
+                {
+                    art = new Model.Artigo();
+                    if (objList.Valor("Artigo") != null)
+                    {
+                        art = GetArtigo(objList.Valor("Artigo"));
+                        listArts.Add(art);
+                    }
+
+                    objList.Seguinte();
+                }
+
+                return listArts;
+
+            }
+            else
+            {
+                return null;
+
+            }
+        }
+
         public static List<Model.Artigo> ListaArtigosPorSTK()
         {
 
