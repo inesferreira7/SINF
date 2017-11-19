@@ -605,20 +605,24 @@ namespace FirstREST.Lib_Primavera
 
         }
 
-        public static List<Tuple<string, string>> ListCategories()
+        public static List<Tuple<string, string, int>> ListCategories()
         {
             StdBELista catList;
-            List<Tuple<string,string>> categories = new List<Tuple<string,string>>();
-            catList = PriEngine.Engine.Consulta("SELECT TipoArtigo, Descricao from TiposArtigo");
+            StdBELista resultList;
+            List<Tuple<string,string, int>> categories = new List<Tuple<string,string, int>>();
+            catList = PriEngine.Engine.Consulta("SELECT DISTINCT Categoria, DescricaoBase from CategoriasArtigos");
             
             while (!catList.NoFim())
             {
-                string cat = catList.Valor("Descricao");
-                string id = catList.Valor("TipoArtigo");
-                categories.Add(new Tuple<string,string>(id,cat));
+                string cat = catList.Valor("DescricaoBase");
+                string id = catList.Valor("Categoria");
+                resultList = PriEngine.Engine.Consulta("SELECT COUNT(Artigo) AS Count from Artigo WHERE SubFamilia='" + id + "'");
+                int count = resultList.Valor("Count");
+                categories.Add(new Tuple<string,string,int>(id,cat.ToUpper(),count));
                 catList.Seguinte();
             }
 
+            categories = categories.OrderByDescending(t => t.Item3).ToList();
             return categories;
              
         }
