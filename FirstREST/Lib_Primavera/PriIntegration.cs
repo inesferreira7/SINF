@@ -415,7 +415,7 @@ namespace FirstREST.Lib_Primavera
 
                 //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
-                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Artigo, LinhasDoc.Data, SUM(LinhasDoc.Quantidade) AS Total FROM LinhasDoc WHERE CONVERT(DATETIME, '2016-10-01 00:00:00') <= LinhasDoc.Data AND CONVERT(VARCHAR, '2016-10-31 00:00:00', 103) >= LinhasDoc.Data  GROUP BY LinhasDoc.Artigo, LinhasDoc.Data ORDER BY Total DESC");
+                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Artigo, LinhasDoc.Data, SUM(LinhasDoc.Quantidade) AS Total FROM LinhasDoc WHERE CONVERT(DATETIME, '2016-09-25 00:00:00') <= LinhasDoc.Data AND CONVERT(VARCHAR, '2016-10-31 00:00:00', 103) >= LinhasDoc.Data  GROUP BY LinhasDoc.Artigo, LinhasDoc.Data ORDER BY Total DESC");
 
                 while (!objList.NoFim())
                 {
@@ -637,7 +637,7 @@ namespace FirstREST.Lib_Primavera
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT Artigo, CodBarras, Descricao, Marca, Modelo, STKActual, Iva, Observacoes FROM Artigo where TipoArtigo = '" + categoria + "'");
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, CodBarras, Descricao, Marca, Modelo, STKActual, Iva, Observacoes FROM Artigo where SubFamilia = '" + categoria + "'");
 
                 while (!objList.NoFim())
                 {
