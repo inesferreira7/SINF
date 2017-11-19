@@ -26,6 +26,18 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
+        public string CondPag
+        {
+            get;
+            set;
+        }
+
+        public string ModoPag
+        {
+            get;
+            set;
+        }
+
         public DateTime Data
         {
             get;

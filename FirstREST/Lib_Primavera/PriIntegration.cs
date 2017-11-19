@@ -845,6 +845,8 @@ namespace FirstREST.Lib_Primavera
 
         public static Model.RespostaErro Encomendas_New(Model.DocVenda dv)
         {
+            bool initiatedTransaction = false;
+
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
             GcpBEDocumentoVenda myEnc = new GcpBEDocumentoVenda();
              
@@ -860,11 +862,14 @@ namespace FirstREST.Lib_Primavera
                 if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
                 {
                     // Atribui valores ao cabecalho do doc
-                    //myEnc.set_DataDoc(dv.Data);
+                    myEnc.set_DataDoc(DateTime.Now);
                     myEnc.set_Entidade(dv.Entidade);
                     myEnc.set_Serie(dv.Serie);
                     myEnc.set_Tipodoc("ECL");
                     myEnc.set_TipoEntidade("C");
+
+                    myEnc.set_CondPag("1");
+                    myEnc.set_ModoPag("NUM");
                     // Linhas do documento para a lista de linhas
                     lstlindv = dv.LinhasDoc;
                     //PriEngine.Engine.Comercial.Vendas.PreencheDadosRelacionados(myEnc, rl);
@@ -878,6 +883,7 @@ namespace FirstREST.Lib_Primavera
                    // PriEngine.Engine.Comercial.Compras.TransformaDocumento(
 
                     PriEngine.Engine.IniciaTransaccao();
+                    initiatedTransaction = true;
                     //PriEngine.Engine.Comercial.Vendas.Edita Actualiza(myEnc, "Teste");
                     PriEngine.Engine.Comercial.Vendas.Actualiza(myEnc, "Teste");
                     PriEngine.Engine.TerminaTransaccao();
@@ -896,7 +902,8 @@ namespace FirstREST.Lib_Primavera
             }
             catch (Exception ex)
             {
-                PriEngine.Engine.DesfazTransaccao();
+                if(initiatedTransaction)
+                    PriEngine.Engine.DesfazTransaccao();
                 erro.Erro = 1;
                 erro.Descricao = ex.Message;
                 return erro;
@@ -918,7 +925,7 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
-                objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL'");
+                objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie, CondPag, ModoPag From CabecDoc where TipoDoc='ECL'");
                 while (!objListCab.NoFim())
                 {
                     dv = new Model.DocVenda();
@@ -928,6 +935,8 @@ namespace FirstREST.Lib_Primavera
                     dv.Data = objListCab.Valor("Data");
                     dv.TotalMerc = objListCab.Valor("TotalMerc");
                     dv.Serie = objListCab.Valor("Serie");
+                    dv.CondPag = objListCab.Valor("CondPag");
+                    dv.ModoPag = objListCab.Valor("ModoPag");
                     objListLin = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido from LinhasDoc where IdCabecDoc='" + dv.id + "' order By NumLinha");
                     listlindv = new List<Model.LinhaDocVenda>();
 
@@ -969,7 +978,7 @@ namespace FirstREST.Lib_Primavera
             {
 
 
-                string st = "SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL' and Entidade ='" + entidade + "' ORDER BY NumDoc ASC";
+                string st = "SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie, CondPag, ModoPag From CabecDoc where TipoDoc='ECL' and Entidade ='" + entidade + "' ORDER BY NumDoc ASC";
                 objListCab = PriEngine.Engine.Consulta(st);
 
                 while (!objListCab.NoFim())
@@ -981,6 +990,8 @@ namespace FirstREST.Lib_Primavera
                     dv.Data = objListCab.Valor("Data");
                     dv.TotalMerc = objListCab.Valor("TotalMerc");
                     dv.Serie = objListCab.Valor("Serie");
+                    dv.CondPag = objListCab.Valor("CondPag");
+                    dv.ModoPag = objListCab.Valor("ModoPag");
                     objListLin = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido from LinhasDoc where IdCabecDoc='" + dv.id + "' order By NumLinha");
                     listlindv = new List<Model.LinhaDocVenda>();
 
@@ -1025,7 +1036,7 @@ namespace FirstREST.Lib_Primavera
             {
                 
 
-                string st = "SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL' and NumDoc='" + numdoc + "'";
+                string st = "SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie, CondPag, ModoPag From CabecDoc where TipoDoc='ECL' and NumDoc='" + numdoc + "'";
                 objListCab = PriEngine.Engine.Consulta(st);
                 dv = new Model.DocVenda();
                 dv.id = objListCab.Valor("id");
@@ -1034,6 +1045,8 @@ namespace FirstREST.Lib_Primavera
                 dv.Data = objListCab.Valor("Data");
                 dv.TotalMerc = objListCab.Valor("TotalMerc");
                 dv.Serie = objListCab.Valor("Serie");
+                dv.CondPag = objListCab.Valor("CondPag");
+                dv.ModoPag = objListCab.Valor("ModoPag");
                 objListLin = PriEngine.Engine.Consulta("SELECT idCabecDoc, Artigo, Descricao, Quantidade, Unidade, PrecUnit, Desconto1, TotalILiquido, PrecoLiquido from LinhasDoc where IdCabecDoc='" + dv.id + "' order By NumLinha");
                 listlindv = new List<Model.LinhaDocVenda>();
 
