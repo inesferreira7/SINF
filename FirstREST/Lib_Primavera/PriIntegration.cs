@@ -278,6 +278,7 @@ namespace FirstREST.Lib_Primavera
                     myArt.ObsArtigo = objArtigo.get_Observacoes();
                     myArt.tipoArtigo = objArtigo.get_TipoArtigo();
                     myArt.armArtigo = new List<Model.Armazens>();
+                    myArt.catArtigo = objArtigo.get_SubFamilia();
 
                     string queryArmazem = "SELECT DISTINCT Armazem, MAX(StkActual) AS StkActual FROM ArtigoArmazem WHERE ArtigoArmazem.Artigo = '" + myArt.CodArtigo + "' GROUP BY Armazem";
 
@@ -308,7 +309,7 @@ namespace FirstREST.Lib_Primavera
                     precoList = PriEngine.Engine.Consulta(queryPreco);
 
                     myArt.precoArtigo = precoList.Valor("PVP1");
-                    myArt.precomIvaArtigo = myArt.precoArtigo + myArt.precoArtigo * Double.Parse(myArt.IvaArtigo) * 0.01;
+                    myArt.precomIvaArtigo = Math.Round(myArt.precoArtigo + myArt.precoArtigo * Double.Parse(myArt.IvaArtigo) * 0.01, 2);
 
                     return myArt;
                 }
@@ -338,7 +339,7 @@ namespace FirstREST.Lib_Primavera
 
                 //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
-                objList = PriEngine.Engine.Consulta("SELECT Artigo, CodBarras, Descricao, Marca, Modelo, PermiteDevolucao, Peso, PesoLiquido, STKActual, Iva, Observacoes FROM Artigo");
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, CodBarras, SubFamilia, Descricao, Marca, Modelo, PermiteDevolucao, Peso, PesoLiquido, STKActual, Iva, Observacoes FROM Artigo");
 
                 while (!objList.NoFim())
                 {
@@ -355,6 +356,7 @@ namespace FirstREST.Lib_Primavera
                     art.IvaArtigo = objList.Valor("Iva");
                     art.ObsArtigo = objList.Valor("Observacoes");
                     art.armArtigo = new List<Model.Armazens>();
+                    art.catArtigo = objList.Valor("SubFamilia");
 
                     string queryArmazem = "SELECT Armazem, MAX(StkActual) AS StkActual FROM ArtigoArmazem WHERE ArtigoArmazem.Artigo = '" + art.CodArtigo + "' GROUP BY Armazem";
                     
@@ -385,7 +387,7 @@ namespace FirstREST.Lib_Primavera
                     precoList = PriEngine.Engine.Consulta(queryPreco);
 
                     art.precoArtigo = precoList.Valor("PVP1");
-                    art.precomIvaArtigo = art.precoArtigo + art.precoArtigo * Double.Parse(art.IvaArtigo) * 0.01;
+                    art.precomIvaArtigo = Math.Round(art.precoArtigo + art.precoArtigo * Double.Parse(art.IvaArtigo) * 0.01, 2);
 
                     listArts.Add(art);
                     objList.Seguinte();
@@ -503,7 +505,7 @@ namespace FirstREST.Lib_Primavera
                     precoList = PriEngine.Engine.Consulta(queryPreco);
 
                     art.precoArtigo = precoList.Valor("PVP1");
-                    art.precomIvaArtigo = art.precoArtigo + art.precoArtigo * Double.Parse(art.IvaArtigo) * 0.01;
+                    art.precomIvaArtigo = Math.Round(art.precoArtigo + art.precoArtigo * Double.Parse(art.IvaArtigo) * 0.01,2);
 
                     listArts.Add(art);
                     objList.Seguinte();
@@ -587,7 +589,7 @@ namespace FirstREST.Lib_Primavera
                         precoList = PriEngine.Engine.Consulta(queryPreco);
 
                         art.precoArtigo = precoList.Valor("PVP1");
-                        art.precomIvaArtigo = art.precoArtigo + art.precoArtigo * Double.Parse(art.IvaArtigo) * 0.01;
+                        art.precomIvaArtigo = Math.Round(art.precoArtigo + art.precoArtigo * Double.Parse(art.IvaArtigo) * 0.01, 2);
 
                         listArts.Add(art);
                     }

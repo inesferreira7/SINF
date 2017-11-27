@@ -2,13 +2,6 @@
     ViewBag.Title = "ArtigoPage";
     var artigo = ViewBag.artigo;
 }
-<script>
-    function preco(price) {
-        var printContents = document.getElementById('price').innerHTML;
-        var n = price.toFixed(2);
-        document.getElementById('price').innerHTML = n;
-    }
-</script>
 
 <div class="container">
     <div class="row">
@@ -33,7 +26,7 @@
         </div>
         <div class="col-xs-1 vlap"></div>
         <div class="col-xs-4 cart_anchor preco-artigo">
-            <h2 id="price"><script>preco(@artigo.precomIvaArtigo)</script> €</h2>
+            <h2>@artigo.precomIvaArtigo €</h2>
             <h4>
                 Warehouse
                 <select>
@@ -71,8 +64,8 @@
                  else {
                 <div class="item single-article col-xs-3">
                     <img src="~/Images/book.jpg" alt="item" />
-                    <p><a href="/artigos/artigopage/@related.CodArtigo/">@related.CodArtigo - @related.precomIvaArtigo €</a></p>
-                    <p>@related.DescArtigo</p>
+                    <p><a href="/artigos/artigopage/@related.CodArtigo/">@artigo.DescArtigo</a></p>
+                    <p>@artigo.precoArtigo €</p>
                     <p>@related.STKActualArtigo</p>
                     <button class="add-to-cart btn" type="button">Add to Cart</button>
 
