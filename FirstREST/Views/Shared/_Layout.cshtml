@@ -42,9 +42,18 @@
                         </div>
 
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a class="shopping-cart glyphicon glyphicon-shopping-cart"></a></li>
-                            <li><a href="#">LOGIN</a></li>
-                            <li><a href="#">REGISTER</a></li>
+                            @if (Session["UserID"] != null)
+                            {
+                                <li><a href="#"class="shopping-cart glyphicon glyphicon-shopping-cart"></a></li>
+                                <li><a href="/clientes/paginacliente/@Session["Client"].ToString()/">@Session["Client"]</a></li>
+                                <li><a href="/Account/logout/">LOGOUT</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="/Account/login/">LOGIN</a></li>
+                                <li><a href="#">REGISTER</a></li>   
+                            }
+                            
 
 
                         </ul>
