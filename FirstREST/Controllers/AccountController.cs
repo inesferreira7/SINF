@@ -40,6 +40,7 @@ namespace FirstREST.Controllers
                         Session["UserID"] = obj.Id.ToString();
                         Session["UserName"] = obj.Username.ToString();
                         Session["Client"] = obj.Client_Name.ToString();
+                        ViewBag.errorMessage = null;
 
                         string url = "http://localhost:49822/home/";
                         return Redirect(url);
