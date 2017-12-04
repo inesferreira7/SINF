@@ -612,12 +612,12 @@ namespace FirstREST.Lib_Primavera
             StdBELista catList;
             StdBELista resultList;
             List<Tuple<string,string, int>> categories = new List<Tuple<string,string, int>>();
-            catList = PriEngine.Engine.Consulta("SELECT DISTINCT Categoria, DescricaoBase from CategoriasArtigos");
+            catList = PriEngine.Engine.Consulta("SELECT DISTINCT SubFamilia, Descricao from SubFamilias WHERE Familia= 'L01'");
             
             while (!catList.NoFim())
             {
-                string cat = catList.Valor("DescricaoBase");
-                string id = catList.Valor("Categoria");
+                string cat = catList.Valor("Descricao");
+                string id = catList.Valor("SubFamilia");
                 resultList = PriEngine.Engine.Consulta("SELECT COUNT(Artigo) AS Count from Artigo WHERE SubFamilia='" + id + "'");
                 int count = resultList.Valor("Count");
                 categories.Add(new Tuple<string,string,int>(id,cat.ToUpper(),count));
