@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="online_storeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ShoppingCart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="CodArtigo" Type="nvarchar" MaxLength="48" Nullable="false" />
+          <Property Name="DescArtigo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ArmazemArtigo" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="QuantidadeArtigo" Type="int" Nullable="false" />
+          <Property Name="PrecoArtigo" Type="float" Nullable="false" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
@@ -12,10 +24,29 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="nvarchar" MaxLength="32" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="32" Nullable="false" />
-          <Property Name="Client_Name" Type="nvarchar" MaxLength="12" />
+          <Property Name="Client_Name" Type="nvarchar" MaxLength="12" Nullable="false" />
         </EntityType>
+        <Association Name="Fk_SC">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShoppingCart">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="online_storeModelStoreContainer">
+          <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Fk_SC" Association="Self.Fk_SC">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -28,11 +59,44 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Client_Name" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Client_Name" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ShoppingCarts" Relationship="online_storeModel.Fk_SC" FromRole="User" ToRole="ShoppingCart" />
         </EntityType>
         <EntityContainer Name="online_storeEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="ShoppingCarts" EntityType="online_storeModel.ShoppingCart" />
+          <AssociationSet Name="Fk_SC" Association="online_storeModel.Fk_SC">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="ShoppingCart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="CodArtigo" Type="String" Nullable="false" MaxLength="48" FixedLength="false" Unicode="true" />
+          <Property Name="DescArtigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ArmazemArtigo" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="QuantidadeArtigo" Type="Int32" Nullable="false" />
+          <Property Name="PrecoArtigo" Type="Double" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="online_storeModel.Fk_SC" FromRole="ShoppingCart" ToRole="User" />
+        </EntityType>
+        <Association Name="Fk_SC">
+          <End Type="online_storeModel.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="online_storeModel.ShoppingCart" Role="ShoppingCart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShoppingCart">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -46,6 +110,19 @@
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Client_Name" ColumnName="Client_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShoppingCarts">
+            <EntityTypeMapping TypeName="online_storeModel.ShoppingCart">
+              <MappingFragment StoreEntitySet="ShoppingCart">
+                <ScalarProperty Name="PrecoArtigo" ColumnName="PrecoArtigo" />
+                <ScalarProperty Name="QuantidadeArtigo" ColumnName="QuantidadeArtigo" />
+                <ScalarProperty Name="ArmazemArtigo" ColumnName="ArmazemArtigo" />
+                <ScalarProperty Name="DescArtigo" ColumnName="DescArtigo" />
+                <ScalarProperty Name="CodArtigo" ColumnName="CodArtigo" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

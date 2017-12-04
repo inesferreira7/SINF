@@ -2,6 +2,11 @@
 
 @{
     ViewBag.Title = "Login";
+    if (Request.Cookies["errorMessage"] != null)
+    {
+        ViewBag.errorMessage = Request.Cookies["errorMessage"].Value.ToString();    
+    }
+    
 }
 
 @using (Html.BeginForm("Login", "Account", FormMethod.Post))

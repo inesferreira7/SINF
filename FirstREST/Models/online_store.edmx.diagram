@@ -5,7 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="760a9b649375495395f247473ab7a16d" Name="Diagram1">
-        <EntityTypeShape EntityType="online_storeModel.User" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="online_storeModel.User" Width="3" PointX="0.5" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="online_storeModel.FK__ShoppingC__Clien__25869641" />
+        <EntityTypeShape EntityType="online_storeModel.ShoppingCart" Width="1.5" PointX="5.125" PointY="0.5" />
+        <AssociationConnector Association="online_storeModel.Fk_SC" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

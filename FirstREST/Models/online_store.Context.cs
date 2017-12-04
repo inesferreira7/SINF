@@ -26,5 +26,6 @@ namespace FirstREST.Models
         }
     
         public DbSet<User> Users { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
     }
 }

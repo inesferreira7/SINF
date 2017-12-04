@@ -1,49 +1,64 @@
-﻿@{
+﻿@model FirstREST.Models.ShoppingCart
+
+@{
     ViewBag.Title = "ArtigoPage";
     var artigo = ViewBag.artigo;
 }
-
 <div class="container">
-    <div class="row">
-        <div class="col-xs-7">
-            <div class="row">
-                <div class="article-page col-xs-5">
-                    <img src="~/Images/book.jpg" alt="item" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <form id="addtoCart" method="post">
+        <div class="row">
+            <div class="col-xs-7">
+                <div class="row">
+                    <div class="article-page col-xs-5">
+                        <img src="~/Images/book.jpg" alt="item" />
+                    </div>
+                    <div class="col-xs-7 cart_anchor">
+                        <h2 id="title-art-page">@artigo.CodArtigo</h2>
+                        <h3 id="desc">@artigo.DescArtigo</h3>
+                        <h4>@artigo.STKActualArtigo</h4>
+                        <h4>@artigo.MarcaArtigo Marca</h4>
+                        <h4>@artigo.ModeloArtigo Modelo</h4>
+                    </div>
                 </div>
-                <div class="col-xs-7 cart_anchor">
-                    <h2 id="title-art-page">@artigo.CodArtigo</h2>
-                    <h3>@artigo.DescArtigo</h3>
-                    <h4>@artigo.STKActualArtigo</h4>
-                    <h4>@artigo.MarcaArtigo Marca</h4>
-                    <h4>@artigo.ModeloArtigo Modelo</h4>
+                <div id="obs-text" class="row">
+                    <div class="col-xs-10 col-xs-offset-1">
+                        <p>Ut vehicula quis nulla et gravida. In vel sodales metus. Integer porttitor nec dui sed semper. Donec et erat pulvinar purus hendrerit convallis. Quisque mattis libero et magna tempor imperdiet. Cras rhoncus metus id turpis commodo porttitor. Aenean porttitor lectus a neque hendrerit, sed lacinia risus convallis. Integer laoreet finibus ante eu tempus. Sed volutpat feugiat leo et sollicitudin. Nullam congue magna nec neque congue finibus. Nulla facilisi. Integer arcu ipsum, ultrices quis venenatis at, pharetra blandit mi. Nullam mattis dapibus velit, sit amet lacinia ipsum dictum eu. Sed volutpat tellus nec elementum facilisis.</p>
+                    </div>
                 </div>
             </div>
-            <div id="obs-text" class="row">
-                <div class="col-xs-10 col-xs-offset-1">
-                    <p>Ut vehicula quis nulla et gravida. In vel sodales metus. Integer porttitor nec dui sed semper. Donec et erat pulvinar purus hendrerit convallis. Quisque mattis libero et magna tempor imperdiet. Cras rhoncus metus id turpis commodo porttitor. Aenean porttitor lectus a neque hendrerit, sed lacinia risus convallis. Integer laoreet finibus ante eu tempus. Sed volutpat feugiat leo et sollicitudin. Nullam congue magna nec neque congue finibus. Nulla facilisi. Integer arcu ipsum, ultrices quis venenatis at, pharetra blandit mi. Nullam mattis dapibus velit, sit amet lacinia ipsum dictum eu. Sed volutpat tellus nec elementum facilisis.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-1 vlap"></div>
-        <div class="col-xs-4 cart_anchor preco-artigo">
-            <h2>@artigo.precomIvaArtigo €</h2>
-            <h4>
-                Warehouse
-                <select>
-                    @{foreach (var wh in artigo.armArtigo)
+            <div class="col-xs-1 vlap"></div>
+            <div class="col-xs-4 cart_anchor preco-artigo">
+                <input id="preco" style="visibility: hidden" value="@artigo.precomIvaArtigo" />
+                <h2>@artigo.precomIvaArtigo €</h2>
+                <h4>
+                    Warehouse
+                    <select id="wh">
+                        @{foreach (var wh in artigo.armArtigo)
+                        {
+                            <option value="@wh.descArmazens">@wh.descArmazens</option>
+                        }
+                        }
+                    </select>
+                </h4>
+                <h4>
+                    Quantity
+                    <input id="qt" name="quantidadeArtigo" type="number" min="1" max="@artigo.STKActualArtigo" step="1" value="1" />
+                </h4>
+                @{
+                    if (Request.Cookies["UserID"] != null)
                     {
-                        <option value="@wh.descArmazens">@wh.descArmazens</option>
+                        <input id="idUser" style="visibility:hidden" value="@Request.Cookies["UserID"].Value.ToString()" />
+                        <button class="btn" type="submit" value="addtoCart">Add to Cart</button>
                     }
+                    else
+                    {
+                        <button class="btn" id="goToLogin">Add to Cart</button>
                     }
-                </select>
-            </h4>
-            <h4>
-                Quantity
-                <input type="number" min="1" max="@artigo.STKActualArtigo" step="1" value="1" />
-            </h4>
-            <button class="add-to-cart btn" type="button">Add to Cart</button>
+                }
+            </div>
         </div>
-    </div>
+    </form>
     <div class="row">
         <div class="col-xs-12 hl"></div>
     </div>
@@ -61,16 +76,17 @@
                  {
                      continue;
                  }
-                 else {
-                <div class="item single-article col-xs-3">
-                    <img src="~/Images/book.jpg" alt="item" />
-                    <p><a href="/artigos/artigopage/@related.CodArtigo/">@artigo.DescArtigo</a></p>
-                    <p>@artigo.precoArtigo €</p>
-                    <p>@related.STKActualArtigo</p>
-                    <button class="add-to-cart btn" type="button">Add to Cart</button>
+                 else
+                 {
+                    <div class="item single-article col-xs-3">
+                        <img src="~/Images/book.jpg" alt="item" />
+                        <p><a href="/artigos/artigopage/@related.CodArtigo/">@artigo.DescArtigo</a></p>
+                        <p>@artigo.precoArtigo €</p>
+                        <p>@related.STKActualArtigo</p>
+                        <button class="add-to-cart btn" type="button">Add to Cart</button>
 
-                </div>
-                 if (++i == 8) { break; }
+                    </div>
+                     if (++i == 8) { break; }
                  }
              }
 
@@ -78,3 +94,32 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(function () {
+        $("#addtoCart").on('submit', function (e) {
+            e.preventDefault() // prevent the form's normal submission
+                    var dataToPost = {
+                        CodArtigo: $("#title-art-page").text(),
+                        DescArtigo: $("#desc").text(),
+                        PrecoArtigo: 1437.6,
+                        ArmazemArtigo: $("#wh option:selected").text(),
+                        QuantidadeArtigo: parseFloat($("#qt").val()),
+                        IdUser: 1
+                    }
+
+                    $.post("/ShoppingCart/AddtoCart", dataToPost)
+                        .done(function (r) {
+                            console.log("Added product successfully!");
+                        })
+                        .fail(function (r) {
+                            console.log("Failed to add the product to the shopping cart");
+                            window.location.assign("http://localhost:49822/Account/login/");
+                        })
+        })
+
+        $("#goToLogin").on('click', function () {
+            window.location.assign("http://localhost:49822/Account/login/");
+        })
+    })
+</script>

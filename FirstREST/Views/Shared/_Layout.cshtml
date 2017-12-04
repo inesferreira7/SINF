@@ -42,10 +42,10 @@
                         </div>
 
                         <ul class="nav navbar-nav navbar-right">
-                            @if (Session["UserID"] != null)
+                            @if (Request.Cookies["UserID"] != null)
                             {
                                 <li><a href="#"class="shopping-cart glyphicon glyphicon-shopping-cart"></a></li>
-                                <li><a href="/clientes/paginacliente/@Session["Client"].ToString()/">@Session["Client"]</a></li>
+                                <li><a href="/clientes/paginacliente/@Request.Cookies["Client"].Value.ToString()/">@Request.Cookies["Client"].Value.ToString()</a></li>
                                 <li><a href="/Account/logout/">LOGOUT</a></li>
                             }
                             else

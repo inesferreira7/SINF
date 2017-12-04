@@ -18,9 +18,13 @@ namespace FirstREST.Controllers
 
         public ActionResult Logout()
         {
-            Session.Remove("UserID");
-            Session.Remove("UserName");
-            Session.Remove("Client");
+           Response.Cookies["UserID"].Expires = DateTime.Now.AddDays(-1);
+           Response.Cookies["Username"].Expires = DateTime.Now.AddDays(-1);
+           Response.Cookies["Client"].Expires = DateTime.Now.AddDays(-1);
+           if (Request.Cookies["errorMessage"] != null)
+           {
+               Response.Cookies["cookie"].Expires = DateTime.Now.AddDays(-1);
+           }  
 
             string url = "http://localhost:49822/home/";
             return Redirect(url);
@@ -37,9 +41,9 @@ namespace FirstREST.Controllers
                     var obj = db.Users.Where(a => a.Username.Equals(objUser.Username) && a.Password.Equals(objUser.Password)).FirstOrDefault();
                     if (obj != null)
                     {
-                        Session["UserID"] = obj.Id.ToString();
-                        Session["UserName"] = obj.Username.ToString();
-                        Session["Client"] = obj.Client_Name.ToString();
+                        Response.Cookies["UserID"].Value = obj.Id.ToString();
+                        Response.Cookies["Username"].Value = obj.Username.ToString();
+                        Response.Cookies["Client"].Value = obj.Client_Name.ToString();
                         ViewBag.errorMessage = null;
 
                         string url = "http://localhost:49822/home/";
@@ -47,7 +51,7 @@ namespace FirstREST.Controllers
                     }
                     else
                     {
-                        ViewBag.errorMessage = "Wrong Username or Password. Try again.";
+                        Response.Cookies["errorMessage"].Value = "Wrong Username or Password. Try again.";
 
                         return View();
                     }
