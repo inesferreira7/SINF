@@ -1,12 +1,41 @@
 ﻿<div class="container">
     <div class="cart_anchor col-xs-2">
-        <h2>Category</h2>
+        <h2 style="margin-bottom:30px;">Category</h2>
         @{foreach (var category in ViewBag.category)
-          { 
-        <p><a href="/home/procuraArtigoPorCategoria/@category.Item1/">@category.Item2 (@category.Item3)</a></p>
+        {
+            <p><a href="/home/procuraArtigoPorCategoria/@category.Item1/">@category.Item2 (@category.Item3)</a></p>
         }
         }
     </div>
-    
-  
+
+    <div class="col-xs-1 vl"></div>
+    <div class="items best-sellers col-xs-9">
+        <h2 style="margin-bottom:35px;">Bestselling Books</h2>
+        @{ int i = 0;
+         foreach (var artigo in ViewBag.artigos)
+         {
+            <div class="item single-article col-xs-3">
+                <img style="margin-bottom:5px;" height="140" src="~/Images/@{@artigo.CodArtigo}.jpg" alt="item" />
+                <p><a href="/artigos/artigopage/@artigo.CodArtigo/">@artigo.DescArtigo</a></p>
+                <p>@artigo.precomIvaArtigo €</p>
+                <div class="row" style="margin:10px;">
+                    <span class="stars">
+                        <i class="glyphicon glyphicon-star"></i>
+                        <i class="glyphicon glyphicon-star"></i>
+                        <i class="glyphicon glyphicon-star"></i>
+                        <i class="glyphicon glyphicon-star"></i>
+                        <i class="glyphicon glyphicon-star"></i>
+                    </span>
+                </div>
+                <button class="add-to-cart btn" type="button">Add to Cart</button>
+
+            </div>
+             if (++i == 8) { break; }
+         }
+
+        }
+    </div>
+
+
+
 </div>

@@ -417,7 +417,7 @@ namespace FirstREST.Lib_Primavera
 
                 //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
-                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Artigo, LinhasDoc.Data, SUM(LinhasDoc.Quantidade) AS Total FROM LinhasDoc WHERE CONVERT(DATETIME, '2016-09-25 00:00:00') <= LinhasDoc.Data AND CONVERT(VARCHAR, '2016-10-31 00:00:00', 103) >= LinhasDoc.Data  GROUP BY LinhasDoc.Artigo, LinhasDoc.Data ORDER BY Total DESC");
+                objList = PriEngine.Engine.Consulta("SELECT LinhasDoc.Artigo, LinhasDoc.Data, SUM(LinhasDoc.Quantidade) AS Total FROM LinhasDoc WHERE CONVERT(DATETIME, '2017-10-31 00:00:00') <= LinhasDoc.Data AND CONVERT(VARCHAR, '2017-12-31 00:00:00', 103) >= LinhasDoc.Data  GROUP BY LinhasDoc.Artigo, LinhasDoc.Data ORDER BY Total DESC");
 
                 while (!objList.NoFim())
                 {
