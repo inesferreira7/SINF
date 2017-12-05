@@ -380,8 +380,14 @@
       <LastGenOutput>online_store.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Images\Z0001.jpg" />
+    <Content Include="Images\Z0002.jpg" />
     <Content Include="Images\Z0003.jpg" />
+    <Content Include="Images\Z0004.jpg" />
     <Content Include="Images\Z0006.jpg" />
+    <Content Include="Images\Z0008.jpg" />
+    <Content Include="Images\Z0010.jpg" />
+    <Content Include="Images\Z0011.jpg" />
+    <Content Include="Images\Z0012.jpg" />
     <Content Include="Models\online_store.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>online_store.edmx</DependentUpon>
