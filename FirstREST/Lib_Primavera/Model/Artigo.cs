@@ -102,5 +102,24 @@ namespace FirstREST.Lib_Primavera.Model
             get;
             set;
         }
+
+        public string SinopseArtigo
+        {
+            get;
+            set;
+        }
+
+        public string AutorArtigo
+        {
+            get;
+            set;
+        }
+
+        public string CatNomeArtigo
+        {
+            get;
+            set;
+        }
+
     }
 }

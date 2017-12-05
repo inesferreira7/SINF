@@ -539,7 +539,7 @@ namespace FirstREST.Lib_Primavera
 
                 //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
-                objList = PriEngine.Engine.Consulta("SELECT Artigo, CodBarras, Descricao, Marca, Modelo, PermiteDevolucao, Peso, PesoLiquido, STKActual, Iva, Observacoes FROM Artigo");
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, CodBarras, Descricao, Marca, Modelo, PermiteDevolucao, Peso, PesoLiquido, STKActual, Iva, Observacoes, Sinopse FROM Artigo");
 
                 while (!objList.NoFim())
                 {
@@ -555,6 +555,7 @@ namespace FirstREST.Lib_Primavera
                     art.STKActualArtigo = objList.Valor("STKActual");
                     art.IvaArtigo = objList.Valor("Iva");
                     art.ObsArtigo = objList.Valor("Observacoes");
+                    art.SinopseArtigo = objList.Valor("Sinopse");
                     art.armArtigo = new List<Model.Armazens>();
 
                     if (art.DescArtigo.Contains(procura))
@@ -633,13 +634,18 @@ namespace FirstREST.Lib_Primavera
         {
             StdBELista objList;
             StdBELista precoList;
+            StdBELista autorList;
             Model.Artigo art = new Model.Artigo();
             List<Model.Artigo> listArts = new List<Model.Artigo>();
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT Artigo, CodBarras, Descricao, Marca, Modelo, STKActual, Iva, Observacoes FROM Artigo where SubFamilia = '" + categoria + "'");
+                string queryCatArtigo = "SELECT Descricao FROM SubFamilias WHERE SubFamilia = '" + categoria + "'";
+                autorList = PriEngine.Engine.Consulta(queryCatArtigo);
+                string cat = autorList.Valor("Descricao");
+
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, CodBarras, Descricao, Marca, Modelo, STKActual, Iva, Observacoes, Sinopse FROM Artigo where SubFamilia = '" + categoria + "'");
 
                 while (!objList.NoFim())
                 {
@@ -651,13 +657,19 @@ namespace FirstREST.Lib_Primavera
                     art.ModeloArtigo = objList.Valor("Modelo");
                     art.STKActualArtigo = objList.Valor("STKActual");
                     art.ObsArtigo = objList.Valor("Observacoes");
+                    art.SinopseArtigo = objList.Valor("Sinopse");
                     art.IvaArtigo = objList.Valor("Iva");
+                    art.CatNomeArtigo = cat;
 
                     string queryPreco = "SELECT PVP1 FROM ArtigoMoeda WHERE Artigo = '" + art.CodArtigo + "'";
                     precoList = PriEngine.Engine.Consulta(queryPreco);
 
                     art.precoArtigo = precoList.Valor("PVP1");
-                    art.precomIvaArtigo = art.precoArtigo + art.precoArtigo * Double.Parse(art.IvaArtigo) * 0.01;
+                    art.precomIvaArtigo = Math.Round(art.precoArtigo + art.precoArtigo * Double.Parse(art.IvaArtigo) * 0.01, 2);
+
+                    string queryDescAutor = "SELECT Descricao FROM Modelos WHERE Marca = '" + art.MarcaArtigo + "' AND Modelo = '" + art.ModeloArtigo+ "'";
+                    autorList = PriEngine.Engine.Consulta(queryDescAutor);
+                    art.AutorArtigo = autorList.Valor("Descricao");
 
                     listArts.Add(art);
                     objList.Seguinte();
