@@ -26,7 +26,7 @@ namespace FirstREST.Controllers
                      var obj = db.ShoppingCarts.Where(a => a.IdUser.Equals(item.IdUser) && a.CodArtigo.Equals(item.CodArtigo)).FirstOrDefault();
                      if (obj == null)
                      {
-                         var new_item = new FirstREST.Models.ShoppingCart { IdUser = item.IdUser, CodArtigo = item.CodArtigo, DescArtigo = item.DescArtigo, ArmazemArtigo = item.ArmazemArtigo, QuantidadeArtigo = item.QuantidadeArtigo, PrecoArtigo = item.PrecoArtigo };
+                         var new_item = new FirstREST.Models.ShoppingCart { IdUser = item.IdUser, CodArtigo = item.CodArtigo, DescArtigo = item.DescArtigo, ArmazemArtigo = item.ArmazemArtigo, QuantidadeArtigo = item.QuantidadeArtigo, PrecoArtigo = item.PrecoArtigo, STKAtualArtigo = item.STKAtualArtigo };
                          db.ShoppingCarts.Add(new_item);
                      }
                      else

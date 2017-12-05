@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "displayShoppingCart";
+}
+
+<div class="container">
+    <div class="row"><h2 style="font-weight: bold">Cart</h2></div>
+    <div class="row">
+        <div class="col-xs-7">
+            <table class="sc-page">
+              @{
+                foreach (var artigo in ViewBag.shoppingCart)
+                {
+                    double precoTotal = artigo.PrecoArtigo * artigo.QuantidadeArtigo;
+                    <tr class=" spacing new-product">
+                        <td>
+                            <img src="~/Images/book.jpg" alt="item" />
+                        </td>
+                        <td class="sc-title">
+                            <h4 class="desc">@artigo.DescArtigo</h4>
+                            <h4>Categoria</h4>
+                            <h4>ISBN</h4>
+                            <h4>@artigo.PrecoArtigo €</h4>
+                        </td>
+                        <td class ="after-title">
+                            <h4 style="font-weight: bold">Warehouse</h4>
+                            <h4>@artigo.ArmazemArtigo</h4>
+                        </td>
+                        <td class="sc-quantity">
+                            <h4 style="font-weight: bold">Quantidade</h4>
+                            <input id="qt" name="quantidadeArtigo" type="number" min="1" max="@artigo.STKAtualArtigo" step="1" value="@artigo.QuantidadeArtigo" />
+                        </td>
+                        <td class="sc-total">
+                            <h3 class="sc-total-price">@precoTotal €</h3>
+                            <button class="btn-danger">Remove</button>
+                            <button style="visibility: hidden;" class="btn-success">Update</button>
+                        </td>
+                    </tr>
+                }
+                }
+            </table>        
+        </div>
+    </div>
+    <div style="width: 100%;"class="row">
+        <div class="col-xs-2 col-xs-offset-6">
+            <h3 style="font-weight:bold">Total Price:</h3>
+        </div>
+        <div class="col-xs-2">
+            <h3>@ViewBag.precoTotal €</h3>
+        </div>
+        <div class="col-xs-1">
+            <button class="checkout-btn">Checkout</button>
+        </div>
+    </div>
+</div>

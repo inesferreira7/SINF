@@ -16,7 +16,7 @@
                     <div class="col-xs-7 cart_anchor">
                         <h2 id="title-art-page">@artigo.CodArtigo</h2>
                         <h3 id="desc">@artigo.DescArtigo</h3>
-                        <h4>@artigo.STKActualArtigo</h4>
+                        <h4 id="stk">@artigo.STKActualArtigo</h4>
                         <h4>@artigo.MarcaArtigo Marca</h4>
                         <h4>@artigo.ModeloArtigo Modelo</h4>
                     </div>
@@ -102,9 +102,10 @@
                     var dataToPost = {
                         CodArtigo: $("#title-art-page").text(),
                         DescArtigo: $("#desc").text(),
-                        PrecoArtigo: 1437.6,
+                        PrecoArtigo: parseFloat($("#preco").val()),
                         ArmazemArtigo: $("#wh option:selected").text(),
-                        QuantidadeArtigo: parseFloat($("#qt").val()),
+                        QuantidadeArtigo: parseInt($("#qt").val()),
+                        STKAtualArtigo: parseInt($("#stk").text()),
                         IdUser: 1
                     }
 

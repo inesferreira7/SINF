@@ -21,6 +21,7 @@ namespace FirstREST.Models
         public string ArmazemArtigo { get; set; }
         public int QuantidadeArtigo { get; set; }
         public double PrecoArtigo { get; set; }
+        public int STKAtualArtigo { get; set; }
     
         public virtual User User { get; set; }
     }

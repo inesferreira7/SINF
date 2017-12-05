@@ -9,6 +9,52 @@
 /* página principal
 ----------------------------------------------------------*/
 
+/* página do carrinho de compras
+----------------------------------------------------------*/
+
+.sc-page{
+    text-align:left;
+    margin-bottom:5%;
+    width: 10% !important;
+}
+
+.sc-page tr.spacing>td{
+    padding-bottom: 1em;
+    padding-top: 1em;
+    border-bottom: 1px solid black;
+}
+
+.sc-page img{
+    width:150px;
+    padding-right: 50px;
+}
+
+.sc-page .after-title{
+    padding-right: 100px;
+}
+
+.sc-page .desc{
+    width: 300px;
+    font-weight: bold;
+}
+
+.sc-page .sc-title{
+    padding-right: 50px;
+}
+
+.sc-page .sc-total{
+    padding-left: 150px;
+}
+
+.sc-page .sc-total-price{
+    width: 200px;
+}
+
+.checkout-btn{
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 2%;
+}
 
 /* página do artigo
 ----------------------------------------------------------*/

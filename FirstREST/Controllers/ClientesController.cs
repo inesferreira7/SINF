@@ -30,6 +30,41 @@ namespace FirstREST.Controllers
             ViewBag.cliente = Lib_Primavera.PriIntegration.GetCliente(id);
             return View();
         }
+
+        public ActionResult displayShoppingCart(string id)
+        {
+            if (ModelState.IsValid)
+            {
+                using (FirstREST.Models.online_storeEntities db = new FirstREST.Models.online_storeEntities())
+                {
+                    List<FirstREST.Models.ShoppingCart> list = new List<Models.ShoppingCart>();
+                    int parseId = Int32.Parse(id);
+                    var obj = db.ShoppingCarts.Where(a => a.IdUser.Equals(parseId)).ToList();
+
+                    double total = 0;
+                    for (int i = 0; i < obj.Count; i++)
+                    {
+                        var curr = obj[i];
+
+                        FirstREST.Models.ShoppingCart sc = new Models.ShoppingCart();
+
+                        sc.DescArtigo = curr.DescArtigo;
+                        sc.CodArtigo = curr.CodArtigo;
+                        sc.ArmazemArtigo = curr.ArmazemArtigo;
+                        sc.QuantidadeArtigo = curr.QuantidadeArtigo;
+                        sc.PrecoArtigo = curr.PrecoArtigo;
+
+
+                        list.Add(sc);
+
+                        total = total + sc.PrecoArtigo * sc.QuantidadeArtigo;
+                    }
+                    ViewBag.shoppingCart = list;
+                    ViewBag.precoTotal = total;
+                }
+            }
+            return View();
+        }
     }
 
     public class ClientsController : ApiController

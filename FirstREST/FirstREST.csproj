@@ -456,6 +456,7 @@
     <Content Include="Views\Home\procuraArtigoPorCategoria.cshtml" />
     <Content Include="Views\Clientes\PaginaCliente.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Clientes\displayShoppingCart.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
