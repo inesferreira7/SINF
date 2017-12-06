@@ -357,6 +357,8 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Images\Z0007.jpg" />
+    <Content Include="Images\Z0014.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -383,6 +385,15 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>online_store.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Images\Z0001.jpg" />
+    <Content Include="Images\Z0002.jpg" />
+    <Content Include="Images\Z0003.jpg" />
+    <Content Include="Images\Z0004.jpg" />
+    <Content Include="Images\Z0006.jpg" />
+    <Content Include="Images\Z0008.jpg" />
+    <Content Include="Images\Z0010.jpg" />
+    <Content Include="Images\Z0011.jpg" />
+    <Content Include="Images\Z0012.jpg" />
     <Content Include="Models\online_store.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>online_store.edmx</DependentUpon>
@@ -401,7 +412,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
-    <Content Include="Images\book.jpg" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -428,19 +438,6 @@
     </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\accent.png" />
-    <Content Include="Images\bullet.png" />
-    <Content Include="Images\heroAccent.png" />
-    <Content Include="Images\orderedList0.png" />
-    <Content Include="Images\orderedList1.png" />
-    <Content Include="Images\orderedList2.png" />
-    <Content Include="Images\orderedList3.png" />
-    <Content Include="Images\orderedList4.png" />
-    <Content Include="Images\orderedList5.png" />
-    <Content Include="Images\orderedList6.png" />
-    <Content Include="Images\orderedList7.png" />
-    <Content Include="Images\orderedList8.png" />
-    <Content Include="Images\orderedList9.png" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
