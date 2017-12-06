@@ -33,37 +33,34 @@ namespace FirstREST.Controllers
 
         public ActionResult displayShoppingCart(string id)
         {
-            if (ModelState.IsValid)
+            if (Request.Cookies["UserID"] != null)
             {
-                using (FirstREST.Models.online_storeEntities db = new FirstREST.Models.online_storeEntities())
+                if (ModelState.IsValid)
                 {
-                    List<FirstREST.Models.ShoppingCart> list = new List<Models.ShoppingCart>();
-                    int parseId = Int32.Parse(id);
-                    var obj = db.ShoppingCarts.Where(a => a.IdUser.Equals(parseId)).ToList();
-
-                    double total = 0;
-                    for (int i = 0; i < obj.Count; i++)
+                    using (FirstREST.Models.online_storeEntities db = new FirstREST.Models.online_storeEntities())
                     {
-                        var curr = obj[i];
+                        List<FirstREST.Models.ShoppingCart> list = new List<Models.ShoppingCart>();
+                        List<Artigo> list_artigos = new List<Artigo>();
+                        int parseId = Int32.Parse(id);
+                        var obj = db.ShoppingCarts.Where(a => a.IdUser.Equals(parseId)).ToList();
 
-                        FirstREST.Models.ShoppingCart sc = new Models.ShoppingCart();
-
-                        sc.DescArtigo = curr.DescArtigo;
-                        sc.CodArtigo = curr.CodArtigo;
-                        sc.ArmazemArtigo = curr.ArmazemArtigo;
-                        sc.QuantidadeArtigo = curr.QuantidadeArtigo;
-                        sc.PrecoArtigo = curr.PrecoArtigo;
-
-
-                        list.Add(sc);
-
-                        total = total + sc.PrecoArtigo * sc.QuantidadeArtigo;
+                        for (int i = 0; i < obj.Count; i++)
+                        {
+                            list_artigos.Add(Lib_Primavera.PriIntegration.GetArtigo(obj[i].CodArtigo));
+                            list.Add(obj[i]);
+                        }
+                        ViewBag.shoppingCart = list;
+                        ViewBag.idUser = id;
+                        ViewBag.artigos = list_artigos;
                     }
-                    ViewBag.shoppingCart = list;
-                    ViewBag.precoTotal = total;
                 }
+                return View();
             }
-            return View();
+            else
+            {
+                return Redirect("http://localhost:49822/account/login");
+            }
+            
         }
     }
 

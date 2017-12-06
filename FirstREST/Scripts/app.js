@@ -4,7 +4,7 @@ $('.add-to-cart').on('click', function () {
     
     var imgtodrag = $(this).parent('.item').find("img").eq(0);
     
-    if (imgtodrag) {
+    if (imgtodrag && cart[0]) {
         
         var imgclone = imgtodrag.clone()
             .offset({
@@ -36,5 +36,18 @@ $('.add-to-cart').on('click', function () {
             $(this).detach()
         });
     }
+
+    var data = $(this).attr("product_id").toString();
+    var dataToPost = {
+        CodArtigo: data
+    }
+
+    $.post("/ShoppingCart/AddDefaultToCart", dataToPost)
+            .done(function (r) {
+                console.log("Added product successfully!");
+            })
+            .fail(function (r) {
+                console.log("Failed to add the product to the shopping cart");
+            })
 });
 

@@ -1,42 +1,69 @@
 ﻿@{
     ViewBag.Title = "displayShoppingCart";
+
+    double totalPrice = 0;
+    foreach(var art in ViewBag.shoppingCart){
+        totalPrice = totalPrice + art.QuantidadeArtigo * art.PrecoArtigo;
+    }
+    ViewBag.precoTotal = totalPrice;
 }
 
 <div class="container">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <div class="row"><h2 style="font-weight: bold">Cart</h2></div>
     <div class="row">
         <div class="col-xs-7">
             <table class="sc-page">
               @{
-                foreach (var artigo in ViewBag.shoppingCart)
-                {
-                    double precoTotal = artigo.PrecoArtigo * artigo.QuantidadeArtigo;
-                    <tr class=" spacing new-product">
-                        <td>
-                            <img src="~/Images/book.jpg" alt="item" />
-                        </td>
-                        <td class="sc-title">
-                            <h4 class="desc">@artigo.DescArtigo</h4>
-                            <h4>Categoria</h4>
-                            <h4>ISBN</h4>
-                            <h4>@artigo.PrecoArtigo €</h4>
-                        </td>
-                        <td class ="after-title">
-                            <h4 style="font-weight: bold">Warehouse</h4>
-                            <h4>@artigo.ArmazemArtigo</h4>
-                        </td>
-                        <td class="sc-quantity">
-                            <h4 style="font-weight: bold">Quantidade</h4>
-                            <input id="qt" name="quantidadeArtigo" type="number" min="1" max="@artigo.STKAtualArtigo" step="1" value="@artigo.QuantidadeArtigo" />
-                        </td>
-                        <td class="sc-total">
-                            <h3 class="sc-total-price">@precoTotal €</h3>
-                            <button class="btn-danger">Remove</button>
-                            <button style="visibility: hidden;" class="btn-success">Update</button>
-                        </td>
-                    </tr>
-                }
-                }
+                  for (var i = 0; i < ViewBag.shoppingCart.Count; i++)
+                  {
+                     var artigo = ViewBag.shoppingCart[i];
+                     var warehouses = ViewBag.artigos[i].armArtigo;
+                     double precoTotal = artigo.PrecoArtigo * artigo.QuantidadeArtigo;
+                      
+                        <tr id="@artigo.Id" class=" spacing new-product">
+                            <td>
+                                <img src="~/Images/book.jpg" alt="item" />
+                            </td>
+                            <td class="sc-title">
+                                <h4 class="desc">@artigo.DescArtigo</h4>
+                                <h4>Categoria</h4>
+                                <h4>ISBN</h4>
+                                <h4>@artigo.PrecoArtigo €</h4>
+                            </td>
+                            <td>
+                                <h4 style="font-weight: bold">Warehouse</h4>
+                                <select class="sc-select after-title">
+                                    @{
+                      foreach (var wh in warehouses)
+                      {
+                          if (wh.descArmazens == artigo.ArmazemArtigo)
+                          {
+                            <option selected style="width:30px;" value="@wh.descArmazens">@artigo.ArmazemArtigo</option>
+                          }
+                          else
+                          {
+                            <option style="width:30px;" value="@wh.descArmazens">@wh.descArmazens</option>
+                          }
+                      }
+                                    }
+                                </select>
+                                <h3></h3>
+                            </td>
+                            
+                            <td class="sc-quantity">
+                                <h4 style="font-weight: bold">Quantidade</h4>
+                                <input class="qt" product_id="@artigo.Id" name="quantidadeArtigo" type="number" min="1"  step="1" value="@artigo.QuantidadeArtigo" />
+                                <input class="curr-qt" style="visibility: hidden" value="@artigo.QuantidadeArtigo" />
+                            </td>
+                            <td class="sc-total">
+                                <h3 class="sc-total-price">@precoTotal €</h3>
+                                <button value="@artigo.Id" class="remove-btn btn-danger">Remove</button>
+                                <button class="update-btn btn-success" style="visibility: hidden;" value="@artigo.Id" class="btn-success">Update</button>
+                            </td>
+                        </tr>
+                  }
+            }
             </table>        
         </div>
     </div>
@@ -52,3 +79,67 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(function () {
+        $(".qt").on('change', function () {
+            var diff_div = "#" + $(this).attr('product_id') + " .curr-qt";
+            var diff = $(diff_div).val().toString();
+
+            var qt_div = "#" + $(this).attr('product_id') + " .qt";
+            var update_btn = "#" + $(this).attr('product_id') + " .update-btn";
+
+            if ($(qt_div).val() != diff) {
+                $(update_btn).css('visibility', 'visible');
+            }
+            else {
+                $(update_btn).css('visibility', 'hidden');
+            }
+        })
+
+        $(".remove-btn").on('click', function (e) {
+            e.preventDefault();
+
+            var id_product = $(this).val();
+
+            var dataToPost = {
+                Id: id_product
+            }
+
+            $.post("/ShoppingCart/RemoveFromCart", dataToPost)
+                .done(function (r) {
+                    console.log("Removed shopping cart successfully");
+                    location.reload();
+                })
+                .fail(function (r) {
+                    console.log("An error ocurred when removing the product from the shopping cart");
+                })
+        })
+
+        $(".update-btn").on('click', function (e) {
+            e.preventDefault();
+
+            var id_product = $(this).val();
+
+            var new_qt_div = "#" + id_product + " .qt";
+
+            var new_qt =  $(new_qt_div).val();
+            var id_user = @ViewBag.idUser;
+
+            var dataToPost = {
+                Id: id_product,
+                QuantidadeArtigo: new_qt,
+                IdUser: id_user
+            }
+
+            $.post("/ShoppingCart/UpdateCart", dataToPost)
+                .done(function (r) {
+                    console.log("Updated shopping cart successfully");
+                    location.reload();
+                })
+                .fail(function (r) {
+                    console.log("An error ocurred when updating the shopping cart");
+                })
+        })
+    })
+</script>

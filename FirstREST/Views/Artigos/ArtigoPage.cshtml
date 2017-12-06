@@ -43,7 +43,7 @@
                 </h4>
                 <h4>
                     Quantity
-                    <input id="qt" name="quantidadeArtigo" type="number" min="1" max="@artigo.STKActualArtigo" step="1" value="1" />
+                    <input id="qt" name="quantidadeArtigo" type="number" min="1" step="1" value="1" />
                 </h4>
                 @{
                     if (Request.Cookies["UserID"] != null)
@@ -69,7 +69,7 @@
     </div>
     <div class="row">
         <div class="items col-xs-12">
-            @{ int i = 0;
+            @{
              foreach (var related in ViewBag.related)
              {
                  if (related.CodArtigo == artigo.CodArtigo)
@@ -80,13 +80,11 @@
                  {
                     <div class="item single-article col-xs-3">
                         <img src="~/Images/book.jpg" alt="item" />
-                        <p><a href="/artigos/artigopage/@related.CodArtigo/">@artigo.DescArtigo</a></p>
-                        <p>@artigo.precoArtigo €</p>
-                        <p>@related.STKActualArtigo</p>
+                        <p><a href="/artigos/artigopage/@related.CodArtigo/">@related.DescArtigo</a></p>
+                        <p>@related.precoArtigo €</p>
                         <button class="add-to-cart btn" type="button">Add to Cart</button>
 
                     </div>
-                     if (++i == 8) { break; }
                  }
              }
 
@@ -105,8 +103,6 @@
                         PrecoArtigo: parseFloat($("#preco").val()),
                         ArmazemArtigo: $("#wh option:selected").text(),
                         QuantidadeArtigo: parseInt($("#qt").val()),
-                        STKAtualArtigo: parseInt($("#stk").text()),
-                        IdUser: 1
                     }
 
                     $.post("/ShoppingCart/AddtoCart", dataToPost)

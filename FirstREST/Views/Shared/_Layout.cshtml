@@ -4,11 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-    <link href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/bootstrap")
-    @Styles.Render("~/Content/Site.css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 
@@ -46,7 +44,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             @if (Request.Cookies["UserID"] != null)
                             {
-                                <li><a href="#"class="shopping-cart glyphicon glyphicon-shopping-cart"></a></li>
+                                <li><a href="/clientes/displayshoppingcart/@Request.Cookies["UserID"].Value.ToString()/"class="shopping-cart glyphicon glyphicon-shopping-cart"></a></li>
                                 <li><a href="/clientes/paginacliente/@Request.Cookies["Client"].Value.ToString()/">@Request.Cookies["Client"].Value.ToString()</a></li>
                                 <li><a href="/Account/logout/">LOGOUT</a></li>
                             }
