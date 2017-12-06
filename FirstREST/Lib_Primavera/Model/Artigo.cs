@@ -121,5 +121,11 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
+        public Armazens armSugestaoArtigo
+        {
+            get;
+            set;
+        }
+
     }
 }

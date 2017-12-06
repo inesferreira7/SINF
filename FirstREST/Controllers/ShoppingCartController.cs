@@ -32,12 +32,6 @@ namespace FirstREST.Controllers
                      {
                          var new_item = new FirstREST.Models.ShoppingCart { IdUser = item.IdUser, CodArtigo = item.CodArtigo, DescArtigo = item.DescArtigo, ArmazemArtigo = item.ArmazemArtigo, QuantidadeArtigo = item.QuantidadeArtigo, PrecoArtigo = item.PrecoArtigo };
                          db.ShoppingCarts.Add(new_item);
-
-                         foreach (var wh in art.armArtigo)
-                         {
-                             var new_wh = new FirstREST.Models.Warehouse { IdCarrinho = new_item.Id, DescArmazem = wh.descArmazens, STKArmazem = (int)wh.StkArmazens };
-                             db.Warehouses.Add(new_wh);
-                         }
                      }
                      else
                      {
@@ -69,11 +63,6 @@ namespace FirstREST.Controllers
                     {
                         var new_item = new FirstREST.Models.ShoppingCart { IdUser = userId, CodArtigo = artigo.CodArtigo, DescArtigo = art.DescArtigo, ArmazemArtigo = art.armSugestaoArtigo.descArmazens, QuantidadeArtigo = 1, PrecoArtigo = art.precomIvaArtigo };
                         db.ShoppingCarts.Add(new_item);
-
-                        foreach (var wh in art.armArtigo)
-                        {
-                            var new_wh = new FirstREST.Models.Warehouse { IdCarrinho = new_item.Id, DescArmazem = wh.descArmazens, STKArmazem = (int)wh.StkArmazens };
-                        }
                     }
                     else
                     {
