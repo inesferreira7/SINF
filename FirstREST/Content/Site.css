@@ -9,9 +9,65 @@
 /* página principal
 ----------------------------------------------------------*/
 
+/* modal carrinho compras
+----------------------------------------------------------*/
+
+#modalTitle{
+  font-size: 20px;
+  letter-spacing: 2px;
+  height: 75%;
+  width: 100%;
+  color: #1B3751;
+  font-weight: bold;
+}
+
+.modal {
+  text-align: center;
+}
+
+
+.modal-dialog {  
+  vertical-align: middle;
+  background-color: white;
+  opacity: 1;
+  margin-top: 30%;
+}
+
+#finalize{
+    margin: auto;
+    width: 100%;
+    margin-top: 8%;
+}
+
+#finalize table{
+    border-bottom: 3px solid black;
+    table-layout: fixed;
+    width: 100%;
+    text-align:center;
+}
+
+#finalize .name{
+    width: 50%;
+}
+
+#finalize th{
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+
+#finalize .end-order{
+    font-size: 14px;
+}
+
+#finalize td{
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+
+
 /* página do carrinho de compras
 ----------------------------------------------------------*/
-/* procurar por categoria
 
 .sc-page{
     text-align:left;
@@ -58,7 +114,9 @@
     border-radius: 2%;
 }
 
-    ----------------------------------------------------------*/
+
+/* procurar por categoria
+----------------------------------------------------------*/
 
 .container { margin-top: 20px; }
 .mb20 { margin-bottom: 20px; } 

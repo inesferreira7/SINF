@@ -52,6 +52,7 @@ namespace FirstREST.Controllers
                         ViewBag.shoppingCart = list;
                         ViewBag.idUser = id;
                         ViewBag.artigos = list_artigos;
+                        ViewBag.scFinal = getShoppingCart(parseId);
                     }
                 }
                 return View();
@@ -61,6 +62,20 @@ namespace FirstREST.Controllers
                 return Redirect("http://localhost:49822/account/login");
             }
             
+        }
+
+        public List<FirstREST.Models.ShoppingCart> getShoppingCart(int idUser)
+        {
+            if (ModelState.IsValid)
+            {
+                using (FirstREST.Models.online_storeEntities db = new FirstREST.Models.online_storeEntities())
+                {
+                    var ret = db.ShoppingCarts.Where(a => a.IdUser.Equals(idUser)).ToList();
+                    return ret;
+                }
+            }
+
+            return null;
         }
     }
 

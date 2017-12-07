@@ -85,8 +85,6 @@ namespace FirstREST.Controllers
                 {
                     var obj = db.ShoppingCarts.Where(a => a.Id.Equals(item.Id)).FirstOrDefault();
 
-                    //if(obj == null)
-
                     if (obj.ArmazemArtigo != item.ArmazemArtigo)
                     {
                         var new_obj = db.ShoppingCarts.Where(a => a.IdUser.Equals(obj.IdUser) && a.ArmazemArtigo.Equals(item.ArmazemArtigo) && a.CodArtigo.Equals(obj.CodArtigo)).FirstOrDefault();
@@ -131,6 +129,52 @@ namespace FirstREST.Controllers
 
             return Redirect(Request.UrlReferrer.ToString());
 
+        }
+
+        public ActionResult FinishOrder()
+        {
+            int idUser = Int32.Parse(Request.Cookies["UserID"].Value.ToString());
+            List<FirstREST.Models.ShoppingCart> orders = new List<Models.ShoppingCart>();
+
+            if (ModelState.IsValid)
+            {
+                using (FirstREST.Models.online_storeEntities db = new FirstREST.Models.online_storeEntities())
+                {
+                    orders = db.ShoppingCarts.Where(a => a.IdUser.Equals(idUser)).ToList();
+
+                    foreach (var product in db.ShoppingCarts)
+                    {
+                        if (product.IdUser == idUser)
+                            db.ShoppingCarts.Remove(product);
+                    }
+
+                    db.SaveChanges();
+                }
+            }
+
+            FirstREST.Lib_Primavera.Model.DocVenda new_doc = new Lib_Primavera.Model.DocVenda();
+            new_doc.Entidade = Request.Cookies["Client"].Value.ToString();
+            new_doc.Serie = "2017";
+
+            List<FirstREST.Lib_Primavera.Model.LinhaDocVenda> linhas = new List<FirstREST.Lib_Primavera.Model.LinhaDocVenda>();
+
+            foreach (var item in orders)
+            {
+                FirstREST.Lib_Primavera.Model.LinhaDocVenda linha = new Lib_Primavera.Model.LinhaDocVenda();
+                linha.IdCabecDoc = new_doc.id;
+                linha.CodArtigo = item.CodArtigo;
+                linha.DescArtigo = item.DescArtigo;
+                linha.Quantidade = item.QuantidadeArtigo;
+                linha.PrecoUnitario = item.PrecoArtigo;
+                linha.TotalILiquido = item.QuantidadeArtigo * item.PrecoArtigo;
+
+                linhas.Add(linha);
+            }
+
+            new_doc.LinhasDoc = linhas;
+            FirstREST.Lib_Primavera.PriIntegration.Encomendas_New(new_doc);
+
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
     }

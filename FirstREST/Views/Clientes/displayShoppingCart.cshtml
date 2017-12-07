@@ -10,6 +10,8 @@
 
 <div class="container">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Content/bootstrap/js/bootstrap.js"></script>
+
     <div class="row"><h2 style="font-weight: bold">Cart</h2></div>
     <div class="row">
         <div class="col-xs-7">
@@ -76,10 +78,60 @@
             <h3>@ViewBag.precoTotal €</h3>
         </div>
         <div class="col-xs-1">
-            <button class="checkout-btn">Checkout</button>
+            <button class="checkout-btn" data-toggle="modal" data-target="#finalize">Checkout</button>
         </div>
     </div>
+
+
+
+    <div id="finalize" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="modalTitle" class="modal-title">Finalizar Compra</h4>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <th class="name">Produto</th>
+                        <th>Armazem</th>
+                        <th>Quantidade</th>
+                        <th>Preço</th>
+                    </tr>
+                    @{
+                        foreach (var p in ViewBag.scFinal)
+                        {
+                            var preco = p.QuantidadeArtigo * p.PrecoArtigo;
+                            <tr>
+                                <td class="name">@p.DescArtigo</td>
+                                <td>@p.ArmazemArtigo</td>
+                                <td>@p.QuantidadeArtigo</td>
+                                <td>@preco</td>
+                            </tr>
+                        }
+                    }
+                </table>
+                <div class="row end-order">
+                    <div class="col-xs-3 col-xs-offset-7">
+                        <span style="font-weight:bold">Total Price:</span>
+                    </div>
+                    <div class="col-xs-2">
+                        <span>@ViewBag.precoTotal €</span>
+                    </div>
+                    <div style=" margin-top: 10%; text-align: center">
+                        <button class="finish-btn">Finalizar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
+
+
+
+
 
 <script>
     $(function () {
@@ -167,6 +219,21 @@
                 })
                 .fail(function (r) {
                     console.log("An error ocurred when updating the shopping cart");
+                })
+        })
+
+        $(".finish-btn").on('click', function(e){
+            e.preventDefault();
+            var dataToPost = {};
+            console.log("posting");
+
+            $.post("/ShoppingCart/FinishOrder")
+                .done(function (r) {
+                    console.log("Order created successfully");
+                    location.reload();
+                })
+                .fail(function (r) {
+                    console.log("An error ocurred when creating the order");
                 })
         })
     })
