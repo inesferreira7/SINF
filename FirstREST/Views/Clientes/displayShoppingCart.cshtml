@@ -20,19 +20,20 @@
                      var artigo = ViewBag.shoppingCart[i];
                      var warehouses = ViewBag.artigos[i].armArtigo;
                      double precoTotal = artigo.PrecoArtigo * artigo.QuantidadeArtigo;
-                      
                         <tr id="@artigo.Id" class=" spacing new-product">
                             <td>
                                 <img src="~/Images/book.jpg" alt="item" />
                             </td>
                             <td class="sc-title">
-                                <h4 class="desc">@artigo.DescArtigo</h4>
+                                <h4 class="desc" value="@artigo.DescArtigo">@artigo.DescArtigo</h4>
+                                <input class="codArt" style="display: none" value="@artigo.CodArtigo" />
                                 <h4>Categoria</h4>
                                 <h4>ISBN</h4>
                                 <h4>@artigo.PrecoArtigo €</h4>
                             </td>
-                            <td>
+                            <td class="wh-select" product_id="@artigo.Id">
                                 <h4 style="font-weight: bold">Warehouse</h4>
+                                <input class="curr-wh" style="display:none" value="@artigo.ArmazemArtigo" />
                                 <select class="sc-select after-title">
                                     @{
                       foreach (var wh in warehouses)
@@ -97,6 +98,21 @@
             }
         })
 
+        $(".wh-select").on('change', function () {
+            var curr_wh_div = "#" + $(this).attr('product_id') + " .curr-wh";
+            var diff = $(curr_wh_div).val();
+
+            var wh_div = "#" + $(this).attr('product_id') + " select.sc-select.after-title option:selected";
+            var update_btn = "#" + $(this).attr('product_id') + " .update-btn";
+
+            if ($(wh_div).val() != diff) {
+                $(update_btn).css('visibility', 'visible');
+            }
+            else {
+                $(update_btn).css('visibility', 'hidden');
+            }
+        })
+
         $(".remove-btn").on('click', function (e) {
             e.preventDefault();
 
@@ -122,14 +138,26 @@
             var id_product = $(this).val();
 
             var new_qt_div = "#" + id_product + " .qt";
+            var wh_div = "#" + id_product + " select.sc-select.after-title option:selected";
+            var cod_art_div = "#" + id_product + " .codArt";
+            var desc_art_div = "#" + id_product + " .desc";
+
 
             var new_qt =  $(new_qt_div).val();
             var id_user = @ViewBag.idUser;
+            var wh = $(wh_div).val();
+            var cod_art = $(cod_art_div).val();
+            var desc_art = $(desc_art_div).text();
+
+            console.log(desc_art);
 
             var dataToPost = {
                 Id: id_product,
                 QuantidadeArtigo: new_qt,
-                IdUser: id_user
+                IdUser: id_user,
+                ArmazemArtigo: wh,
+                CodArtigo: cod_art,
+                DescArtigo:desc_art
             }
 
             $.post("/ShoppingCart/UpdateCart", dataToPost)

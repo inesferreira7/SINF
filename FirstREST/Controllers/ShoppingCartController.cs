@@ -35,8 +35,7 @@ namespace FirstREST.Controllers
                      }
                      else
                      {
-                         int updatedQuantity = obj.QuantidadeArtigo + item.QuantidadeArtigo;
-                         obj.QuantidadeArtigo = updatedQuantity;
+                         obj.QuantidadeArtigo = obj.QuantidadeArtigo + item.QuantidadeArtigo;
 
                      }
                         db.SaveChanges();
@@ -85,7 +84,28 @@ namespace FirstREST.Controllers
                 using (FirstREST.Models.online_storeEntities db = new FirstREST.Models.online_storeEntities())
                 {
                     var obj = db.ShoppingCarts.Where(a => a.Id.Equals(item.Id)).FirstOrDefault();
-                    obj.QuantidadeArtigo = item.QuantidadeArtigo;
+
+                    //if(obj == null)
+
+                    if (obj.ArmazemArtigo != item.ArmazemArtigo)
+                    {
+                        var new_obj = db.ShoppingCarts.Where(a => a.IdUser.Equals(obj.IdUser) && a.ArmazemArtigo.Equals(item.ArmazemArtigo) && a.CodArtigo.Equals(obj.CodArtigo)).FirstOrDefault();
+
+                        if (new_obj != null)
+                        {
+                            new_obj.QuantidadeArtigo = new_obj.QuantidadeArtigo + item.QuantidadeArtigo;
+                        }
+                        else
+                        {
+                            new_obj = item;
+                        }
+                        AddtoCart(new_obj);
+                        db.ShoppingCarts.Remove(obj);
+                    }
+                    else
+                    {
+                        obj.QuantidadeArtigo = item.QuantidadeArtigo;
+                    }
 
                     db.SaveChanges();
                 }

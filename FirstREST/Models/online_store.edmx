@@ -13,10 +13,9 @@
           <Property Name="IdUser" Type="int" Nullable="false" />
           <Property Name="CodArtigo" Type="nvarchar" MaxLength="48" Nullable="false" />
           <Property Name="DescArtigo" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ArmazemArtigo" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="ArmazemArtigo" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="QuantidadeArtigo" Type="int" Nullable="false" />
           <Property Name="PrecoArtigo" Type="float" Nullable="false" />
-          <Property Name="STKAtualArtigo" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -79,11 +78,10 @@
           <Property Name="IdUser" Type="Int32" Nullable="false" />
           <Property Name="CodArtigo" Type="String" Nullable="false" MaxLength="48" FixedLength="false" Unicode="true" />
           <Property Name="DescArtigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ArmazemArtigo" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="ArmazemArtigo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="QuantidadeArtigo" Type="Int32" Nullable="false" />
           <Property Name="PrecoArtigo" Type="Double" Nullable="false" />
           <NavigationProperty Name="User" Relationship="online_storeModel.Fk_SC" FromRole="ShoppingCart" ToRole="User" />
-          <Property Name="STKAtualArtigo" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="Fk_SC">
           <End Type="online_storeModel.User" Role="User" Multiplicity="1">
@@ -118,7 +116,6 @@
           <EntitySetMapping Name="ShoppingCarts">
             <EntityTypeMapping TypeName="online_storeModel.ShoppingCart">
               <MappingFragment StoreEntitySet="ShoppingCart">
-                <ScalarProperty Name="STKAtualArtigo" ColumnName="STKAtualArtigo" />
                 <ScalarProperty Name="PrecoArtigo" ColumnName="PrecoArtigo" />
                 <ScalarProperty Name="QuantidadeArtigo" ColumnName="QuantidadeArtigo" />
                 <ScalarProperty Name="ArmazemArtigo" ColumnName="ArmazemArtigo" />
