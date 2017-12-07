@@ -127,5 +127,11 @@ namespace FirstREST.Lib_Primavera.Model
             set;
         }
 
+        public string SubFamilia
+        {
+            get;
+            set;
+        }
+
     }
 }
