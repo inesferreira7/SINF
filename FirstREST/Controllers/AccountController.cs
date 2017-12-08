@@ -16,6 +16,42 @@ namespace FirstREST.Controllers
             return View();
         }
 
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(FormCollection form)
+        {
+            string full_name = form["full_name"];
+            string abrev = form["abrev"];
+            string username = form["username"];
+            string address = form["address"];
+            string password = form["password"];
+
+            FirstREST.Lib_Primavera.Model.Cliente new_cli = new Lib_Primavera.Model.Cliente();
+            new_cli.CodCliente = abrev;
+            new_cli.NomeCliente = full_name;
+            new_cli.Morada = address;
+            new_cli.NumContribuinte = "NULL";
+            new_cli.Moeda = "EUR";
+
+            FirstREST.Models.User new_user = new Models.User { Username = username, Password = password, Client_Name = abrev };
+            if (ModelState.IsValid)
+            {
+                using (FirstREST.Models.online_storeEntities db = new FirstREST.Models.online_storeEntities())
+                {
+                    FirstREST.Lib_Primavera.PriIntegration.InsereClienteObj(new_cli);
+                    db.Users.Add(new_user);
+
+                    db.SaveChanges();
+                }
+            }
+            return Login(new_user);
+        }
+
         public ActionResult Logout()
         {
            Response.Cookies["UserID"].Expires = DateTime.Now.AddDays(-1);

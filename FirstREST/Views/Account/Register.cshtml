@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "Register";
+}
+
+<div class="container">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Content/bootstrap/js/bootstrap.js"></script>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post))
+{@Html.AntiForgeryToken()
+
+    <form id="register_form" class="form-horizontal">
+        <fieldset>
+            <!-- Form Name -->
+            <legend>Register</legend>
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="full_name">Nome Completo</label>
+                <div class="col-md-4">
+                    <input id="full_name" name="full_name" type="text" placeholder="Nome Completo" class="form-control input-md" required="">
+                </div>
+            </div>
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="abrev">Nome Abrev.</label>
+                <div class="col-md-4">
+                    <input id="abrev" name="abrev" type="text" placeholder="Nome abreviado" class="form-control input-md" required="">
+                </div>
+            </div>
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="username">Nome de Utilizador</label>
+                <div class="col-md-4">
+                    <input id="username" name="username" type="text" placeholder="Nome de Utilizador" class="form-control input-md">
+                </div>
+            </div>
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="address">Morada</label>
+                <div class="col-md-4">
+                    <input id="address" name="address" type="text" placeholder="Morada" class="form-control input-md">
+                </div>
+            </div>
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="password">Palavra-Passe</label>
+                <div class="col-md-4">
+                    <input id="password" name="password" type="password" placeholder="Palavra-Passe" class="form-control input-md">
+                </div>
+            </div>
+            <!-- Button (Double) -->
+            <div class="form-group">
+                <label class="col-md-4 control-label"></label>
+                <div class="col-md-8">
+                    <button id="register" name="register" type="submit" class="btn btn-success">Registar</button>
+                    <button id="cancel" name="cancel" class="btn btn-danger">Cancelar</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+}
+
+</div>
+
+<script>
+    $(function () {
+        /*$("#register_form").on('submit', function (e) {
+            e.preventDefault();
+
+            var full_name = $("#full_name").val();
+            var abrev = $("#abrev").val();
+            var username = $("#username").val();
+            var address = $("#address").val();
+            var password = $("#password").val();
+
+            var cli_info = {
+                CodCliente: abrev,
+                NomeCliente: full_name,
+                Moeda: "EUR",
+                Morada: address
+            };
+
+            var user_info = {
+                Username: username,
+                Password: password,
+                Client_Name: abrev
+            };
+
+            console.log(user_info)
+            console.log(cli_info)
+
+            $.post("/Account/Register", user_info)
+                .done(function (r) {
+                    console.log("User created successfully");
+                })
+                .fail(function (r) {
+                    console.log(e);
+                    console.log("Error creating user");
+                })
+
+        })*/
+    })
+</script>

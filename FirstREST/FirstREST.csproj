@@ -454,6 +454,7 @@
     <Content Include="Views\Clientes\PaginaCliente.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Clientes\displayShoppingCart.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
