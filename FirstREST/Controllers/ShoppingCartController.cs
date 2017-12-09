@@ -57,7 +57,7 @@ namespace FirstREST.Controllers
                 {
                     int userId = Int32.Parse(Request.Cookies["UserID"].Value.ToString());
 
-                    var obj = db.ShoppingCarts.Where(a => a.IdUser.Equals(userId) && a.ArmazemArtigo.Equals(art.armSugestaoArtigo.descArmazens) && a.CodArtigo.Equals(artigo.CodArtigo)).FirstOrDefault();
+                    var obj = db.ShoppingCarts.Where(a => a.IdUser.Equals(userId) && a.ArmazemArtigo.Equals(art.armSugestaoArtigo.descArmazens) && a.CodArtigo.Equals(art.CodArtigo)).FirstOrDefault();
                     if (obj == null)
                     {
                         var new_item = new FirstREST.Models.ShoppingCart { IdUser = userId, CodArtigo = artigo.CodArtigo, DescArtigo = art.DescArtigo, ArmazemArtigo = art.armSugestaoArtigo.descArmazens, QuantidadeArtigo = 1, PrecoArtigo = art.precomIvaArtigo };

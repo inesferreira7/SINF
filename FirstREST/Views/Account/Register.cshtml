@@ -3,8 +3,6 @@
 }
 
 <div class="container">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript" src="~/Content/bootstrap/js/bootstrap.js"></script>
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post))
 {@Html.AntiForgeryToken()
@@ -61,43 +59,3 @@
 }
 
 </div>
-
-<script>
-    $(function () {
-        /*$("#register_form").on('submit', function (e) {
-            e.preventDefault();
-
-            var full_name = $("#full_name").val();
-            var abrev = $("#abrev").val();
-            var username = $("#username").val();
-            var address = $("#address").val();
-            var password = $("#password").val();
-
-            var cli_info = {
-                CodCliente: abrev,
-                NomeCliente: full_name,
-                Moeda: "EUR",
-                Morada: address
-            };
-
-            var user_info = {
-                Username: username,
-                Password: password,
-                Client_Name: abrev
-            };
-
-            console.log(user_info)
-            console.log(cli_info)
-
-            $.post("/Account/Register", user_info)
-                .done(function (r) {
-                    console.log("User created successfully");
-                })
-                .fail(function (r) {
-                    console.log(e);
-                    console.log("Error creating user");
-                })
-
-        })*/
-    })
-</script>
