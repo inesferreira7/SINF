@@ -210,6 +210,8 @@ namespace FirstREST.Lib_Primavera
                     myCli.set_NumContribuinte(cli.NumContribuinte);
                     myCli.set_Moeda(cli.Moeda);
                     myCli.set_Morada(cli.Morada);
+                    myCli.set_Pais("PT");
+                    myCli.set_Localidade("Porto");
                    
 
                     PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
