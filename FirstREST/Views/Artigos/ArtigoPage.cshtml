@@ -23,7 +23,7 @@
                     </span>
                 </h4>
 
-                <h2 id="preco" style="margin-top:35px; margin-bottom:15px;">@artigo.precomIvaArtigo €</h2>
+                <h2 id="preco" preco="@artigo.precomIvaArtigo" style="margin-top:35px; margin-bottom:15px;">@artigo.precomIvaArtigo €</h2>
 
 
                 <div class="section" style="padding-bottom:5px;">
@@ -31,7 +31,7 @@
                     <select id="wh">
                         @{foreach (var wh in artigo.armArtigo)
                         {
-                            <option value="@wh.descArmazens">@wh.descArmazens</option>
+                            <option max_stock="@wh.StkArmazens" value="@wh.descArmazens">@wh.descArmazens</option>
                         }
                         }
                     </select>
@@ -41,7 +41,7 @@
                     <h6 class="title-attr"><small>Quantity</small></h6>
                     <div>
                         <div class="btn-minus"><span class="glyphicon glyphicon-minus"></span></div>
-                        <input id="qt" value="1" />
+                        <input id="qt" min="1" value="1" max="@artigo.armSugestaoArtigo.StkArmazens" />
                         <div class="btn-plus"><span class="glyphicon glyphicon-plus"></span></div>
                     </div>
                 </div>
@@ -71,12 +71,41 @@
 
 <script>
     $(function () {
+        $("#wh").on('change', function (e) {
+            e.preventDefault();
+            var max_stock = $("#wh select option:selected").attr("max_stock");
+            $('#qt').attr('max', max_stock);
+        })
+
+        $(".btn-plus").on('click', function (e) {
+            e.preventDefault();
+            $('#qt').val(function (i, oldval) {
+                var newval = parseInt(oldval) + 1;
+
+                if (newval >= parseInt($("#wh option:selected").attr("max_stock")))
+                    return parseInt($("#wh option:selected").attr("max_stock"));
+                else
+                    return ++oldval;
+            });
+        })
+
+        $(".btn-minus").on('click', function (e) {
+            e.preventDefault();
+            $('#qt').val(function (i, oldval) {
+                var newval = parseInt(oldval) - 1;
+                if (newval >= 1)
+                    return --oldval;
+                else
+                    return 1;
+            });
+        })
+
         $("#addtoCart").on('submit', function (e) {
             e.preventDefault() // prevent the form's normal submission
                     var dataToPost = {
                         CodArtigo: $("#title-art-page").text(),
                         DescArtigo: $("#desc").text(),
-                        PrecoArtigo: parseFloat($("#preco").val()),
+                        PrecoArtigo: $("#preco").attr('preco'),
                         ArmazemArtigo: $("#wh option:selected").text(),
                         QuantidadeArtigo: parseInt($("#qt").val()),
                     }
@@ -84,6 +113,7 @@
                     $.post("/ShoppingCart/AddtoCart", dataToPost)
                         .done(function (r) {
                             console.log("Added product successfully!");
+                            window.location.reload();
                         })
                         .fail(function (r) {
                             console.log("Failed to add the product to the shopping cart");

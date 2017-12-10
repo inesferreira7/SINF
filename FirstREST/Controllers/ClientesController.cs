@@ -45,7 +45,7 @@ namespace FirstREST.Controllers
             if (Request.Cookies["Client"] == null)
                 return Redirect("http://localhost:49822/account/login/");
 
-            if (Request.Cookies["Client"].Value.ToString() != id)
+            if (Request.Cookies["UserID"].Value.ToString() != id)
             {
                 string url = "http://localhost:49822/clientes/paginacliente/" + Request.Cookies["Client"].Value.ToString() + "/";
                 return Redirect(url);

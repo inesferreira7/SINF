@@ -26,8 +26,6 @@ namespace FirstREST.Controllers
             item.IdUser = Int32.Parse(Request.Cookies["UserID"].Value.ToString());
 
             FirstREST.Lib_Primavera.Model.Artigo art = FirstREST.Lib_Primavera.PriIntegration.GetArtigo(item.CodArtigo);
-            if (ModelState.IsValid)
-            {
                 using (FirstREST.Models.online_storeEntities db = new FirstREST.Models.online_storeEntities())
                 {
                     var obj = db.ShoppingCarts.Where(a => a.IdUser.Equals(item.IdUser) && a.ArmazemArtigo.Equals(item.ArmazemArtigo) && a.CodArtigo.Equals(item.CodArtigo)).FirstOrDefault();
@@ -43,7 +41,6 @@ namespace FirstREST.Controllers
                      }
                         db.SaveChanges();
                 }
-            }
 
             return Redirect(Request.UrlReferrer.ToString());
         }
