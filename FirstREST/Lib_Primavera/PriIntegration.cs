@@ -673,8 +673,7 @@ namespace FirstREST.Lib_Primavera
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
 
-                string queryCatArtigo = "SELECT Descricao FROM SubFamilias WHERE SubFamilia = '" + categoria + "'";
-                autorList = PriEngine.Engine.Consulta(queryCatArtigo);
+                autorList = PriEngine.Engine.Consulta("SELECT Descricao FROM SubFamilias WHERE SubFamilia = '" + categoria + "'");
                 string cat = autorList.Valor("Descricao");
 
                 objList = PriEngine.Engine.Consulta("SELECT Artigo, CodBarras, Descricao, Marca, Modelo, STKActual, Iva, Observacoes, Sinopse FROM Artigo where SubFamilia = '" + categoria + "'");
@@ -684,23 +683,18 @@ namespace FirstREST.Lib_Primavera
                     art = new Model.Artigo();
                     art.CodArtigo = objList.Valor("Artigo");
                     art.DescArtigo = objList.Valor("Descricao");
-                    art.CodBArtigo = objList.Valor("CodBarras");
                     art.MarcaArtigo = objList.Valor("Marca");
                     art.ModeloArtigo = objList.Valor("Modelo");
-                    art.STKActualArtigo = objList.Valor("STKActual");
-                    art.ObsArtigo = objList.Valor("Observacoes");
                     art.SinopseArtigo = objList.Valor("Sinopse");
                     art.IvaArtigo = objList.Valor("Iva");
                     art.CatNomeArtigo = cat;
 
                     string queryPreco = "SELECT PVP1 FROM ArtigoMoeda WHERE Artigo = '" + art.CodArtigo + "'";
                     precoList = PriEngine.Engine.Consulta(queryPreco);
-
                     art.precoArtigo = precoList.Valor("PVP1");
-                    art.precomIvaArtigo = Math.Round(art.precoArtigo + art.precoArtigo * Double.Parse(art.IvaArtigo) * 0.01, 2);
+                    art.precomIvaArtigo = calculateIva(art.precoArtigo, art.IvaArtigo);
 
-                    string queryDescAutor = "SELECT Descricao FROM Modelos WHERE Marca = '" + art.MarcaArtigo + "' AND Modelo = '" + art.ModeloArtigo + "'";
-                    autorList = PriEngine.Engine.Consulta(queryDescAutor);
+                    autorList = PriEngine.Engine.Consulta("SELECT Descricao FROM Modelos WHERE Marca = '" + art.MarcaArtigo + "' AND Modelo = '" + art.ModeloArtigo + "'");
                     art.AutorArtigo = autorList.Valor("Descricao");
 
                     listArts.Add(art);

@@ -450,11 +450,11 @@
     <Content Include="Views\DocVenda\Index.cshtml" />
     <Content Include="Views\Artigos\ProcuraArtigo.cshtml" />
     <Content Include="Views\Home\ProcuraArtigo.cshtml" />
-    <Content Include="Views\Home\procuraArtigoPorCategoria.cshtml" />
     <Content Include="Views\Clientes\PaginaCliente.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Clientes\displayShoppingCart.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Home\Category.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
