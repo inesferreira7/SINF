@@ -243,6 +243,48 @@ namespace FirstREST.Lib_Primavera
 
         #region Artigo
 
+        public static double calculateIva(double input, string iva)
+        {
+            double output = Math.Round(input + input * Double.Parse(iva) * 0.01, 2);
+            return output;
+        }
+
+        public static Lib_Primavera.Model.Artigo getBestInfo(string codArtigo)
+        {
+
+            GcpBEArtigo objArtigo = new GcpBEArtigo();
+            Model.Artigo myArt = new Model.Artigo();
+
+            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            {
+
+                if (PriEngine.Engine.Comercial.Artigos.Existe(codArtigo) == false)
+                {
+                    return null;
+                }
+                else
+                {
+                    objArtigo = PriEngine.Engine.Comercial.Artigos.Edita(codArtigo);
+                    myArt.CodArtigo = objArtigo.get_Artigo();
+                    myArt.DescArtigo = objArtigo.get_Descricao();
+                    myArt.IvaArtigo = objArtigo.get_IVA();
+                    myArt.PesoLArtigo = objArtigo.get_PesoLiquido();
+
+                    StdBELista precoList = PriEngine.Engine.Consulta("SELECT PVP1 FROM ArtigoMoeda WHERE Artigo = '" + myArt.CodArtigo + "'");
+
+                    myArt.precoArtigo = precoList.Valor("PVP1");
+                    myArt.precomIvaArtigo = calculateIva(myArt.precoArtigo, myArt.IvaArtigo);
+
+                    return myArt;
+                }
+
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public static Lib_Primavera.Model.Artigo GetArtigo(string codArtigo)
         {
             StdBELista armList;
@@ -427,9 +469,6 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
             {
-
-                //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
-
                 objList = PriEngine.Engine.Consulta("SELECT TOP 8 LinhasDoc.Artigo, LinhasDoc.Data, SUM(LinhasDoc.Quantidade) AS Total FROM LinhasDoc WHERE CONVERT(DATETIME, '2017-10-31 00:00:00') <= LinhasDoc.Data AND CONVERT(VARCHAR, '2017-12-31 00:00:00', 103) >= LinhasDoc.Data  GROUP BY LinhasDoc.Artigo, LinhasDoc.Data ORDER BY Total DESC");
 
                 while (!objList.NoFim())
@@ -437,7 +476,7 @@ namespace FirstREST.Lib_Primavera
                     art = new Model.Artigo();
                     if (objList.Valor("Artigo") != null)
                     {
-                        art = GetArtigo(objList.Valor("Artigo"));
+                        art = getBestInfo(objList.Valor("Artigo"));
                         listArts.Add(art);
                     }
 
@@ -618,7 +657,7 @@ namespace FirstREST.Lib_Primavera
                 catList.Seguinte();
             }
 
-            categories = categories.OrderByDescending(t => t.Item3).ToList();
+            categories = categories.OrderBy(t => t.Item2).ToList();
             return categories;
              
         }
