@@ -36,12 +36,13 @@ namespace FirstREST.Controllers
             string username = form["username"];
             string address = form["address"];
             string password = form["password"];
+            string nif = form["nif"];
 
             FirstREST.Lib_Primavera.Model.Cliente new_cli = new Lib_Primavera.Model.Cliente();
             new_cli.CodCliente = abrev;
             new_cli.NomeCliente = full_name;
             new_cli.Morada = address;
-            //new_cli.NumContribuinte = "NULL";
+            new_cli.NumContribuinte = nif;
             new_cli.Moeda = "EUR";
 
             FirstREST.Models.User new_user = new Models.User { Username = username, Password = password, Client_Name = abrev };
