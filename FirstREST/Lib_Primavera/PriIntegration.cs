@@ -12,7 +12,8 @@ namespace FirstREST.Lib_Primavera
 {
     public class PriIntegration
     {
-        
+
+        private static bool initialized = false;
 
         # region Cliente
 
@@ -24,9 +25,13 @@ namespace FirstREST.Lib_Primavera
 
             List<Model.Cliente> listClientes = new List<Model.Cliente>();
 
-            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            if(!initialized)
             {
-
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                    initialized = true;
+                else
+                    return null;
+            }
                 //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
 
                 objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, Moeda, NumContrib as NumContribuinte, Fac_Mor AS campo_exemplo FROM  CLIENTES");
@@ -49,9 +54,6 @@ namespace FirstREST.Lib_Primavera
                 }
 
                 return listClientes;
-            }
-            else
-                return null;
         }
 
         public static Lib_Primavera.Model.Cliente GetCliente(string codCliente)
@@ -63,8 +65,13 @@ namespace FirstREST.Lib_Primavera
 
             Model.Cliente myCli = new Model.Cliente();
 
-            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            if(!initialized)
             {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                    initialized = true;
+                else
+                    return null;
+            }
 
                 if (PriEngine.Engine.Comercial.Clientes.Existe(codCliente) == true)
                 {
@@ -81,9 +88,6 @@ namespace FirstREST.Lib_Primavera
                 {
                     return null;
                 }
-            }
-            else
-                return null;
         }
 
         public static Lib_Primavera.Model.RespostaErro UpdCliente(Lib_Primavera.Model.Cliente cliente)
@@ -96,8 +100,17 @@ namespace FirstREST.Lib_Primavera
             try
             {
 
+                if(!initialized)
+            {
                 if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                    initialized = true;
+                else
                 {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir a empresa";
+                    return erro;
+                }
+            }
 
                     if (PriEngine.Engine.Comercial.Clientes.Existe(cliente.CodCliente) == false)
                     {
@@ -124,15 +137,6 @@ namespace FirstREST.Lib_Primavera
                         erro.Descricao = "Sucesso";
                         return erro;
                     }
-                }
-                else
-                {
-                    erro.Erro = 1;
-                    erro.Descricao = "Erro ao abrir a empresa";
-                    return erro;
-
-                }
-
             }
 
             catch (Exception ex)
@@ -155,8 +159,17 @@ namespace FirstREST.Lib_Primavera
             try
             {
 
+                if(!initialized)
+            {
                 if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                    initialized = true;
+                else
                 {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir a empresa";
+                    return erro;
+                }
+            }
                     if (PriEngine.Engine.Comercial.Clientes.Existe(codCliente) == false)
                     {
                         erro.Erro = 1;
@@ -171,14 +184,6 @@ namespace FirstREST.Lib_Primavera
                         erro.Descricao = "Sucesso";
                         return erro;
                     }
-                }
-
-                else
-                {
-                    erro.Erro = 1;
-                    erro.Descricao = "Erro ao abrir a empresa";
-                    return erro;
-                }
             }
 
             catch (Exception ex)
@@ -202,8 +207,17 @@ namespace FirstREST.Lib_Primavera
 
             try
             {
+                if(!initialized)
+            {
                 if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                    initialized = true;
+                else
                 {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir a empresa";
+                    return erro;
+                }
+            }
 
                     myCli.set_Cliente(cli.CodCliente);
                     myCli.set_Nome(cli.NomeCliente);
@@ -221,13 +235,6 @@ namespace FirstREST.Lib_Primavera
                     erro.Erro = 0;
                     erro.Descricao = "Sucesso";
                     return erro;
-                }
-                else
-                {
-                    erro.Erro = 1;
-                    erro.Descricao = "Erro ao abrir empresa";
-                    return erro;
-                }
             }
 
             catch (Exception ex)
@@ -259,8 +266,13 @@ namespace FirstREST.Lib_Primavera
             GcpBEArtigo objArtigo = new GcpBEArtigo();
             Model.Artigo myArt = new Model.Artigo();
 
-            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+           if(!initialized)
             {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                    initialized = true;
+                else
+                    return null;
+            }
 
                 if (PriEngine.Engine.Comercial.Artigos.Existe(codArtigo) == false)
                 {
@@ -281,12 +293,6 @@ namespace FirstREST.Lib_Primavera
 
                     return myArt;
                 }
-
-            }
-            else
-            {
-                return null;
-            }
         }
 
         public static Lib_Primavera.Model.Artigo GetArtigo(string codArtigo)
@@ -301,8 +307,13 @@ namespace FirstREST.Lib_Primavera
             GcpBEArtigo objArtigo = new GcpBEArtigo();
             Model.Artigo myArt = new Model.Artigo();
 
-            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            if(!initialized)
             {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                    initialized = true;
+                else
+                    return null;
+            }
 
                 if (PriEngine.Engine.Comercial.Artigos.Existe(codArtigo) == false)
                 {
@@ -375,13 +386,6 @@ namespace FirstREST.Lib_Primavera
 
                     return myArt;
                 }
-                
-            }
-            else
-            {
-                return null;
-            }
-
         }
 
         public static List<Model.Artigo> ListaArtigos()
@@ -396,8 +400,13 @@ namespace FirstREST.Lib_Primavera
             Model.Armazens arm = new Model.Armazens();
             List<Model.Artigo> listArts = new List<Model.Artigo>();
 
-            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+           if(!initialized)
             {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                    initialized = true;
+                else
+                    return null;
+            }
 
                 //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
@@ -462,14 +471,6 @@ namespace FirstREST.Lib_Primavera
                 }
 
                 return listArts;
-
-            }
-            else
-            {
-                return null;
-
-            }
-
         }
 
 
@@ -480,8 +481,13 @@ namespace FirstREST.Lib_Primavera
             Model.Artigo art = new Model.Artigo();
             List<Model.Artigo> listArts = new List<Model.Artigo>();
 
-            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            if(!initialized)
             {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                    initialized = true;
+                else
+                    return null;
+            }
                 objList = PriEngine.Engine.Consulta("SELECT TOP 8 LinhasDoc.Artigo, LinhasDoc.Data, SUM(LinhasDoc.Quantidade) AS Total FROM LinhasDoc WHERE CONVERT(DATETIME, '2017-10-31 00:00:00') <= LinhasDoc.Data AND CONVERT(VARCHAR, '2017-12-31 00:00:00', 103) >= LinhasDoc.Data  GROUP BY LinhasDoc.Artigo, LinhasDoc.Data ORDER BY Total DESC");
 
                 while (!objList.NoFim())
@@ -497,13 +503,6 @@ namespace FirstREST.Lib_Primavera
                 }
 
                 return listArts;
-
-            }
-            else
-            {
-                return null;
-
-            }
         }
 
         public static List<Model.Artigo> ListaArtigosPorSTK()
@@ -518,9 +517,13 @@ namespace FirstREST.Lib_Primavera
             Model.Armazens arm = new Model.Armazens();
             List<Model.Artigo> listArts = new List<Model.Artigo>();
 
-            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+           if(!initialized)
             {
-
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                    initialized = true;
+                else
+                    return null;
+            }
                 //objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
 
                 objList = PriEngine.Engine.Consulta("SELECT Artigo, CodBarras, Descricao, ArmazemSugestao, Marca, Modelo, PermiteDevolucao, Peso, PesoLiquido, STKActual, Iva, Observacoes FROM Artigo ORDER BY STKActual DESC");
@@ -577,14 +580,6 @@ namespace FirstREST.Lib_Primavera
                 }
 
                 return listArts;
-
-            }
-            else
-            {
-                return null;
-
-            }
-
         }
 
         public static List<Model.Artigo> ProcuraArtigos(string procura)
@@ -598,8 +593,13 @@ namespace FirstREST.Lib_Primavera
             Model.Artigo art = new Model.Artigo();
             List<Model.Artigo> listArts = new List<Model.Artigo>();
 
-            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            if(!initialized)
             {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                    initialized = true;
+                else
+                    return null;
+            }
                 string query = "SELECT Artigo.Artigo, Artigo.Descricao, Artigo.Marca, Artigo.Modelo, Artigo.SubFamilia, Artigo.PesoLiquido, Artigo.STKActual, Artigo.Iva, Artigo.Observacoes, Artigo.Sinopse, Modelos.Descricao AS Autor, Subfamilias.Descricao AS categoria FROM Artigo, Modelos, Subfamilias WHERE Artigo.SubFamilia = SubFamilias.SubFamilia AND Modelos.Modelo = Artigo.Modelo AND Modelos.Marca = Artigo.Marca AND  (Artigo.Descricao LIKE '%" + procura + "%' OR Modelos.Descricao LIKE '%" + procura + "%')";
                 objList = PriEngine.Engine.Consulta(query);
 
@@ -629,14 +629,6 @@ namespace FirstREST.Lib_Primavera
                 }
 
                 return listArts;
-
-            }
-            else
-            {
-                return null;
-
-            }
-
         }
 
         public static List<Tuple<string, string, int>> ListCategories()
@@ -670,8 +662,13 @@ namespace FirstREST.Lib_Primavera
             Model.Artigo art = new Model.Artigo();
             List<Model.Artigo> listArts = new List<Model.Artigo>();
 
-            if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+            if(!initialized)
             {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                    initialized = true;
+                else
+                    return null;
+            }
 
                 catList = PriEngine.Engine.Consulta("SELECT Descricao FROM SubFamilias WHERE SubFamilia = '" + categoria + "'");
                 string cat = catList.Valor("Descricao");
@@ -701,11 +698,7 @@ namespace FirstREST.Lib_Primavera
                     listArts.Add(art);
                     objList.Seguinte();
                 }
-
                 return listArts;
-            }
-            else return null;
-
         }
 
         #endregion Artigo
@@ -900,8 +893,18 @@ namespace FirstREST.Lib_Primavera
             
             try
             {
-                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                if(!initialized)
                 {
+                    if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                        initialized = true;
+                    else
+                    {
+                        erro.Erro = 1;
+                        erro.Descricao = "Erro ao abrir empresa";
+                        return erro;
+                    }
+                }
+
                     // Atribui valores ao cabecalho do doc
                     myEnc.set_DataDoc(DateTime.Now);
                     myEnc.set_Entidade(dv.Entidade);
@@ -931,15 +934,6 @@ namespace FirstREST.Lib_Primavera
                     erro.Erro = 0;
                     erro.Descricao = "Sucesso";
                     return erro;
-                }
-                else
-                {
-                    erro.Erro = 1;
-                    erro.Descricao = "Erro ao abrir empresa";
-                    return erro;
-
-                }
-
             }
             catch (Exception ex)
             {
