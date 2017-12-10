@@ -212,7 +212,9 @@ namespace FirstREST.Lib_Primavera
                     myCli.set_Morada(cli.Morada);
                     myCli.set_Pais("PT");
                     myCli.set_Localidade("Porto");
-                   
+                    myCli.set_Idioma("PT");
+                    myCli.set_ModoPag("DEP");
+                    myCli.set_LocalOperacao("0");
 
                     PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
 
