@@ -13,11 +13,17 @@ namespace FirstREST.Controllers
 
         public ActionResult Login()
         {
+            if (Request.Cookies["UserID"] != null)
+                return Redirect("http://localhost:49822/home/");
+
             return View();
         }
 
         public ActionResult Register()
         {
+            if (Request.Cookies["UserID"] != null)
+                return Redirect("http://localhost:49822/home/");
+
             return View();
         }
 
@@ -43,6 +49,13 @@ namespace FirstREST.Controllers
             {
                 using (FirstREST.Models.online_storeEntities db = new FirstREST.Models.online_storeEntities())
                 {
+                    var obj = db.Users.Where(a => a.Username.Equals(username) || a.Client_Name.Equals(abrev)).FirstOrDefault();
+                    if (obj != null)
+                    {
+                        ViewBag.errorMessage = "Nome de utilizador ou nome abreviado já existentes";
+                        System.Diagnostics.Debug.WriteLine("EXISTENTE");
+                        return Register();
+                    }
                     FirstREST.Lib_Primavera.PriIntegration.InsereClienteObj(new_cli);
                     db.Users.Add(new_user);
 
@@ -54,13 +67,12 @@ namespace FirstREST.Controllers
 
         public ActionResult Logout()
         {
+            if (Request.Cookies["UserID"] == null)
+                return Redirect("http://localhost:49822/account/login");
+
            Response.Cookies["UserID"].Expires = DateTime.Now.AddDays(-1);
            Response.Cookies["Username"].Expires = DateTime.Now.AddDays(-1);
            Response.Cookies["Client"].Expires = DateTime.Now.AddDays(-1);
-           if (Request.Cookies["errorMessage"] != null)
-           {
-               Response.Cookies["cookie"].Expires = DateTime.Now.AddDays(-1);
-           }  
 
             string url = "http://localhost:49822/home/";
             return Redirect(url);
@@ -87,7 +99,7 @@ namespace FirstREST.Controllers
                     }
                     else
                     {
-                        Response.Cookies["errorMessage"].Value = "Wrong Username or Password. Try again.";
+                        ViewBag.errorMessage = "Wrong Username or Password. Try again.";
 
                         return View();
                     }

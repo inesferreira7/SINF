@@ -44,7 +44,7 @@ $('.add-to-cart').on('click', function () {
 
     $.post("/ShoppingCart/AddDefaultToCart", dataToPost)
             .done(function (r) {
-                console.log("Added product successfully!");
+
             })
             .fail(function (r) {
                 console.log("Failed to add the product to the shopping cart");

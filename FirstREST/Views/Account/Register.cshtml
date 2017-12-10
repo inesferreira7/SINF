@@ -3,10 +3,9 @@
 }
 
 <div class="container">
-
+    <span style="color:red">@ViewBag.errorMessage</span>
 @using (Html.BeginForm("Register", "Account", FormMethod.Post))
 {@Html.AntiForgeryToken()
-
     <form id="register_form" class="form-horizontal">
         <fieldset>
             <!-- Form Name -->
