@@ -14,6 +14,15 @@ namespace FirstREST.Controllers
     {
         public ActionResult PaginaCliente(string id)
         {
+            if (Request.Cookies["Client"] == null)
+                return Redirect("http://localhost:49822/account/login/");
+
+            if (Request.Cookies["Client"].Value.ToString() != id)
+            {
+                string url = "http://localhost:49822/clientes/paginacliente/" + Request.Cookies["Client"].Value.ToString() + "/";
+                return Redirect(url);
+            }
+
             ViewBag.clientes = Lib_Primavera.PriIntegration.ListaClientes();
             ViewBag.cliente = Lib_Primavera.PriIntegration.GetCliente(id);
             ViewBag.encomendas = Lib_Primavera.PriIntegration.Encomenda_Get_Entidade(id);
@@ -33,8 +42,15 @@ namespace FirstREST.Controllers
 
         public ActionResult displayShoppingCart(string id)
         {
-            if (Request.Cookies["UserID"] != null)
+            if (Request.Cookies["Client"] == null)
+                return Redirect("http://localhost:49822/account/login/");
+
+            if (Request.Cookies["Client"].Value.ToString() != id)
             {
+                string url = "http://localhost:49822/clientes/paginacliente/" + Request.Cookies["Client"].Value.ToString() + "/";
+                return Redirect(url);
+            }
+
                 if (ModelState.IsValid)
                 {
                     using (FirstREST.Models.online_storeEntities db = new FirstREST.Models.online_storeEntities())
@@ -56,12 +72,6 @@ namespace FirstREST.Controllers
                     }
                 }
                 return View();
-            }
-            else
-            {
-                return Redirect("http://localhost:49822/account/login");
-            }
-            
         }
 
         public List<FirstREST.Models.ShoppingCart> getShoppingCart(int idUser)

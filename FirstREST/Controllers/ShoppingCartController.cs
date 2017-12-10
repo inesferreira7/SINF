@@ -20,6 +20,9 @@ namespace FirstREST.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult AddtoCart(FirstREST.Models.ShoppingCart item){
 
+            if (Request.Cookies["UserID"] == null)
+                return Redirect("http://localhost:49822/account/login/");
+
             item.IdUser = Int32.Parse(Request.Cookies["UserID"].Value.ToString());
 
             FirstREST.Lib_Primavera.Model.Artigo art = FirstREST.Lib_Primavera.PriIntegration.GetArtigo(item.CodArtigo);
@@ -49,6 +52,10 @@ namespace FirstREST.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult AddDefaultToCart(FirstREST.Lib_Primavera.Model.Artigo artigo)
         {
+
+            if (Request.Cookies["UserID"] == null)
+                return Redirect("http://localhost:49822/account/login/");
+
             FirstREST.Lib_Primavera.Model.Artigo art = FirstREST.Lib_Primavera.PriIntegration.GetArtigo(artigo.CodArtigo);
 
             if (ModelState.IsValid)
