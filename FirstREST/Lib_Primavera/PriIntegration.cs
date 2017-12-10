@@ -671,13 +671,14 @@ namespace FirstREST.Lib_Primavera
                 catList = PriEngine.Engine.Consulta("SELECT Descricao FROM SubFamilias WHERE SubFamilia = '" + categoria + "'");
                 string cat = catList.Valor("Descricao");
 
-                objList = PriEngine.Engine.Consulta("SELECT Artigo, CodBarras, Descricao, Marca, Modelo, STKActual, Iva, Observacoes, Sinopse FROM Artigo where SubFamilia = '" + categoria + "'");
+                objList = PriEngine.Engine.Consulta("SELECT Artigo, Descricao, PesoLiquido, Marca, Modelo, Iva, Sinopse FROM Artigo where SubFamilia = '" + categoria + "'");
 
                 while (!objList.NoFim())
                 {
                     art = new Model.Artigo();
                     art.CodArtigo = objList.Valor("Artigo");
                     art.DescArtigo = objList.Valor("Descricao");
+                    art.PesoLArtigo = objList.Valor("PesoLiquido");
                     art.MarcaArtigo = objList.Valor("Marca");
                     art.ModeloArtigo = objList.Valor("Modelo");
                     art.SinopseArtigo = objList.Valor("Sinopse");
