@@ -4,94 +4,59 @@
     ViewBag.Title = "ArtigoPage";
     var artigo = ViewBag.artigo;
 }
-<div class="container">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <form id="addtoCart" method="post">
-        <div class="row">
-            <div class="col-xs-7">
-                <div class="row">
-                    <div class="article-page col-xs-5">
-                        <img src="~/Images/book.jpg" alt="item" />
-                    </div>
-                    <div class="col-xs-7 cart_anchor">
-                        <h2 id="title-art-page">@artigo.CodArtigo</h2>
-                        <h3 id="desc">@artigo.DescArtigo</h3>
-                        <h4 id="stk">@artigo.STKActualArtigo</h4>
-                        <h4>@artigo.MarcaArtigo Marca</h4>
-                        <h4>@artigo.ModeloArtigo Modelo</h4>
-                    </div>
-                </div>
-                <div id="obs-text" class="row">
-                    <div class="col-xs-10 col-xs-offset-1">
-                        <p>Ut vehicula quis nulla et gravida. In vel sodales metus. Integer porttitor nec dui sed semper. Donec et erat pulvinar purus hendrerit convallis. Quisque mattis libero et magna tempor imperdiet. Cras rhoncus metus id turpis commodo porttitor. Aenean porttitor lectus a neque hendrerit, sed lacinia risus convallis. Integer laoreet finibus ante eu tempus. Sed volutpat feugiat leo et sollicitudin. Nullam congue magna nec neque congue finibus. Nulla facilisi. Integer arcu ipsum, ultrices quis venenatis at, pharetra blandit mi. Nullam mattis dapibus velit, sit amet lacinia ipsum dictum eu. Sed volutpat tellus nec elementum facilisis.</p>
-                    </div>
+<div id="artigopage" class="container">
+    <div class="row">
+        <div class="col-md-4 item-photo">
+            <img height="400" src="~/Images/@{@artigo.CodArtigo}.jpg" />
+        </div>
+        <div class="col-xs-5" style="border:0px solid gray">
+ 
+            <h1>@artigo.DescArtigo</h1>
+            <h6><small>de  </small> @artigo.AutorArtigo</h6>
+            <h4 style="margin-top:10px;">
+                <span class="stars">
+                                        @for (int stars = 1; stars <= artigo.PesoLArtigo; stars++)
+                    {
+                                            <i class="glyphicon glyphicon-star" style="color:#FFD700"></i>
+                    }
+                </span>
+            </h4>
+
+            <h2 style="margin-top:35px; margin-bottom:15px;">@artigo.precomIvaArtigo €</h2>
+            
+
+            <div class="section" style="padding-bottom:5px;">
+                <h6 class="title-attr"><small>Warehouse</small></h6>
+                <select id="wh">
+                    @{foreach (var wh in artigo.armArtigo)
+                    {
+                        <option value="@wh.descArmazens">@wh.descArmazens</option>
+                    }
+                    }
+                </select>
+
+            </div>
+            <div class="section" style="padding-bottom:20px;">
+                <h6 class="title-attr"><small>Quantity</small></h6>
+                <div>
+                    <div class="btn-minus"><span class="glyphicon glyphicon-minus"></span></div>
+                    <input value="1" />
+                    <div class="btn-plus"><span class="glyphicon glyphicon-plus"></span></div>
                 </div>
             </div>
-            <div class="col-xs-1 vlap"></div>
-            <div class="col-xs-4 cart_anchor preco-artigo">
-                <input id="preco" style="visibility: hidden" value="@artigo.precomIvaArtigo" />
-                <h2>@artigo.precomIvaArtigo €</h2>
-                <h4>
-                    Warehouse
-                    <select id="wh">
-                        @{foreach (var wh in artigo.armArtigo)
-                        {
-                            <option value="@wh.descArmazens">@wh.descArmazens</option>
-                        }
-                        }
-                    </select>
-                </h4>
-                <h4>
-                    Quantity
-                    <input id="qt" name="quantidadeArtigo" type="number" min="1" step="1" value="1" />
-                </h4>
-                @{
-                    if (Request.Cookies["UserID"] != null)
-                    {
-                        <input id="idUser" style="visibility:hidden" value="@Request.Cookies["UserID"].Value.ToString()" />
-                        <button class="btn" type="submit" value="addtoCart">Add to Cart</button>
-                    }
-                    else
-                    {
-                        <button class="btn" id="goToLogin">Add to Cart</button>
-                    }
-                }
+
+            <!-- Botones de compra -->
+            <div class="section" style="padding-bottom:20px;">
+                <button class="btn btn-success"><span style="margin-right:20px" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to cart</button>
+                
             </div>
         </div>
-    </form>
-    <div class="row">
-        <div class="col-xs-12 hl"></div>
-    </div>
-    <div class="row">
-        <div class="col-xs-11 related">
-            <h2>Related</h2>
+        <div style="margin-top:15px;"class="col-xs-10">
+            <h3>Sinopse</h3>
+            <p align="justify" style="font-size:16px;" >@artigo.SinopseArtigo</p>
         </div>
     </div>
-    <div class="row">
-        <div class="items col-xs-12">
-            @{
-             foreach (var related in ViewBag.related)
-             {
-                 if (related.CodArtigo == artigo.CodArtigo)
-                 {
-                     continue;
-                 }
-                 else
-                 {
-                    <div class="item single-article col-xs-3">
-                        <img src="~/Images/book.jpg" alt="item" />
-                        <p><a href="/artigos/artigopage/@related.CodArtigo/">@related.DescArtigo</a></p>
-                        <p>@related.precoArtigo €</p>
-                        <button class="add-to-cart btn" type="button">Add to Cart</button>
-
-                    </div>
-                 }
-             }
-
-            }
-        </div>
-    </div>
-</div>
+</div>      
 
 <script>
     $(function () {

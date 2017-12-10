@@ -290,6 +290,7 @@ namespace FirstREST.Lib_Primavera
             StdBELista armList;
             StdBELista descArmList;
             StdBELista precoList;
+            StdBELista autorList;
 
             Model.Armazens arm = new Model.Armazens();
 
@@ -359,6 +360,14 @@ namespace FirstREST.Lib_Primavera
 
                     myArt.precoArtigo = precoList.Valor("PVP1");
                     myArt.precomIvaArtigo = Math.Round(myArt.precoArtigo + myArt.precoArtigo * Double.Parse(myArt.IvaArtigo) * 0.01, 2);
+
+                    string queryDescAutor = "SELECT Descricao FROM Modelos WHERE Marca = '" + myArt.MarcaArtigo + "' AND Modelo = '" + myArt.ModeloArtigo + "'";
+                    autorList = PriEngine.Engine.Consulta(queryDescAutor);
+                    myArt.AutorArtigo = autorList.Valor("Descricao");
+
+                    string querySinopse = "SELECT Sinopse FROM Artigo WHERE Artigo = '" + myArt.CodArtigo + "'";
+                    StdBELista sinopseList = PriEngine.Engine.Consulta(querySinopse);
+                    myArt.SinopseArtigo = sinopseList.Valor("Sinopse");
 
                     return myArt;
                 }
