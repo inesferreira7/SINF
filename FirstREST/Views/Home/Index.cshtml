@@ -9,30 +9,57 @@
     </div>
 
     <div class="col-xs-1 vl"></div>
-    <div class="items best-sellers col-xs-9">
-        <h2 style="margin-bottom:35px;">Bestselling Books</h2>
-        @{
-         foreach (var artigo in ViewBag.artigos)
-         {
-            <div class="item single-article col-xs-3">
-                <img style="margin-bottom:5px;" height="140" src="~/Images/@{@artigo.CodArtigo}.jpg" alt="item" />
-                <p><a href="/artigos/artigopage/@artigo.CodArtigo/">@artigo.DescArtigo</a></p>
-                <p>@artigo.precomIvaArtigo €</p>
-                <div class="row" style="margin:10px;">
-                    <span class="stars">
-                        @for (int stars = 1; stars <= artigo.PesoLArtigo; stars++)
-                        {
-                            <i class="glyphicon glyphicon-star" style="color:#FFD700"></i>
-                        }
-                    </span>
-                </div>
-                <button class="add-to-cart btn" user_id="@Request.Cookies["UserID"]" product_id="@artigo.CodArtigo" type="button">Add to Cart</button>
+        <div class="items best-sellers col-xs-9">
+            <h2 style="margin-bottom:35px;">Bestselling Books</h2>
+            @{
+                foreach (var artigo in ViewBag.artigos)
+                {
+                    <div class="item single-article col-xs-3">
+                        <img style="margin-bottom:5px;" height="140" src="~/Images/@{@artigo.CodArtigo}.jpg" alt="item" />
+                        <p><a href="/artigos/artigopage/@artigo.CodArtigo/">@artigo.DescArtigo</a></p>
+                        <p>@artigo.precomIvaArtigo €</p>
+                        <div class="row" style="margin:10px;">
+                            <span class="stars">
+                                @for (int stars = 1; stars <= artigo.PesoLArtigo; stars++)
+                                {
+                                    <i class="glyphicon glyphicon-star" style="color:#FFD700"></i>
+                                }
+                            </span>
+                        </div>
+                        <button class="add-to-cart btn" user_id="@Request.Cookies["UserID"]" product_id="@artigo.CodArtigo" type="button">Add to Cart</button>
 
-            </div>
-        }
-        }
+                    </div>
+                }
+            }
+        </div>
+
+   
+    <div class="cart_anchor col-xs-2"></div>
+        <div class="col-xs-1 vl"></div>
+        <div class="items best-sellers col-xs-9">
+            <h2 style="margin-bottom:35px;">Top Rated Books</h2>
+            @{
+                foreach (var artigo in ViewBag.highrated)
+                {
+                    <div class="item single-article col-xs-3">
+                        <img style="margin-bottom:5px;" height="140" src="~/Images/@{@artigo.CodArtigo}.jpg" alt="item" />
+                        <p><a href="/artigos/artigopage/@artigo.CodArtigo/">@artigo.DescArtigo</a></p>
+                        <p>@artigo.precomIvaArtigo €</p>
+                        <div class="row" style="margin:10px;">
+                            <span class="stars">
+                                @for (int stars = 1; stars <= artigo.PesoLArtigo; stars++)
+                                {
+                                    <i class="glyphicon glyphicon-star" style="color:#FFD700"></i>
+                                }
+                            </span>
+                        </div>
+                        <button class="add-to-cart btn" user_id="@Request.Cookies["UserID"]" product_id="@artigo.CodArtigo" type="button">Add to Cart</button>
+
+                    </div>
+                }
+            }
+        </div>
+
+
+
     </div>
-
-
-
-</div>

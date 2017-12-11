@@ -510,6 +510,37 @@ namespace FirstREST.Lib_Primavera
                 return listArts;
         }
 
+        public static List<Model.Artigo> ListaHighRated()
+        {
+            StdBELista objList;
+
+            Model.Artigo art = new Model.Artigo();
+            List<Model.Artigo> listArts = new List<Model.Artigo>();
+
+            if (!initialized)
+            {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                    initialized = true;
+                else
+                    return null;
+            }
+            objList = PriEngine.Engine.Consulta("SELECT TOP 8 Artigo, PesoLiquido from Artigo WHERE Familia='L01' ORDER BY PesoLiquido DESC");
+
+            while (!objList.NoFim())
+            {
+                art = new Model.Artigo();
+                if (objList.Valor("Artigo") != null)
+                {
+                    art = getBestInfo(objList.Valor("Artigo"));
+                    listArts.Add(art);
+                }
+
+                objList.Seguinte();
+            }
+
+            return listArts;
+        }
+
         public static List<Model.Artigo> ListaArtigosPorSTK()
         {
 

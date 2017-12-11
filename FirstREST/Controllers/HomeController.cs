@@ -11,6 +11,7 @@ namespace FirstREST.Controllers
         public ActionResult Index()
         {
             ViewBag.artigos = Lib_Primavera.PriIntegration.ListaBestSellers();
+            ViewBag.highrated = Lib_Primavera.PriIntegration.ListaHighRated();
             ViewBag.category = Lib_Primavera.PriIntegration.ListCategories();
             return View();
         }
