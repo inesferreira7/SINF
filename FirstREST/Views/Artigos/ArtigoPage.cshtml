@@ -28,18 +28,18 @@
 
 
                 <div class="section" style="padding-bottom:5px;">
-                    <h6 class="title-attr"><small>Warehouse</small></h6>
+                    <h6 style="margin-bottom:7px;"class="title-attr"><small>Warehouse</small></h6>
                     <select id="wh">
                         @{foreach (var wh in artigo.armArtigo)
                         {
-                            <option max_stock="@wh.StkArmazens" value="@wh.descArmazens">@wh.descArmazens</option>
+                            <option max_stock="@wh.StkArmazens" value="@wh.descArmazens">@wh.descArmazens: @wh.StkArmazens available</option>
                         }
                         }
                     </select>
 
                 </div>
                 <div class="section" style="padding-bottom:20px;">
-                    <h6 class="title-attr"><small>Quantity</small></h6>
+                    <h6 style="margin-bottom:7px;" class="title-attr"><small>Quantity</small></h6>
                     <div>
                         <div class="btn-minus"><span class="glyphicon glyphicon-minus"></span></div>
                         <input id="qt" min="1" value="1" max="@artigo.armSugestaoArtigo.StkArmazens" />
