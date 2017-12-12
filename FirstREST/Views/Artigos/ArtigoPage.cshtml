@@ -28,7 +28,7 @@
 
 
                 <div class="section" style="padding-bottom:5px;">
-                    <h6 style="margin-bottom:7px;"class="title-attr"><small>Warehouse</small></h6>
+                    <h6 style="margin-bottom:7px;"class="title-attr"><small>Armazém</small></h6>
                     <select id="wh">
                         @{foreach (var wh in artigo.armArtigo)
                         {
@@ -39,7 +39,7 @@
 
                 </div>
                 <div class="section" style="padding-bottom:20px;">
-                    <h6 style="margin-bottom:7px;" class="title-attr"><small>Quantity</small></h6>
+                    <h6 style="margin-bottom:7px;" class="title-attr"><small>Quantidade</small></h6>
                     <div>
                         <div class="btn-minus"><span class="glyphicon glyphicon-minus"></span></div>
                         <input id="qt" min="1" value="1" max="@artigo.armSugestaoArtigo.StkArmazens" />
@@ -57,7 +57,7 @@
                     }
                     else
                     {
-                    <button class="btn btn-success" type="submit"><span style="margin-right:20px" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to cart</button>
+                    <button class="btn btn-success" type="submit"><span style="margin-right:20px" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Adicionar ao carrinho</button>
 }
 }
                 </div>
