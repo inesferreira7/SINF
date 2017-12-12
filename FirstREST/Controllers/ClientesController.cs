@@ -22,8 +22,14 @@ namespace FirstREST.Controllers
                 string url = "http://localhost:49822/clientes/paginacliente/" + Request.Cookies["Client"].Value.ToString() + "/";
                 return Redirect(url);
             }
+            if (Request.Cookies["error"] != null)
+            {
+                ViewBag.error = Request.Cookies["error"].Value.ToString();
+                Response.Cookies["error"].Expires = DateTime.Now.AddDays(-1);
+            }
+            else
+                ViewBag.error = "ok";
 
-            ViewBag.clientes = Lib_Primavera.PriIntegration.ListaClientes();
             ViewBag.cliente = Lib_Primavera.PriIntegration.GetCliente(id);
             ViewBag.encomendas = Lib_Primavera.PriIntegration.Encomenda_Get_Entidade(id);
             return View();
@@ -38,6 +44,48 @@ namespace FirstREST.Controllers
         {
             ViewBag.cliente = Lib_Primavera.PriIntegration.GetCliente(id);
             return View();
+        }
+
+
+        [ValidateAntiForgeryToken]
+        public ActionResult AtualizaCliente(FormCollection form)
+        {
+            string client = Request.Cookies["Client"].Value.ToString();
+            string old_pw = form["old-password"];
+            string new_pw = form["new-password"];
+
+            if(new_pw != "" && old_pw != "")
+            {
+                using (FirstREST.Models.online_storeEntities db = new FirstREST.Models.online_storeEntities())
+                {
+                    var obj = db.Users.Where(a => a.Client_Name.Equals(client)).FirstOrDefault();
+                    if (obj.Password != old_pw)
+                    {
+                        Response.Cookies["error"].Value = "A palavra passe antiga está incorreta";
+                        return Redirect("http://localhost:49822/clientes/paginacliente/" + client + "/");
+                    }
+                    else
+                    {
+                        obj.Password = new_pw;
+                        db.SaveChanges();
+                    }
+
+                }
+            }
+
+            Lib_Primavera.Model.Cliente temp_cli = Lib_Primavera.PriIntegration.GetCliente(client);
+
+            if (form["telefone"] != "")
+                temp_cli.Telefone = form["telefone"];
+
+            if (form["morada"] != "")
+                temp_cli.Morada = form["morada"];
+
+            if (form["email"] != "")
+                temp_cli.Email = form["email"];
+
+            Lib_Primavera.PriIntegration.UpdCliente(temp_cli);
+            return Redirect("http://localhost:49822/clientes/paginacliente/" + client + "/");
         }
 
         public ActionResult displayShoppingCart(string id)

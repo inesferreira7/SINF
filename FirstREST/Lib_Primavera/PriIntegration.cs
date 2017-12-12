@@ -81,6 +81,8 @@ namespace FirstREST.Lib_Primavera
                     myCli.Morada = objCli.get_Morada();
                     myCli.NumContribuinte = objCli.get_NumContribuinte();
                     myCli.Moeda = objCli.get_Moeda();
+                    myCli.Email = objCli.get_EnderecoWeb();
+                    myCli.Telefone = objCli.get_Telefone();
                    
                     return myCli;
                 }
@@ -128,6 +130,8 @@ namespace FirstREST.Lib_Primavera
                         objCli.set_NumContribuinte(cliente.NumContribuinte);
                         objCli.set_Moeda(cliente.Moeda);
                         objCli.set_Morada(cliente.Morada);
+                        objCli.set_EnderecoWeb(cliente.Email);
+                        objCli.set_Telefone(cliente.Telefone);
 
 
 
@@ -229,6 +233,8 @@ namespace FirstREST.Lib_Primavera
                     myCli.set_Idioma("PT");
                     myCli.set_ModoPag("DEP");
                     myCli.set_LocalOperacao("0");
+                    myCli.set_Telefone(cli.Telefone);
+                    myCli.set_EnderecoWeb(cli.Email);
 
                     PriEngine.Engine.Comercial.Clientes.Actualiza(myCli);
 

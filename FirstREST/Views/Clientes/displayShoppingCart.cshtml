@@ -228,7 +228,7 @@
             $.post("/ShoppingCart/FinishOrder")
                 .done(function (r) {
                     console.log("Order created successfully");
-                    location.reload();
+                    window.location.reload();
                 })
                 .fail(function (r) {
                     console.log("An error ocurred when creating the order");
