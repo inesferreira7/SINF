@@ -357,7 +357,10 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Images\Z0005.jpg" />
     <Content Include="Images\Z0007.jpg" />
+    <Content Include="Images\Z0009.jpg" />
+    <Content Include="Images\Z0013.jpg" />
     <Content Include="Images\Z0014.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

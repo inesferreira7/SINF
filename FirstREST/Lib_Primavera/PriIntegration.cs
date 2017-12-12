@@ -307,6 +307,7 @@ namespace FirstREST.Lib_Primavera
             StdBELista descArmList;
             StdBELista precoList;
             StdBELista autorList;
+            StdBELista editoraList;
 
             Model.Armazens arm = new Model.Armazens();
 
@@ -385,6 +386,10 @@ namespace FirstREST.Lib_Primavera
                     string queryDescAutor = "SELECT Descricao FROM Modelos WHERE Marca = '" + myArt.MarcaArtigo + "' AND Modelo = '" + myArt.ModeloArtigo + "'";
                     autorList = PriEngine.Engine.Consulta(queryDescAutor);
                     myArt.AutorArtigo = autorList.Valor("Descricao");
+
+                    string queryEditora = "SELECT Descricao FROM Marcas WHERE Marca = '" + myArt.MarcaArtigo + "'";
+                    editoraList = PriEngine.Engine.Consulta(queryEditora);
+                    myArt.EditoraArtigo = editoraList.Valor("Descricao");
 
                     string querySinopse = "SELECT Sinopse FROM Artigo WHERE Artigo = '" + myArt.CodArtigo + "'";
                     StdBELista sinopseList = PriEngine.Engine.Consulta(querySinopse);
@@ -509,6 +514,37 @@ namespace FirstREST.Lib_Primavera
                 }
 
                 return listArts;
+        }
+
+        public static List<Model.Artigo> ListaHighRated()
+        {
+            StdBELista objList;
+
+            Model.Artigo art = new Model.Artigo();
+            List<Model.Artigo> listArts = new List<Model.Artigo>();
+
+            if (!initialized)
+            {
+                if (PriEngine.InitializeCompany(FirstREST.Properties.Settings.Default.Company.Trim(), FirstREST.Properties.Settings.Default.User.Trim(), FirstREST.Properties.Settings.Default.Password.Trim()) == true)
+                    initialized = true;
+                else
+                    return null;
+            }
+            objList = PriEngine.Engine.Consulta("SELECT TOP 8 Artigo, PesoLiquido from Artigo WHERE Familia='L01' ORDER BY PesoLiquido DESC");
+
+            while (!objList.NoFim())
+            {
+                art = new Model.Artigo();
+                if (objList.Valor("Artigo") != null)
+                {
+                    art = getBestInfo(objList.Valor("Artigo"));
+                    listArts.Add(art);
+                }
+
+                objList.Seguinte();
+            }
+
+            return listArts;
         }
 
         public static List<Model.Artigo> ListaArtigosPorSTK()
