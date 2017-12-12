@@ -31,7 +31,9 @@ namespace FirstREST.Controllers
                 ViewBag.error = "ok";
 
             ViewBag.cliente = Lib_Primavera.PriIntegration.GetCliente(id);
-            ViewBag.encomendas = Lib_Primavera.PriIntegration.Encomenda_Get_Entidade(id);
+            ViewBag.pendentes = Lib_Primavera.PriIntegration.get_Orders_pending(id);
+            ViewBag.transferidas = Lib_Primavera.PriIntegration.get_Orders_shipped(id);
+            
             return View();
         }
         public ActionResult getClientes()

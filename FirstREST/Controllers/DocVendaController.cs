@@ -125,5 +125,15 @@ namespace FirstREST.Controllers
         {
             return Lib_Primavera.PriIntegration.Encomenda_Get_Entidade(id);
         }
+
+        public IEnumerable<Lib_Primavera.Model.DocVenda> pendingOrders(string id)
+        {
+            return Lib_Primavera.PriIntegration.get_Orders_pending(id);
+        }
+
+        public IEnumerable<Lib_Primavera.Model.DocVenda> shippedOrders(string id)
+        {
+            return Lib_Primavera.PriIntegration.get_Orders_shipped(id);
+        }
     }
 }

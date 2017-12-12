@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = "PaginaCliente";
     var cliente = ViewBag.cliente;
+    var i = 0;
+    var j = 0;
     
 }
 <div id="client-page" class="container">
@@ -35,11 +37,92 @@
     </div>
     <div class="col-xs-12">
         <ul class="menu-items">
-            <li class="active">Encomendas Pendentes</li>
-            <li>Encomendas Termindadas</li>
+            <li class=" pend active">Encomendas Pendentes</li>
+            <li class="fin">Encomendas Terminadas</li>
         </ul>
-        <div style="width:100%;border-top:1px solid silver">
-
+        <div id="pendentes" style="width:100%;order-top:1px solid silver">
+                @{
+                    foreach (var pending in ViewBag.pendentes)
+                    {
+                        i++;
+                        <div style="background-color:lightgray; text-align:center; margin-top:3%; font-weight:bold; font-size: 18px;"class="row">
+                            <div class="col-md-6">Encomenda @i</div>
+                            <div class="col-md-6">Data: @pending.Data</div>
+                        </div>
+                                <table style="font-size: 16px;"class="orders-table">
+                            <tr>
+                                <th class="desc">Artigo</th>
+                                <th class="qt">Quantidade</th>
+                                <th class="pu">Preço Unitário</th>
+                                <th class="pt">Preço Total</th>
+                            </tr>
+                            @{
+                        var soma_preco = 0.0;
+                                foreach (var indiv in pending.LinhasDoc)
+                                {
+                                    var ptotal = indiv.Quantidade * indiv.PrecoUnitario;
+                                    soma_preco += ptotal;
+                                    <tr>
+                                        <td class="desc">@indiv.DescArtigo</td>
+                                        <td class="qt">@indiv.Quantidade</td>
+                                        <td class="pu">@indiv.PrecoUnitario</td>
+                                        <td class="pt">@ptotal</td>
+                                    </tr>
+                                }
+                            }
+                         </table>
+                         <div class="row end-order" style="font-size:18px; margin-top:2%;">
+                             <div class="col-xs-3 col-xs-offset-7">
+                                 <span style="font-weight:bold">Preço Total:</span>
+                             </div>
+                             <div class="col-xs-2">
+                                 <span>@soma_preco €</span>
+                             </div>
+                         </div>
+                      }
+                }
+        </div>
+        <div id="terminadas" style="display: none;width:100%;border-top:1px solid silver">
+            @{
+                foreach (var shipped in ViewBag.transferidas)
+                {
+                    j++;
+                        <div style="background-color:lightgray; text-align:center; margin-top:3%; font-weight:bold; font-size: 18px;" class="row">
+                            <div class="col-md-6">Encomenda @j</div>
+                            <div class="col-md-6">Data: @shipped.Data</div>
+                        </div>
+                    <table style="font-size: 16px;" class="orders-table">
+                        <tr>
+                            <th class="desc">Artigo</th>
+                            <th class="qt">Quantidade</th>
+                            <th class="pu">Preço Unitário</th>
+                            <th class="pt">Preço Total</th>
+                        </tr>
+                    @{
+                    var soma_preco1 = 0.0;
+                    foreach (var indiv in shipped.LinhasDoc)
+                    {
+                        var ptotal = indiv.Quantidade * indiv.PrecoUnitario;
+                        soma_preco1 += ptotal;
+                        <tr>
+                            <td class="desc">@indiv.DescArtigo</td>
+                            <td class="qt">@indiv.Quantidade</td>
+                            <td class="pu">@indiv.PrecoUnitario</td>
+                            <td class="pt">@ptotal</td>
+                        </tr>
+                    }
+        }
+    </table>
+                        <div class="row end-order" style="font-size:18px; margin-top:2%;">
+                            <div class="col-xs-3 col-xs-offset-7">
+                                <span style="font-weight:bold">Preço Total:</span>
+                            </div>
+                            <div class="col-xs-2">
+                                <span>@soma_preco1 €</span>
+                            </div>
+                        </div>
+                    }
+}
         </div>
     </div>
 </div>
@@ -99,3 +182,28 @@
     </div>
 </div>
 
+<script>
+    $(function () {
+        $("ul.menu-items > li").on("click", function () {
+            $("ul.menu-items > li").removeClass("active");
+            $(this).addClass("active");
+        })
+
+        $(".pend").on('click', function () {
+            $("#terminadas").css("display", "none");
+            $("#pendentes").css("display", "inline");
+        })
+
+        $(".fin").on('click', function () {
+            $("#terminadas").css("display", "inline");
+            $("#pendentes").css("display", "none");
+        })
+
+        $(".attr,.attr2").on("click", function () {
+            var clase = $(this).attr("class");
+
+            $("." + clase).removeClass("active");
+            $(this).addClass("active");
+        })
+    })
+</script>

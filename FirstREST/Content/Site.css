@@ -256,6 +256,23 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
 
 /* página do cliente
 ----------------------------------------------------------*/
+
+.orders-table .desc{
+    width:40%;
+}
+
+.orders-table .qt{
+    width:20%;
+}
+
+.orders-table .pu{
+    width:32%;
+}
+
+.orders-table .pt{
+    width:30%;
+}
+
 .details li {
       list-style: none;
     }
@@ -268,7 +285,7 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
     cursor: pointer;
     outline: inherit !important;
 }
-#client-page ul > li{margin-right:25px;}
+#client-page ul > li{margin-right:25px; cursor:pointer}
 #client-page li.active{border-bottom:3px solid black;}
 
 #client-page .menu-items{list-style-type:none;font-size:16px;display:inline-flex;margin-bottom:0;margin-top:5px}
