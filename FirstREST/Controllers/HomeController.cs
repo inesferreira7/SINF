@@ -19,6 +19,7 @@ namespace FirstREST.Controllers
         public ActionResult SearchResults(string id)
         {
             ViewBag.procura_artigo = Lib_Primavera.PriIntegration.ProcuraArtigos(id);
+            ViewBag.search = id;
             return View();
         }
 
