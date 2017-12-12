@@ -31,11 +31,14 @@
 
                     <ul class="nav navbar-nav navbar-left">
                         <li><a href="/home/" class="home glyphicon glyphicon-home"></a></li>
-                        </ul>
+                    </ul>
+                    <div style="text-align:end"class="col-sm-1">
+                        <p id="bookit" style="font-size:24px;margin-top:9px;">BookIt</p>
+                    </div>
                         <div class="col-sm-3 col-md-3">
 
                             <div class="navbar-form input-group">
-                                <input type="text" class="form-control" placeholder="Search" id="search" name="q">
+                                <input type="text" class="form-control" placeholder="Procurar" id="search" name="q">
                                 <div class="input-group-btn">
                                     <button class="btn btn-default" onclick="search();"><i class="glyphicon glyphicon-search"></i></button>
                                 </div>
@@ -45,20 +48,20 @@
                         <ul class="nav navbar-nav navbar-right">
                             @if (Request.Cookies["UserID"] != null)
                             {
-                                <li><a href="/clientes/displayshoppingcart/@Request.Cookies["UserID"].Value.ToString()/"class="shopping-cart glyphicon glyphicon-shopping-cart"></a></li>
+                                <li><a href="/clientes/displayshoppingcart/@Request.Cookies["UserID"].Value.ToString()/" class="shopping-cart glyphicon glyphicon-shopping-cart"></a></li>
                                 <li><a href="/clientes/paginacliente/@Request.Cookies["Client"].Value.ToString()/">@Request.Cookies["Client"].Value.ToString()</a></li>
                                 <li><a href="/Account/logout/">LOGOUT</a></li>
                             }
                             else
                             {
                                 <li><a href="/Account/login/">LOGIN</a></li>
-                                <li><a href="/Account/Register/">REGISTER</a></li>   
+                                <li><a href="/Account/Register/">REGISTAR</a></li>
                             }
-                            
+
 
 
                         </ul>
-</div><!-- /.navbar-collapse -->
+                    </div><!-- /.navbar-collapse -->
             </div>
         </nav>
     </header>
