@@ -3,45 +3,99 @@
     var cliente = ViewBag.cliente;
     
 }
+<div id="client-page" class="container">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Content/bootstrap/js/bootstrap.js"></script>
 
-<div class="clientepage container">
-    <div class="perfil col-xs-5">
-        <h2>Perfil</h2>
-        <p>Code: @cliente.CodCliente</p>
-        <p>Name: @cliente.NomeCliente</p>
-        <p>Address: @cliente.Morada</p>
-        <p>Phone Number: 999999999 </p>
-
-       <button class="btn" type="button">Edit Profile</button>
-    </div>
-    
-    <div class="orders col-xs-6">
-        <h2>Pending Orders</h2>
-        @{ int i = 0;
-         foreach (var encomenda in ViewBag.encomendas)
-         {
-            <div class="single-order">
-                <p class="col-xs-6">Order: @encomenda.NumDoc</p>
-                <button class="col-xs-6 btn" type="button">Details</button>
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
+                <img src="https://www.svgimages.com/svg-image/s5/man-passportsize-silhouette-icon-256x256.png" alt="stack photo" class="img">
             </div>
-    <br />
-
-             if (++i == 4) { break; }
-         }
-    }
-
-    <h2>Completed Orders</h2>
-    @{int j = 0;
-    foreach (var encomenda in ViewBag.encomendas)
-    {
-        <div class="single-order">
-            <p class="col-xs-6">Order: @encomenda.NumDoc</p>
-            <button class="col-xs-6 btn" type="button">Details</button>
+            <div style="margin-top: -2%"class="col-md-8 col-xs-12 col-sm-6 col-lg-8">
+                <div class="container" style="border-bottom:1px solid black">
+                    <h3>@cliente.NomeCliente</h3>
+                    <input class="codCliPerfil" style="display:none" value="@cliente.CodCliente" />
+                </div>
+                <hr>
+                <ul class="container details">
+                    <li><p style="font-size: 16px;"><span class="glyphicon glyphicon-earphone one" style="width:30px;"></span>@cliente.Telefone</p></li>
+                    <li><p style="font-size: 16px;"><span class="glyphicon glyphicon-envelope one" style="width:30px;"></span>@cliente.Email</p></li>
+                    <li><p style="font-size: 16px;"><span class="glyphicon glyphicon-map-marker one" style="width:30px;"></span>@cliente.Morada</p></li>
+                    <li><button id="edit-perfil" data-toggle="modal" data-target="#updateCli"><p style="font-size: 16px;"><span class="glyphicon glyphicon-pencil one" style="width:30px;"></span>Editar perfil</p></button></li>
+                    @{
+                        if (ViewBag.error != "ok")
+                        {
+                            <li><p style="color: red; font-size: 16px">@ViewBag.error</p></li>
+                        }
+                    }
+                </ul>
+            </div>
         </div>
-    <br />
+    </div>
+    <div class="col-xs-12">
+        <ul class="menu-items">
+            <li class="active">Encomendas Pendentes</li>
+            <li>Encomendas Termindadas</li>
+        </ul>
+        <div style="width:100%;border-top:1px solid silver">
 
-        if (++j == 4) { break; }
-    }
-}
-            
+        </div>
+    </div>
 </div>
+
+<div id="updateCli" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 id="modalTitle" class="modal-title">Editar Perfil</h4>
+        </div>
+        @using (Html.BeginForm("AtualizaCliente", "Clientes", FormMethod.Post))
+        {@Html.AntiForgeryToken()
+            <div class="container">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <div class="modal-body">
+                            <div class="row">
+                                <label class="col-md-3 control-label" for="telefone">Número de Telefone</label>
+                                <div class="col-md-3">
+                                    <input name="telefone" type="text" placeholder="@cliente.Telefone" class="form-control input-md">
+                                </div>
+                            </div><br />
+                            <div class="row">
+                                <label class="col-md-3 control-label" for="morada">Morada</label>
+                                <div class="col-md-3">
+                                    <input name="morada" type="text" placeholder="@cliente.Morada" class="form-control input-md">
+                                </div>
+                            </div><br />
+                            <div class="row">
+                                <label class="col-md-3 control-label" for="email">Endereço e-mail</label>
+                                <div class="col-md-3">
+                                    <input name="email" type="text" placeholder="@cliente.Email" class="form-control input-md">
+                                </div>
+                            </div><br />
+                            <div class="row">
+                                <label class="col-md-3 control-label" for="old-password">Palavra-passe antiga</label>
+                                <div class="col-md-3">
+                                    <input name="old-password" type="password" placeholder="********" class="form-control input-md">
+                                </div>
+                            </div><br />
+                            <div class="row">
+                                <label class="col-md-3 control-label" for="new-password">Nova palavra-passe</label>
+                                <div class="col-md-3">
+                                    <input name="new-password" type="password" placeholder="********" class="form-control input-md">
+                                </div>
+                            </div><br />
+                            <div class="row edit">
+                                <div style=" margin-top: 10%; text-align: center">
+                                    <button type="submit" class="edit-btn">Editar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        }
+    </div>
+</div>
+

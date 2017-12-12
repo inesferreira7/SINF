@@ -52,6 +52,18 @@ namespace FirstREST.Lib_Primavera.Model
 
         }
 
+        public string Email
+        {
+            get;
+            set;
+        }
+
+        public string Telefone
+        {
+            get;
+            set;
+        }
+
       
     }
 }

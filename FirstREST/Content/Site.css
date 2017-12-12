@@ -257,17 +257,38 @@ hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; 
 
 /* página do cliente
 ----------------------------------------------------------*/
-
-.perfil h2{
-    font-weight: bold;
+.details li {
+      list-style: none;
+    }
+#edit-perfil{
+    background: none !important;
+    color: inherit;
+    border: none;
+    padding: 0! important;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit !important;
 }
+#client-page ul > li{margin-right:25px;}
+#client-page li.active{border-bottom:3px solid black;}
 
-.single-order{
-    margin-bottom: 7%;
-}
+#client-page .menu-items{list-style-type:none;font-size:16px;display:inline-flex;margin-bottom:0;margin-top:5px}
 
-.single-order button{
-    width: 20%;
+@media (max-width: 426px) {
+    #client-page .container {margin-top:0px !important;}
+    #client-page .container > .row{padding:0 !important;}
+    #client-page .container > .row > .col-xs-12.col-sm-5{
+        padding-right:0 ;    
+    }
+    #client-page .container > .row > .col-xs-12.col-sm-9 > div > p{
+        padding-left:0 !important;
+        padding-right:0 !important;
+    }
+    #client-page .container > .row > .col-xs-12.col-sm-9 > div > ul{
+        padding-left:10px !important;
+        
+    }            
+    #client-page .menu-items{padding-left:0;}
 }
 
 /* página do cliente
