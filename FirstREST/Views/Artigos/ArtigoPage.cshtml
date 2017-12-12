@@ -32,10 +32,23 @@
                     <select id="wh">
                         @{foreach (var wh in artigo.armArtigo)
                         {
-                            <option max_stock="@wh.StkArmazens" value="@wh.descArmazens">@wh.descArmazens: @wh.StkArmazens available</option>
+                            <option wh="@wh.idArmazens" class="@wh.idArmazens" max_stock="@wh.StkArmazens" value="@wh.descArmazens">@wh.descArmazens</option>
                         }
                         }
                     </select>
+                    @{var i = 0;
+                    foreach (var wh in artigo.armArtigo)
+                    {i++;
+                        if (i == 1)
+                        {
+                            <div id="av" class="section av @wh.idArmazens">@wh.StkArmazens Disponíveis</div>
+                        }
+                        else
+                        {
+                            <div id="av" style="display: none" class="section av @wh.idArmazens">@wh.StkArmazens Disponíveis</div>
+                        }
+                    }
+}
 
                 </div>
                 <div class="section" style="padding-bottom:20px;">
@@ -74,8 +87,13 @@
     $(function () {
         $("#wh").on('change', function (e) {
             e.preventDefault();
-            var max_stock = $("#wh select option:selected").attr("max_stock");
+            var max_stock = $("#wh option:selected").attr("max_stock");
             $('#qt').attr('max', max_stock);
+
+            $(".av").css('display', 'none');
+
+            var disp = ".av." + $("#wh option:selected").attr("wh");
+            $(disp).css('display', 'block');
         })
 
         $(".btn-plus").on('click', function (e) {
