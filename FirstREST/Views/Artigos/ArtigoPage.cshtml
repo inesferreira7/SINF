@@ -28,7 +28,7 @@
 
 
                 <div class="section" style="padding-bottom:5px;">
-                    <h6 style="margin-bottom:7px;"class="title-attr"><small>Armazém</small></h6>
+                    <h6 style="margin-bottom:7px;" class="title-attr"><small>Armazém</small></h6>
                     <select id="wh">
                         @{foreach (var wh in artigo.armArtigo)
                         {
@@ -62,26 +62,54 @@
 
                 <!-- Botones de compra -->
                 <div class="section" style="padding-bottom:20px;">
-@{
-                    if (Request.Cookies["UserID"] != null)
-                    {
-                        <input id="idUser" style="visibility:hidden" value="@Request.Cookies["UserID"].Value.ToString()" />
-                        <button class="btn" type="submit" value="addtoCart">Add to Cart</button>
+                    @{
+                        if (Request.Cookies["UserID"] != null)
+                        {
+                            <input id="idUser" style="visibility:hidden" value="@Request.Cookies["UserID"].Value.ToString()" />
+                            <button class="btn" type="submit" value="addtoCart">Add to Cart</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-success" type="submit"><span style="margin-right:20px" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Adicionar ao carrinho</button>
+                        }
                     }
-                    else
-                    {
-                    <button class="btn btn-success" type="submit"><span style="margin-right:20px" class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Adicionar ao carrinho</button>
-}
-}
                 </div>
             </div>
             <div style="margin-top:15px;" class="col-xs-10">
                 <h3>Sinopse</h3>
                 <p align="justify" style="font-size:16px;">@artigo.SinopseArtigo</p>
+            </div>
         </div>
+    </form>
+
+    <div class="items best-sellers col-xs-9">
+        <h2 style="margin-bottom:35px; margin-top:50px;">Relacionados</h2>
+        @{
+            foreach (var related in ViewBag.related)
+            {
+                if (related.CodArtigo != @ViewBag.artigo.CodArtigo)
+                {
+                    <div class="item single-article col-xs-3">
+                        <img style="margin-bottom:5px;" height="140" src="~/Images/@{@related.CodArtigo}.jpg" alt="item" />
+                        <p><a href="/artigos/artigopage/@related.CodArtigo/">@related.DescArtigo</a></p>
+                        <p>@related.precomIvaArtigo €</p>
+                        <div class="row" style="margin:10px;">
+                            <span class="stars">
+                                @for (int stars = 1; stars <= related.PesoLArtigo; stars++)
+                                {
+                                    <i class="glyphicon glyphicon-star" style="color:#FFD700"></i>
+                                }
+                            </span>
+                        </div>
+                        <button class="add-to-cart btn" user_id="@Request.Cookies["UserID"]" product_id="@related.CodArtigo" type="button">Adicionar ao Carrinho</button>
+
+                    </div>
+                }
+            }
+        }
     </div>
-        </form>
-</div>      
+
+</div>
 
 <script>
     $(function () {
@@ -121,23 +149,23 @@
 
         $("#addtoCart").on('submit', function (e) {
             e.preventDefault() // prevent the form's normal submission
-                    var dataToPost = {
-                        CodArtigo: $("#title-art-page").text(),
-                        DescArtigo: $("#desc").text(),
-                        PrecoArtigo: $("#preco").attr('preco'),
-                        ArmazemArtigo: $("#wh option:selected").text(),
-                        QuantidadeArtigo: parseInt($("#qt").val()),
-                    }
+            var dataToPost = {
+                CodArtigo: $("#title-art-page").text(),
+                DescArtigo: $("#desc").text(),
+                PrecoArtigo: $("#preco").attr('preco'),
+                ArmazemArtigo: $("#wh option:selected").text(),
+                QuantidadeArtigo: parseInt($("#qt").val()),
+            }
 
-                    $.post("/ShoppingCart/AddtoCart", dataToPost)
-                        .done(function (r) {
-                            console.log("Added product successfully!");
-                            window.location.reload();
-                        })
-                        .fail(function (r) {
-                            console.log("Failed to add the product to the shopping cart");
-                            window.location.assign("http://localhost:49822/Account/login/");
-                        })
+            $.post("/ShoppingCart/AddtoCart", dataToPost)
+                .done(function (r) {
+                    console.log("Added product successfully!");
+                    window.location.reload();
+                })
+                .fail(function (r) {
+                    console.log("Failed to add the product to the shopping cart");
+                    window.location.assign("http://localhost:49822/Account/login/");
+                })
         })
 
         $("#goToLogin").on('click', function () {
