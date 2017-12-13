@@ -27,7 +27,7 @@
                                 <img src="~/Images/@{@artigo.CodArtigo}.jpg" alt="item" />
                             </td>
                             <td class="sc-title">
-                                <h4 class="desc" value="@artigo.DescArtigo">@artigo.DescArtigo</h4>
+                                <a href="/artigos/artigopage/@{@artigo.CodArtigo}/"><h4 class="desc" value="@artigo.DescArtigo">@artigo.DescArtigo</h4></a>
                                 <input class="codArt" style="display: none" value="@artigo.CodArtigo" />
                                 <h4>@ViewBag.artigos[i].AutorArtigo</h4>
                                 <h4>@ViewBag.artigos[i].CodBArtigo</h4>
@@ -218,7 +218,7 @@
             var wh_div = "#" + id_product + " select.sc-select.after-title option:selected";
             var cod_art_div = "#" + id_product + " .codArt";
             var desc_art_div = "#" + id_product + " .desc";
-            var preco_art_div = "#preArt";
+            var preco_art_div = "#" + id_product + " #preArt";
 
 
             var new_qt =  $(new_qt_div).val();
