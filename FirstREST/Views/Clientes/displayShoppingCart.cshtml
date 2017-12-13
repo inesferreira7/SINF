@@ -12,7 +12,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="~/Content/bootstrap/js/bootstrap.js"></script>
 
-    <div class="row"><h2 style="font-weight: bold">Cart</h2></div>
+    <div class="row"><h2 style="font-weight: bold">Carrinho</h2></div>
     <div class="row">
         <div class="col-xs-7">
             <table class="sc-page">
@@ -24,45 +24,64 @@
                      double precoTotal = artigo.PrecoArtigo * artigo.QuantidadeArtigo;
                         <tr id="@artigo.Id" class=" spacing new-product">
                             <td>
-                                <img src="~/Images/book.jpg" alt="item" />
+                                <img src="~/Images/@{@artigo.CodArtigo}.jpg" alt="item" />
                             </td>
                             <td class="sc-title">
-                                <h4 class="desc" value="@artigo.DescArtigo">@artigo.DescArtigo</h4>
+                                <a href="/artigos/artigopage/@{@artigo.CodArtigo}/"><h4 class="desc" value="@artigo.DescArtigo">@artigo.DescArtigo</h4></a>
                                 <input class="codArt" style="display: none" value="@artigo.CodArtigo" />
-                                <h4>@artigo.AutorArtigo</h4>
-                                <h4>@artigo.CodBArtigo</h4>
+                                <h4>@ViewBag.artigos[i].AutorArtigo</h4>
+                                <h4>@ViewBag.artigos[i].CodBArtigo</h4>
                                 <h4>@artigo.PrecoArtigo €</h4>
+                                <input id="preArt" style="display: none" value="@artigo.PrecoArtigo" />
                             </td>
                             <td class="wh-select" product_id="@artigo.Id">
-                                <h4 style="font-weight: bold">Warehouse</h4>
+                                <h4 style="font-weight: bold">Armazém</h4>
                                 <input class="curr-wh" style="display:none" value="@artigo.ArmazemArtigo" />
-                                <select class="sc-select after-title">
+                                <select style="width:200px"class="sc-select after-title">
                                     @{
                       foreach (var wh in warehouses)
                       {
                           if (wh.descArmazens == artigo.ArmazemArtigo)
                           {
-                            <option selected style="width:30px;" value="@wh.descArmazens">@artigo.ArmazemArtigo</option>
+                            <option selected style="width:30px;" wh="@wh.idArmazens" value="@wh.descArmazens">@artigo.ArmazemArtigo</option>
                           }
                           else
                           {
-                            <option style="width:30px;" value="@wh.descArmazens">@wh.descArmazens</option>
+                            <option style="width:30px;" wh="@wh.idArmazens" value="@wh.descArmazens">@wh.descArmazens</option>
                           }
                       }
-                                    }
+}
                                 </select>
-                                <h3></h3>
+                                @{foreach (var wh in warehouses)
+                                {
+                                if (wh.descArmazens == artigo.ArmazemArtigo)
+                                {
+                                    <h5 quant="@wh.StkArmazens" class="disp_wh @wh.idArmazens">@wh.StkArmazens Disponíveis</h5>
+                                }
+                                else
+                                {
+                                    <h5 quant="@wh.StkArmazens" style="display:none;" class="disp_wh @wh.idArmazens">@wh.StkArmazens Disponíveis</h5>
+                                }
+                                }
+}
                             </td>
                             
-                            <td class="sc-quantity">
+                            <td style="text-align:right"class="sc-quantity">
                                 <h4 style="font-weight: bold">Quantidade</h4>
-                                <input class="qt" product_id="@artigo.Id" name="quantidadeArtigo" type="number" min="1"  step="1" value="@artigo.QuantidadeArtigo" />
+                                @{foreach (var wh in warehouses)
+                                {
+                                    if (wh.descArmazens == artigo.ArmazemArtigo)
+                                    {
+                                        <input class="qt" style="width:40%" product_id="@artigo.Id" name="quantidadeArtigo" type="number" min="1" step="1" max="@wh.StkArmazens"value="@artigo.QuantidadeArtigo" />
+                                    }
+                                }
+                                }
                                 <input class="curr-qt" style="visibility: hidden" value="@artigo.QuantidadeArtigo" />
                             </td>
                             <td class="sc-total">
                                 <h3 class="sc-total-price">@precoTotal €</h3>
-                                <button value="@artigo.Id" class="remove-btn btn-danger">Remove</button>
-                                <button class="update-btn btn-success" style="visibility: hidden;" value="@artigo.Id" class="btn-success">Update</button>
+                                <button value="@artigo.Id" class="remove-btn btn-danger">Remover</button>
+                                <button class="update-btn btn-success" style="visibility: hidden;" value="@artigo.Id" class="btn-success">Atualizar</button>
                             </td>
                         </tr>
                   }
@@ -72,13 +91,13 @@
     </div>
     <div style="width: 100%;"class="row">
         <div class="col-xs-2 col-xs-offset-6">
-            <h3 style="font-weight:bold">Total Price:</h3>
+            <h3 style="font-weight:bold">Preço Total:</h3>
         </div>
         <div class="col-xs-2">
             <h3>@ViewBag.precoTotal €</h3>
         </div>
         <div class="col-xs-1">
-            <button class="checkout-btn" data-toggle="modal" data-target="#finalize">Checkout</button>
+            <button class="checkout-btn" data-toggle="modal" data-target="#finalize">Finalizar</button>
         </div>
     </div>
 
@@ -94,7 +113,7 @@
                 <table>
                     <tr>
                         <th class="name">Produto</th>
-                        <th>Armazem</th>
+                        <th>Armazém</th>
                         <th>Quantidade</th>
                         <th>Preço</th>
                     </tr>
@@ -113,7 +132,7 @@
                 </table>
                 <div class="row end-order">
                     <div class="col-xs-3 col-xs-offset-7">
-                        <span style="font-weight:bold">Total Price:</span>
+                        <span style="font-weight:bold">Preço Total:</span>
                     </div>
                     <div class="col-xs-2">
                         <span>@ViewBag.precoTotal €</span>
@@ -163,6 +182,12 @@
             else {
                 $(update_btn).css('visibility', 'hidden');
             }
+
+            $(".disp_wh").css('display', 'none');
+
+            var disp = ".disp_wh." + $(".wh-select option:selected").attr("wh");
+            $(disp).css('display', 'block');
+            $('.qt').attr('max', $(disp).attr('quant'));
         })
 
         $(".remove-btn").on('click', function (e) {
@@ -193,6 +218,7 @@
             var wh_div = "#" + id_product + " select.sc-select.after-title option:selected";
             var cod_art_div = "#" + id_product + " .codArt";
             var desc_art_div = "#" + id_product + " .desc";
+            var preco_art_div = "#" + id_product + " #preArt";
 
 
             var new_qt =  $(new_qt_div).val();
@@ -200,6 +226,7 @@
             var wh = $(wh_div).val();
             var cod_art = $(cod_art_div).val();
             var desc_art = $(desc_art_div).text();
+            var prec_art = $(preco_art_div).val();
 
             var dataToPost = {
                 Id: id_product,
@@ -207,7 +234,8 @@
                 IdUser: id_user,
                 ArmazemArtigo: wh,
                 CodArtigo: cod_art,
-                DescArtigo:desc_art
+                DescArtigo:desc_art,
+                PrecoArtigo: prec_art
             }
 
             $.post("/ShoppingCart/UpdateCart", dataToPost)

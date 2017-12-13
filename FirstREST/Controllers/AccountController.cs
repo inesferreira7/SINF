@@ -68,7 +68,11 @@ namespace FirstREST.Controllers
                     db.SaveChanges();
                 }
             }
-            return Login(new_user);
+            Response.Cookies["UserID"].Value = new_user.Id.ToString();
+            Response.Cookies["Username"].Value = new_user.Username.ToString();
+            Response.Cookies["Client"].Value = new_user.Client_Name.ToString();
+            ViewBag.errorMessage = null;
+            return Login();
         }
 
         public ActionResult Logout()
@@ -86,13 +90,19 @@ namespace FirstREST.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(FirstREST.Models.User objUser)
+        public ActionResult Login(FormCollection form)
         {
+            string username= form["username"];
+            string password = form["password"];
+            FirstREST.Models.User objUser = new FirstREST.Models.User();
+            objUser.Username = username;
+            objUser.Password = password;
+
             if (ModelState.IsValid)
             {
                 using (FirstREST.Models.online_storeEntities db = new FirstREST.Models.online_storeEntities())
                 {
-                    var obj = db.Users.Where(a => a.Username.Equals(objUser.Username) && a.Password.Equals(objUser.Password)).FirstOrDefault();
+                    var obj = db.Users.Where(a => a.Username.Equals(username) && a.Password.Equals(password)).FirstOrDefault();
                     if (obj != null)
                     {
                         Response.Cookies["UserID"].Value = obj.Id.ToString();
